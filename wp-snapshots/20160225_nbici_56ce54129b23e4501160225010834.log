@@ -1,0 +1,75 @@
+********************************************************************************
+PACKAGE-LOG: 2016-02-25 01:08:38
+NOTICE: Do NOT post to public sites or forums 
+********************************************************************************
+VERSION:	1.1.4
+WORDPRESS:	4.4.2
+PHP INFO:	5.5.30 | SAPI: apache2handler
+SERVER:		Apache/2.4.16 (Unix) PHP/5.5.30 
+PHP TIME LIMIT: (0) no time limit imposed 
+PHP MAX MEMORY: 5000M (128M default) 
+MEMORY STACK: 31MB 
+
+********************************************************************************
+DATABASE:
+********************************************************************************
+BUILD MODE:   PHP(query limit - 100)
+MYSQLTIMEOUT: 5000
+MYSQLDUMP:    Is Supported 
+TABLES: total:13 | filtered:0 | create:13 
+FILTERED: [] 
+SQL CREATED: 20160225_nbici_56ce54129b23e4501160225010834_database.sql 
+SQL FILE SIZE: 661.11KB (676973) 
+SQL FILE TIME: 2016-02-25 01:08:38 
+SQL RUNTIME: 0.08 sec. 
+
+******************************************************************************** 
+ARCHIVE (ZIP): 
+******************************************************************************** 
+ARCHIVE DIR:  /Users/schultzRr/Documents/Proyectos/wp_divi 
+ARCHIVE FILE: 20160225_nbici_56ce54129b23e4501160225010834_archive.zip 
+FILTERS: *OFF* 
+DIRS:  not set 
+EXTS:  not set 
+---------------------------------------- 
+COMPRESSING 
+SIZE:	43.15MB 
+STATS:	Dirs 185 | Files 1,780 
+SQL ADDED: 20160225_nbici_56ce54129b23e4501160225010834_database.sql 
+ZipArchive Object
+(
+    [status] => 0
+    [statusSys] => 0
+    [numFiles] => 1965
+    [filename] => /Users/schultzRr/Documents/Proyectos/wp_divi/wp-snapshots/tmp/20160225_nbici_56ce54129b23e4501160225010834_archive.zip
+    [comment] => 
+)
+ 
+COMPRESSION RESULT: '1' 
+COMPRESSED SIZE: 14.01MB 
+ARCHIVE RUNTIME: 5.53 sec. 
+MEMORY STACK: 32MB 
+
+******************************************************************************** 
+MAKE INSTALLER: 
+******************************************************************************** 
+Build Start 
+Build Finished 
+Preping for use 
+Template parsed with new data 
+Complete [/Users/schultzRr/Documents/Proyectos/wp_divi/wp-snapshots/tmp/20160225_nbici_56ce54129b23e4501160225010834_installer.php] 
+Added to archive 
+
+******************************************************************************** 
+INTEGRITY CHECKS: 
+******************************************************************************** 
+SQL File: 661.11KB 
+Installer File: 318.85KB 
+Archive File: 14.01MB  
+
+********************************************************************************
+RECORD ID:[1]
+TOTAL PROCESS RUNTIME: 6.01 sec.
+PEAK PHP MEMORY USED: 35MB
+DONE PROCESSING => 20160225_nbici 2016-02-25 01:08:44
+ 
