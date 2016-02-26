@@ -40,10 +40,9 @@ class My_Widget extends WP_Widget {
     public function widget( $args, $instance ) {
 
         echo $args['before_widget'];
-        if ( ! empty( $instance['title'] ) ) {
-            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
-        }
-        echo __( 'Hello, World!', 'text_domain' );
+
+        echo '<div ng-controller="TestController as testCtl"><ul ng-repeat="route in routes"><li>{{ route.id }} - {{ route.name }}</li></ul></div>';
+
         echo $args['after_widget'];
     }
     /**

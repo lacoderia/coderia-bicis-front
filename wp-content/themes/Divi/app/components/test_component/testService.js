@@ -2,22 +2,27 @@
  * Created by owen on 26/02/16.
  */
 
-nbici.factory('TestService', ['"$http", "$q"', function($http, $q){
+'use strict';
 
+nbici.factory('TestService', ['$http', '$q', 'DEFAULT_VALUES', function($http, $q, DEFAULT_VALUES){
 
-    var getRoutes = function(){
-        var routeServiceURL = 'http://servicios.coderia.mx/routes.json';
+    var getRoutes = function(assetType){
 
-        return $http.get(routeServiceURL, {})
-            .success(function (data){
+        var serviceURL = 'http://servicios.coderia.mx/routes.json';
+        return $http.get(serviceURL, {})
+            .success(function(data){
                 if(data){
                     console.log(data);
                 }
             })
+
+        return [];
     };
 
-    return {
-        'getRoutes': getRoutes
+    var service = {
+        getRoutes: getRoutes,
     };
+
+    return service;
 
 }]);

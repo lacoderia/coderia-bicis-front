@@ -10,7 +10,7 @@
 <html id="ie8" <?php language_attributes(); ?>>
 <![endif]-->
 <!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
-<html <?php language_attributes(); ?> ng-app>
+<html <?php language_attributes(); ?> ng-app="nbici">
 <!--<![endif]-->
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
@@ -35,7 +35,7 @@
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-	<div id="page-container" ng-app="nbici">
+	<div id="page-container">
 <?php
 	if ( is_page_template( 'page-template-blank.php' ) ) {
 		return;
