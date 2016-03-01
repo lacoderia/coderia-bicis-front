@@ -2,11 +2,6 @@
 
 <div id="main-content">
 	<div class="container">
-		<div>
-		<input type="text" ng-model="name">
-
-		<p>Hello, {{name}}!</p>
-	</div>
 		<div id="content-area" class="clearfix">
 			<div id="left-area">
 		<?php

@@ -8035,24 +8035,3 @@ if ( class_exists( 'WooCommerce' ) ) {
 		woocommerce_related_products( $woocommerce_args );
 	}
 }
-
-// Custom Coderia Code
-
-// Add Angular scripts
-
-function coderia_enqueue_angular_scripts() {
-
-	wp_enqueue_script( 'angularjs', get_stylesheet_directory_uri() . '/js/bower_components/angular/angular.min.js' );
-
-	wp_enqueue_script( 'angularjs-route', get_stylesheet_directory_uri() . '/js/bower_components/angular-route/angular-route.min.js' );
-
-	wp_enqueue_script( 'app', get_stylesheet_directory_uri() . '/app/application.js' );
-
-	wp_enqueue_script( 'TestService', get_stylesheet_directory_uri() . '/app/components/test_component/testService.js' );
-
-	wp_enqueue_script( 'TestController', get_stylesheet_directory_uri() . '/app/components/test_component/testController.js' );
-
-}
-
-add_action( 'wp_enqueue_scripts', 'coderia_enqueue_angular_scripts' );
-
