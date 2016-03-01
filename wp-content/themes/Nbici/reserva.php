@@ -2,12 +2,6 @@
 
 get_header();
 
-wp_enqueue_script( 'angularjs' );
-wp_enqueue_script( 'angularjs-route' );
-wp_enqueue_script( 'app' );
-wp_enqueue_script( 'TestService' );
-wp_enqueue_script( 'TestController' );
-
 $is_page_builder_used = et_pb_is_pagebuilder_used( get_the_ID() );
 
 ?>
@@ -46,12 +40,12 @@ $is_page_builder_used = et_pb_is_pagebuilder_used( get_the_ID() );
 
 				<?php endif; ?>
 
-					<div ng-controller="TestController as testCtl"><ul ng-repeat="route in routes"><li>{{ route.id }} - {{ route.name }}</li></ul></div>
-
 					<div class="entry-content">
 					<?php
 						the_content();
 					?>
+
+					<?php locate_template( array( 'app/components/test_component/testTemplate.php' ), true, true ); ?>
 
 					<?php
 						if ( ! $is_page_builder_used )
