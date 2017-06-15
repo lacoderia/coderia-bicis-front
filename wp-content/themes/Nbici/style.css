@@ -1,9 +1,28 @@
 /*
- Theme Name:     Nbici Theme
- Theme URI:      http://www.coderia.mx
- Description:    Nbici (Divi Child Theme)
- Author:         La Codería
- Author URI:     http://www.coderia.mx
- Template:       Divi
- Version:        1.0.0
-*/
+ Theme Name:   Divi Child for Nbici
+ Theme URI:    #
+ Description:  Divi child
+ Author:       Niumedia
+ Author URI:   niumedia.mx
+ Template:     Divi
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
+
+/* Sticky footer
+   -------------------------------- */
+
+html, body {
+ height: 100%;
+}
+.wrapper {
+ min-height: 100%;
+ height: auto !important;
+ height: 100%;
+ margin: 0 auto -53px;
+}
+.main-footer, .push {
+ height: 53px;
+}

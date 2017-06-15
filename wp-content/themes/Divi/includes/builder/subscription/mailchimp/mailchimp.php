@@ -2,9 +2,8 @@
 
 /**
  * Super-simple, minimum abstraction MailChimp API v2 wrapper
- *
- * Uses curl if available, falls back to file_get_contents and HTTP stream.
- * This probably has more comments than code.
+ * Class name was renamed from MailChimp to MailChimp_Divi to avoid conflicts with some plugins.
+ * The use of curl and file_get_content has been replaced with WordPress' HTTP API
  *
  * Contributors:
  * Michael Minor <me@pixelbacon.com>
@@ -35,8 +34,6 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-
-// class was renamed from MailChimp to MailChimp_Divi to avoid conflicts with some plugins. The body of class wasn't changed.
 class MailChimp_Divi
 {
     private $api_key;
@@ -69,41 +66,32 @@ class MailChimp_Divi
      * Performs the underlying HTTP request. Not very exciting
      * @param  string $method The API method to be called
      * @param  array  $args   Assoc array of parameters to be passed
+     * @param  int  $timeout  Time allocated before timeout
      * @return array          Assoc array of decoded result
      */
-    private function makeRequest($method, $args=array(), $timeout = 10)
+    private function makeRequest( $method, $args_body = array(), $timeout = 10 )
     {
-        $args['apikey'] = $this->api_key;
+        // Prepare argument
+        $args = array(
+            'timeout' => $timeout,
+            'sslverify' => $this->verify_ssl,
+            'body' => array(
+                'apikey' => $this->api_key,
+            ),
+        );
 
-        $url = $this->api_endpoint.'/'.$method.'.json';
-
-        if (function_exists('curl_init') && function_exists('curl_setopt')){
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-            curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->verify_ssl);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($args));
-            $result = curl_exec($ch);
-            curl_close($ch);
-        } else {
-            $json_data = json_encode($args);
-            $result    = file_get_contents($url, null, stream_context_create(array(
-                'http' => array(
-                    'protocol_version' => 1.1,
-                    'user_agent'       => 'PHP-MCAPI/2.0',
-                    'method'           => 'POST',
-                    'header'           => "Content-type: application/json\r\n".
-                                          "Connection: close\r\n" .
-                                          "Content-length: " . strlen($json_data) . "\r\n",
-                    'content'          => $json_data,
-                ),
-            )));
+        // Merge $args_body into $args['body']
+        if ( ! empty( $args_body ) ) {
+            $args['body'] = array_merge( $args['body'], $args_body );
         }
 
-        return $result ? json_decode($result, true) : false;
+        // Setup URL
+        $url = $this->api_endpoint.'/'.$method.'.json';
+
+        // Request to MailChimp API and get result
+        $result = wp_remote_post( $url, $args );
+
+        // Return result
+        return $result;
     }
 }
