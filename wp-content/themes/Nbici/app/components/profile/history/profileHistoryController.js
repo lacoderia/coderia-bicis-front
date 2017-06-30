@@ -105,7 +105,7 @@ nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'Sessi
      */
     historyCtrl.isAppointmentEnabled = function(appointment) {
         var now = moment();
-        return appointment.getDate().diff(now, 'days') >= 1;
+        return appointment.getDate().diff(now, 'hours') >= 12;
     };
 
 
