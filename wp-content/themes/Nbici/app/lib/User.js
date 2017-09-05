@@ -1,6 +1,6 @@
 'use strict';
 
-function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, active, coupon, couponValue, balance) {
+function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, active, coupon, couponValue, balance, isTestUser) {
 
     // Private attributes
     var _id = undefined;
@@ -13,6 +13,7 @@ function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, a
     var _coupon = undefined;
     var _couponValue = undefined;
     var _balance = 0;
+    var _isTestUser = false;
 
     /**
      *
@@ -21,13 +22,15 @@ function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, a
      * @param lastName
      * @param email
      * @param classesLeft
+     * @param lastClassPurchased
      * @param active
      * @param balance
      * @param coupon
      * @param couponValue
+     * @param isTestUser
      */
 
-    this.constructor = function(id, firstName, lastName, email, classesLeft, lastClassPurchased, active, coupon, couponValue, balance) {
+    this.constructor = function(id, firstName, lastName, email, classesLeft, lastClassPurchased, active, coupon, couponValue, balance, isTestUser) {
         this.setId(id);
         this.setFirstName(firstName);
         this.setLastName(lastName);
@@ -38,6 +41,7 @@ function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, a
         this.setCoupon(coupon);
         this.setCouponValue(couponValue);
         this.setBalance(balance);
+        this.setIsTestUser(isTestUser)
     };
 
     /**
@@ -205,6 +209,22 @@ function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, a
         _balance = balance;
     };
 
-    this.constructor(id, firstName, lastName, email, classesLeft, lastClassPurchased, active, coupon, couponValue, balance);
+    /**
+     *
+     * @returns {undefined}
+     */
+    this.getIsTestUser = function(){
+        return _isTestUser;
+    };
+
+    /**
+     *
+     * @param isTestUser
+     */
+    this.setIsTestUser = function(isTestUser){
+        _isTestUser = isTestUser;
+    };
+
+    this.constructor(id, firstName, lastName, email, classesLeft, lastClassPurchased, active, coupon, couponValue, balance, isTestUser);
 
 };

@@ -60,6 +60,16 @@ nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'Sessi
         }, 0);
     });
 
+    $scope.$on('closeClassroom', function($event){
+        historyCtrl.selectAppointment(undefined);
+        setShowCalendar(true);
+
+        $timeout(function(){
+            var historyContainer = angular.element(document.getElementById('history-classes'));
+            $document.scrollToElement(historyContainer,120, 800);
+        }, 0);
+    });
+
     /**
      *
      * @param newAppointment
@@ -105,7 +115,7 @@ nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'Sessi
      */
     historyCtrl.isAppointmentEnabled = function(appointment) {
         var now = moment();
-        return appointment.getDate().diff(now, 'hours') >= 12;
+        return appointment.getDate().diff(now, 'hours') >= 12 || (SessionService.get() && SessionService.get().getIsTestUser());
     };
 
 
@@ -189,7 +199,7 @@ nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'Sessi
     };
 
     /**
-     * 
+     *
      * @param appointments
      */
     historyCtrl.initDashboard = function(appointments) {
