@@ -31,18 +31,18 @@ nbici.factory('SocialService', ['$http', '$q', '$rootScope', 'SessionService', '
     var shareFB = function(coupon) {
         if(coupon){
             FB.ui({
-                method: 'feed',
-                link: 'http://n-bici.com',
-                title: 'CUPÓN: ' + coupon,
-                description: '¡Baila sobre ruedas! ¡' + SessionService.get().getFirstName() + ' te invita a vivir la experiencia N bici utilizando este cupón! ¡Agrégalo al hacer tu siguiente compra y rueda con nosotros!',
-                caption: 'Obtén un descuento usando este cupón'
+                method: 'share',
+                href: 'http://n-bici.com',
+                quote: '¡Te invito a vivir la experiencia N bici utilizando este cupón: ' + coupon + '! ¡Agrégalo al hacer tu siguiente compra y rueda con nosotros!',
+                caption: 'Obtén un descuento usando este cupón',
+                hashtag: "#bailasobreruedas"
             }, function (response) {
             });
         } else {
             FB.ui({
-                method: 'feed',
-                link: 'http://n-bici.com',
-                title: '¡Actívate con N Bici!',
+                method: 'share',
+                href: 'http://n-bici.com',
+                quote: '¡Actívate con N Bici!',
                 caption: 'http://n-bici.com'
             }, function (response) {
             });
