@@ -121,7 +121,7 @@ nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'Sessi
 
     historyCtrl.isAppointmentEditable = function(appointment) {
         var now = moment();
-        return appointment.getDate().diff(now, 'hours') >= 1;
+        return appointment.getDate().diff(now, 'hours') >= 1 || (SessionService.get() && SessionService.get().getIsTestUser());
     };
 
     /**
