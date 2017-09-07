@@ -91,12 +91,11 @@ nbici.factory('CalendarService', ['$rootScope', 'LoggerService', 'DEFAULT_VALUES
      *
      * @returns {*|Map.<K, V>|Map.<string, V>}
      */
-    var getWeek = function(classes) {
-
-        setSpinningClasses(classes);
+    var getWeek = function(weeklySchedule) {
+        setSpinningClasses(weeklySchedule.schedules);
 
         for(var i=0; i<DEFAULT_VALUES.WEEK_LENGTH; i++) {
-            var day = moment().add({'days': i});
+            var day = moment(weeklySchedule.start_day).add({'days': i});
             var calendarDay = new CalendarDay(day, []);
             weekCalendar.push(getSpinningClasses(calendarDay));
         }

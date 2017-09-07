@@ -39,15 +39,16 @@ nbici.factory('InstructorProfileService', ['$http', '$q', '$rootScope', 'LoggerS
 
         try {
             var spinningClasses = [];
-            for (var i = 0; i < instructorProfile.weekly_schedules.length; i++) {
-                var item = instructorProfile.weekly_schedules[i];
+            var weeklySchedules = instructorProfile.weekly_schedules.schedules;
+            for (var i = 0; i < weeklySchedules.length; i++) {
+                var item = weeklySchedules[i];
                 var spinningClass = new SpinningClass(item.id, instructorProfile.id, instructorProfile.first_name, item.room.id, item.datetime, item.available_seats, item.description, item.free);
                 spinningClasses.push(spinningClass);
             }
 
             var weekCalendar = [];
             for(var i=0; i<DEFAULT_VALUES.WEEK_LENGTH; i++) {
-                var day = moment().add({'days': i});
+                var day = moment(instructorProfile.weekly_schedules.start_day).add({'days': i});
                 var calendarDay = new CalendarDay(day, []);
 
                 for(var j=0; j<spinningClasses.length; j++) {

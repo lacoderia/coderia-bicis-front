@@ -2,7 +2,7 @@
 
 define('child_template_directory', dirname( get_bloginfo('stylesheet_url')) );
 
-define ('VERSION', '1.4.3');
+define ('VERSION', '1.5.0');
 
 function version_id() {
   if ( WP_DEBUG )
@@ -64,20 +64,20 @@ function get_packs() {
     return htmlspecialchars(json_encode($data['packs']));
 }
 
-function get_classes() {
-    global $api_url_base;
+function get_weekly_schedule() {
+    global $api_url_base, $api_args;
     $data['schedules'] = array();
 
     $url = $api_url_base.'/schedules/weekly_scope';
     $request = new WP_Http;
-    $result = $request->get( $url );
+    $result = $request->get( $url, $api_args );
     if( wp_remote_retrieve_response_code($result) == '200' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['schedules']) ){
-            $data['schedules'] = $json['schedules'];
+            $data['weekly_schedule'] = $json;
         }
     }
-    return htmlspecialchars(json_encode($data['schedules']));
+    return htmlspecialchars(json_encode($data['weekly_schedule']));
 }
 
 function get_instructor_profile() {

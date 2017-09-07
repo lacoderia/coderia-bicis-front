@@ -5,7 +5,7 @@
 
 ?>
 
-<div id="calendar" ng-controller="CalendarController as calendarCtrl" ng-init="calendarCtrl.init(<?php echo get_instructors() . ', ' . get_classes(); ?>)" ng-show="calendarCtrl.isVisible()" class="calendar-component animate-visibility">
+<div id="calendar" ng-controller="CalendarController as calendarCtrl" ng-init="calendarCtrl.init(<?php echo get_instructors() . ', ' . get_weekly_schedule(); ?>)" ng-show="calendarCtrl.isVisible()" class="calendar-component animate-visibility">
     <h2>Reserva tu lugar</h2>
     <p class="et_pb_text_align_center">Selecciona un horario</p>
     <div class="calendar">

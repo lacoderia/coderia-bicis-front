@@ -189,7 +189,7 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
      * @param instructors
      * @param classes
      */
-    calendarCtrl.init = function(instructors, classes) {
+    calendarCtrl.init = function(instructors, weeklySchedule) {
         // Setting the instructors catalog
         InstructorService.setInstructors(instructors);
 
@@ -197,7 +197,7 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
         calendarCtrl.instructors = InstructorService.getInstructors();
 
         // Getting the current calendar week
-        calendarCtrl.week = CalendarService.getWeek(classes);
+        calendarCtrl.week = CalendarService.getWeek(weeklySchedule);
 
         // Setting the default day (for mobile mode view)
         if(calendarCtrl.week.length > 0){
