@@ -2,8 +2,6 @@
 
 nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$document', 'InstructorProfileService', 'usSpinnerService', 'DEFAULT_VALUES', function($scope, $timeout, $document, InstructorProfileService, usSpinnerService, DEFAULT_VALUES){
 
-    var CLASS_QUOTES = ['Aparta un lugar', '¡A sudar!', 'Cerrado :('];
-
     var instructorProfileCtrl = this;
 
     /**
@@ -74,26 +72,6 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
     instructorProfileCtrl.hasClassesAvailable = function(day) {
         return (day.getSpinningClasses().length > 0);
     };
-
-
-    /**
-     *
-     * @param spinningClass
-     * @returns {string}
-     */
-    instructorProfileCtrl.getAvailableSeatsLabel = function(availableSeats) {
-        if(availableSeats > 15 ){
-            return CLASS_QUOTES[0];
-        } else if(availableSeats > 10 && availableSeats <= 15){
-            return CLASS_QUOTES[1];
-        } else if(availableSeats <= 10 && availableSeats > 0) {
-            return '¡' + availableSeats + ' lugares!';
-        } else if(availableSeats == 0){
-            return CLASS_QUOTES[2];
-        }
-
-    };
-
 
     /**
      *

@@ -126,19 +126,7 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
      */
     calendarCtrl.isClassEnabled = function(spinningClass) {
         var now = moment();
-        var enabled = true;
-
-        if (now.date() == spinningClass.getDate().date() && now.month() == spinningClass.getDate().month()) {
-            if (now.hour() > spinningClass.getDate().hour()) {
-                enabled = false;
-            } else if (now.hour() == spinningClass.getDate().hour()) {
-                if (now.minute() >= spinningClass.getDate().minute()) {
-                    enabled = false;
-                }
-            }
-        }
-
-        return enabled;
+        return (spinningClass.getDate().diff(now, 'minutes') >= 1) && (spinningClass.getAvailableSeats() > 0);
     };
 
     /**

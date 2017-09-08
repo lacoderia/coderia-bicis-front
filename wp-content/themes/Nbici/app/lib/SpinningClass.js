@@ -162,6 +162,27 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         _isFree = isFree;
     };
 
+    /**
+     *
+     * @returns {string}
+     */
+    this.getAvailableSeatsMessage = function (showAll) {
+
+        var message = '';
+
+        if(_availableSeats > 15 && showAll){
+            message = 'Aparta un lugar';
+        } else if(_availableSeats > 10 && _availableSeats <= 15 && showAll){
+            message = '¡A sudar!';
+        } else if(_availableSeats <= 10 && _availableSeats > 0 && showAll) {
+            message = '¡' + _availableSeats + ' lugares!';
+        } else if(_availableSeats == 0) {
+            message = 'Cerrado';
+        }
+
+        return message;
+    };
+
     this.constructor(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree);
 
 };

@@ -480,10 +480,15 @@
       table-layout: fixed;
       width: 100%; }
       .calendar-component .calendar > ul li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 120px;
         padding: 1rem 0rem;
         text-align: center; }
         @media screen and (max-width: 768px) {
           .calendar-component .calendar > ul li {
+            min-height: auto;
             padding: 0.4rem 0.2rem; } }
       .calendar-component .calendar > ul .class {
         border: 1px solid #e1e3e6;

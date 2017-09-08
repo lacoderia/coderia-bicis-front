@@ -32,6 +32,7 @@
                         <span class="class-description" ng-if="calendarCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>
                         <span class="class-instructor">{{ ::spinningClass.getInstructorName() }}</span>
                         <span class="class-time">{{ ::spinningClass.getDate().format('H:mm')}}</span>
+                        <span class="class-title">{{ ::spinningClass.getAvailableSeatsMessage() }}</span>
                     </li>
                 </ul>
             </li>
@@ -52,6 +53,7 @@
                 <span class="class-description" ng-if="calendarCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>
                 <span class="class-instructor">{{ ::spinningClass.getInstructorName() }}</span>
                 <span class="class-time">{{ ::spinningClass.getDate().format('H:mm')}}</span>
+                <span class="class-title">{{ ::spinningClass.getAvailableSeatsMessage() }}</span>
             </li>
             <li ng-if="!calendarCtrl.selectedDay.getSpinningClasses().length" >
                 La búsqueda no trajo resultados

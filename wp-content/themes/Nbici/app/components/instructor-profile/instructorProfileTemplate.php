@@ -34,7 +34,7 @@
                         <div class="ribbon" ng-if="::spinningClass.getIsFree()"><span>GRATIS</span></div>
                         <span class="class-description" ng-if="instructorProfileCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>
                         <span class="class-time">{{ ::spinningClass.getDate().format('H:mm')}}</span>
-                        <span class="class-title">{{ instructorProfileCtrl.getAvailableSeatsLabel(spinningClass.getAvailableSeats()) }}</span>
+                        <span class="class-title">{{ ::spinningClass.getAvailableSeatsMessage(true) }}</span>
                     </li>
                 </ul>
             </li>
