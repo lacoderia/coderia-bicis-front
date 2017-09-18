@@ -30,7 +30,7 @@
                     <span class="day-title"> {{ ::instructorProfileCtrl.getDayOfWeek(day.getDate().day()) }}</span>
                 </div>
                 <ul>
-                    <li ng-repeat="spinningClass in day.getSpinningClasses() | orderByDate" class="class" ng-class="{ 'enabled': instructorProfileCtrl.isClassEnabled(spinningClass), 'disabled': !instructorProfileCtrl.isClassEnabled(spinningClass), 'warning': spinningClass.getAvailableSeats() <= 10, 'special': spinningClass.getDescription() }" ng-click="instructorProfileCtrl.selectSpinningClass(spinningClass)">
+                    <li ng-repeat="spinningClass in day.getSpinningClasses() | orderByDate" class="class" ng-class="{ 'enabled': instructorProfileCtrl.isClassEnabled(spinningClass), 'disabled': !instructorProfileCtrl.isClassEnabled(spinningClass), 'selectable': instructorProfileCtrl.isClassSelectable(spinningClass), 'warning': spinningClass.getAvailableSeats() <= 10, 'special': spinningClass.getDescription() }" ng-click="instructorProfileCtrl.selectSpinningClass(spinningClass)">
                         <div class="ribbon" ng-if="::spinningClass.getIsFree()"><span>GRATIS</span></div>
                         <span class="class-description" ng-if="instructorProfileCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>
                         <span class="class-time">{{ ::spinningClass.getDate().format('H:mm')}}</span>

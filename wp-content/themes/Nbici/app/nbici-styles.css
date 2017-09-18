@@ -1126,6 +1126,8 @@
               opacity: 0.4; }
               .instructors-profile-component .calendar > ul > li ul li.class.disabled .class-time, .instructors-profile-component .calendar > ul > li ul li.class.disabled .class-title {
                 color: #666666 !important; }
+            .instructors-profile-component .calendar > ul > li ul li.class.selectable {
+              cursor: pointer !important; }
             .instructors-profile-component .calendar > ul > li ul li.class.enabled:hover {
               background: black;
               color: #e3da19; }
