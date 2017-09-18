@@ -61,7 +61,17 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
      */
     instructorProfileCtrl.isClassEnabled = function(spinningClass) {
         var now = moment();
-        return (now.date() == spinningClass.getDate().date() && now.month() == spinningClass.getDate().month())? ((spinningClass.getDate().hour() > now.hour()) && (spinningClass.getAvailableSeats() > 0)): (spinningClass.getAvailableSeats() > 0);
+        return (spinningClass.getDate().diff(now, 'minutes') >= 1) && (spinningClass.getAvailableSeats() > 0);
+    };
+
+    /**
+     *
+     * @param spinningClass
+     * @returns {boolean}
+     */
+    calendarCtrl.isClassSelectable = function(spinningClass) {
+        var now = moment();
+        return (spinningClass.getDate().diff(now, 'minutes') >= 1) && (spinningClass.getInstructorId());
     };
 
     /**
@@ -89,7 +99,7 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
      * @param spinningClass
      */
     instructorProfileCtrl.selectSpinningClass = function(spinningClass) {
-        if (instructorProfileCtrl.isClassEnabled(spinningClass)) {
+        if (calendarCtrl.isClassSelectable(spinningClass)) {
             setShowCalendar(false);
             $timeout(function(){
                 InstructorProfileService.broadcast('spinningClassSelected', spinningClass);

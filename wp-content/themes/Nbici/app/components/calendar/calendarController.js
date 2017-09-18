@@ -131,6 +131,16 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
 
     /**
      *
+     * @param spinningClass
+     * @returns {boolean}
+     */
+    calendarCtrl.isClassSelectable = function(spinningClass) {
+        var now = moment();
+        return (spinningClass.getDate().diff(now, 'minutes') >= 1) && (spinningClass.getInstructorId());
+    };
+
+    /**
+     *
      * @returns {string}
      */
     calendarCtrl.getWeekLabel = function() {
@@ -163,7 +173,7 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
      * @param spinningClass
      */
     calendarCtrl.selectSpinningClass = function(spinningClass) {
-        if (calendarCtrl.isClassEnabled(spinningClass)) {
+        if (calendarCtrl.isClassSelectable(spinningClass)) {
             setShowCalendar(false);
             $timeout(function(){
                 CalendarService.broadcast('spinningClassSelected', spinningClass);
