@@ -512,6 +512,8 @@
           opacity: 0.4; }
           .calendar-component .calendar > ul .class.disabled .class-time, .calendar-component .calendar > ul .class.disabled .class-instructor {
             color: #666666; }
+        .calendar-component .calendar > ul .class.selectable {
+          cursor: pointer !important; }
         .calendar-component .calendar > ul .class.enabled {
           box-shadow: 0px 0px 4px 0px rgba(134, 135, 136, 0.1);
           color: black; }

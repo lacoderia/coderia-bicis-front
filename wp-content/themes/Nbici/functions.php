@@ -2,7 +2,7 @@
 
 define('child_template_directory', dirname( get_bloginfo('stylesheet_url')) );
 
-define ('VERSION', '1.5.8');
+define ('VERSION', '1.6.0.1');
 
 function version_id() {
   if ( WP_DEBUG )
