@@ -13,7 +13,7 @@
     <p>Paga con tu cuenta principal registrada o agrega una nueva tarjeta de crédito.</p>
     <div class="payment-wrapper">
         <div class="payment-section">
-            <h3>Método de págo</h3>
+            <h3>Método de pago</h3>
             <div class="no-card" ng-if="!paymentCtrl.hasPrimaryCard()" ng-class="{ true: 'active', false: ''}[paymentCtrl.isNewCardActive()]" ng-mouseover="paymentCtrl.setNewCardFormStatus(true)" ng-mouseout="paymentCtrl.setNewCardFormStatus(false)">
                 <div class="card-title">Pagar con tarjeta de crédito</div>
                 <div class="card-info">

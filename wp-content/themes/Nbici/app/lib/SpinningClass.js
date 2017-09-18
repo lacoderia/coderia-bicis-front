@@ -176,7 +176,9 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
             message = '¡A sudar!';
         } else if(_availableSeats <= 10 && _availableSeats > 0 && showAll) {
             message = '¡' + _availableSeats + ' lugares!';
-        } else if(_availableSeats == 0) {
+        } else if(_availableSeats == 0 && _instructorId) {
+            message = 'LLeno';
+        } else if(_availableSeats == 0 && !_instructorId) {
             message = 'Cerrado';
         }
 
