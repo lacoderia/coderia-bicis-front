@@ -1,6 +1,6 @@
 'use strict';
 
-nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'SessionService', 'HistoryService', 'LoggerService', 'usSpinnerService', 'DEFAULT_VALUES', function($scope, $timeout, $document, SessionService, HistoryService, LoggerService, usSpinnerService, DEFAULT_VALUES){
+nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'LoginService', 'SessionService', 'HistoryService', 'LoggerService', 'usSpinnerService', 'DEFAULT_VALUES', function($scope, $timeout, $document, LoginService, SessionService, HistoryService, LoggerService, usSpinnerService, DEFAULT_VALUES){
 
     // Private variables
     /**
@@ -164,13 +164,17 @@ nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'Sessi
                 HistoryService.cancelAppointment(appointment.getId())
                     .then(function(data) {
                         if (data.appointment) {
-                            SessionService.get().setClassesLeft(SessionService.get().getClassesLeft() + 1);
-                            historyCtrl.futureAppointments = HistoryService.getFutureAppointments();
 
-                            HistoryService.broadcast('updateFutureAppointments');
+                            LoginService.getCurrentSession()
+                                .then(function(data){
+                                    historyCtrl.futureAppointments = HistoryService.getFutureAppointments();
+                                    HistoryService.broadcast('updateFutureAppointments');
 
-                            var successMessage = '<strong>¡Listo!</strong>, cancelamos tu reservación en esta clase';
-                            alertify.log(successMessage, 'success', 5000);
+                                    var successMessage = '<strong>¡Listo!</strong>, cancelamos tu reservación en esta clase';
+                                    alertify.log(successMessage, 'success', 5000);
+                                }, function(error){
+                                    LoggerService.$logger().error(error);
+                                });
                         }
                         usSpinnerService.stop('future-appointments-spinner');
                     }, function(error) {
