@@ -27,6 +27,12 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
      */
     var selectedDay = undefined;
 
+    /**
+     *
+     * @type {SpinningClass}
+     */
+    var spinningClassInfo = undefined;
+
     // Scope variables
 
     /**
@@ -180,6 +186,22 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
             }, 500);
             usSpinnerService.spin('full-spinner');
         }
+    };
+
+    /**
+     *
+     * @param spinningClass
+     */
+    calendarCtrl.showSpinningClassInfo = function(spinningClass) {
+        spinningClassInfo = spinningClass;
+    };
+
+    /**
+     *
+     * @param spinningClass
+     */
+    calendarCtrl.isSpinningClassInfoShown = function(spinningClass) {
+        return spinningClassInfo == spinningClass;
     };
 
     /**

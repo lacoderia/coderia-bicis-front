@@ -10,6 +10,12 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
      */
     var showCalendar = true;
 
+    /**
+     *
+     * @type {CalendarDay}
+     */
+    var spinningClassInfo = undefined;
+
     // Scope variables
     /**
      *
@@ -106,6 +112,22 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
             }, 500);
             usSpinnerService.spin('full-spinner');
         }
+    };
+
+    /**
+     *
+     * @param spinningClass
+     */
+    instructorProfileCtrl.showSpinningClassInfo = function(spinningClass) {
+        spinningClassInfo = spinningClass;
+    };
+
+    /**
+     *
+     * @param spinningClass
+     */
+    instructorProfileCtrl.isSpinningClassInfoShown = function(spinningClass) {
+        return spinningClassInfo == spinningClass;
     };
 
     /**

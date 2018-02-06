@@ -30,11 +30,18 @@
                     <span class="day-title"> {{ ::instructorProfileCtrl.getDayOfWeek(day.getDate().day()) }}</span>
                 </div>
                 <ul>
-                    <li ng-repeat="spinningClass in day.getSpinningClasses() | orderByDate" class="class" ng-class="{ 'enabled': instructorProfileCtrl.isClassEnabled(spinningClass), 'disabled': !instructorProfileCtrl.isClassEnabled(spinningClass), 'selectable': instructorProfileCtrl.isClassSelectable(spinningClass), 'warning': spinningClass.getAvailableSeats() <= 10, 'special': spinningClass.getDescription() }" ng-click="instructorProfileCtrl.selectSpinningClass(spinningClass)">
-                        <div class="ribbon" ng-if="::spinningClass.getIsFree()"><span>GRATIS</span></div>
-                        <span class="class-description" ng-if="instructorProfileCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>
-                        <span class="class-time">{{ ::spinningClass.getDate().format('H:mm')}}</span>
-                        <span class="class-title">{{ ::spinningClass.getAvailableSeatsMessage(true) }}</span>
+                    <li ng-repeat="spinningClass in day.getSpinningClasses() | orderByDate" class="class" ng-class="{ 'enabled': instructorProfileCtrl.isClassEnabled(spinningClass), 'disabled': !instructorProfileCtrl.isClassEnabled(spinningClass), 'selectable': instructorProfileCtrl.isClassSelectable(spinningClass), 'warning': spinningClass.getAvailableSeats() <= 10, 'special': spinningClass.getDescription() }">
+                        <div ng-click="instructorProfileCtrl.selectSpinningClass(spinningClass)">
+                            <div class="ribbon" ng-if="::spinningClass.getIsFree()"><span>GRATIS</span></div>
+                            <span class="class-description" ng-if="instructorProfileCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>
+                            <span class="class-time">{{ ::spinningClass.getDate().format('H:mm')}}</span>
+                            <span class="class-title">{{ ::spinningClass.getAvailableSeatsMessage(true) }}</span>
+                        </div>
+                        <div class="info-overlay animate-visibility" ng-show="instructorProfileCtrl.isSpinningClassInfoShown(spinningClass)">
+                            <span class="class-alternate" ng-if="::spinningClass.getAlternateInstructor()">suple a {{ ::spinningClass.getAlternateInstructor() }}</span>
+                            <icon class="icon-close animate-visibility" title="Cerrar" ng-click="instructorProfileCtrl.showSpinningClassInfo(undefined)"></icon>
+                        </div>
+                        <icon class="icon-info animate-visibility" title="Info" ng-if="::spinningClass.getAlternateInstructor()" ng-click="instructorProfileCtrl.showSpinningClassInfo(spinningClass)" ng-show="!instructorProfileCtrl.isSpinningClassInfoShown(spinningClass)"></icon>
                     </li>
                 </ul>
             </li>

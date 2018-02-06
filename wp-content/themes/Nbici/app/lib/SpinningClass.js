@@ -1,6 +1,6 @@
 'use strict';
 
-function SpinningClass(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree) {
+function SpinningClass(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor) {
 
     // Private variables
     var _id = undefined;
@@ -11,6 +11,7 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
     var _availableSeats = undefined;
     var _description = undefined;
     var _isFree = undefined;
+    var _alternateInstructor = undefined;
 
     /**
      *
@@ -22,8 +23,9 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
      * @param availableSeats
      * @param description
      * @param isFree
+     * @param alternateInstructor
      */
-    this.constructor = function(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree) {
+    this.constructor = function(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor) {
         this.setId(id);
         this.setInstructorId(instructorId);
         this.setInstructorName(instructorName);
@@ -32,6 +34,7 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         this.setAvailableSeats(availableSeats);
         this.setDescription(description);
         this.setIsFree(isFree);
+        this.setAlternateInstructor(alternateInstructor);
     };
 
     /**
@@ -164,6 +167,22 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
 
     /**
      *
+     * @returns {undefined}
+     */
+    this.getAlternateInstructor = function () {
+        return _alternateInstructor;
+    };
+
+    /**
+     *
+     * @param alternateInstructor
+     */
+    this.setAlternateInstructor = function (alternateInstructor) {
+        _alternateInstructor = alternateInstructor;
+    };
+
+    /**
+     *
      * @returns {string}
      */
     this.getAvailableSeatsMessage = function (showAll) {
@@ -185,6 +204,6 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         return message;
     };
 
-    this.constructor(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree);
+    this.constructor(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor);
 
 };
