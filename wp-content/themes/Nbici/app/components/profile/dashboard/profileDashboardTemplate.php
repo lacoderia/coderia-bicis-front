@@ -6,6 +6,7 @@
             <span class="user-name">{{ accountCtrl.getUserName() }}</span>
             <span class="user-mail">{{ accountCtrl.getUserEmail() }}</span>
             <a href="" class="button" ng-click="profileCtrl.events.selectModule(profileCtrl.MODULES.PERSONAL_INFO)">Editar</a>
+            <a href="<?php echo site_url() ?>/sincroniza" class="button" style="margin-left:20px;" ng-hide="accountCtrl.userIsSynced()">Sincronizar con Nbox</a>
         </div> 
     </user>
     <ul class="resume">
@@ -63,42 +64,6 @@
         </div>
     </div>
 </div>
-<!--div class="resume-module" ng-controller="ProfilePaymentController as profilePaymentCtrl" ng-init="profilePaymentCtrl.initDashboard(<?php echo get_primary_card(); ?>)">
-    <p class="module-name">Método de pago principal</p>
-    <div ng-if="!profilePaymentCtrl.hasPrimaryCard()" class="no-items">
-        <div class="title">No tienes métodos de pago registrados</div>
-        <a ng-click="profileCtrl.events.selectModule(profileCtrl.MODULES.PAYMENTS)" class="button">Modificar métodos de pago</a>
-    </div>
-    <card ng-if="profilePaymentCtrl.hasPrimaryCard()">
-        <div class="card">
-            <div class="card-info top-border">
-                <div class="card-info-row">
-                    <div class="card-info-cell full-width">
-                        <span class=" card-number card-info-input">XXXX-XXXX-XXXX-{{ profilePaymentCtrl.primaryCard.getLastNumbers() }}</span>
-                    </div>
-                </div>
-                <div class="card-info-row">
-                    <div class="card-info-cell full-width">
-                        <div class="card-info-label card-expiration-date-label">Vencimiento: </div>
-                        <span class="card-info-input card-expiration-date">{{ profilePaymentCtrl.primaryCard.getExpYear() }}/{{ profilePaymentCtrl.primaryCard.getExpMonth() }}</span>
-                    </div>
-                </div>
-                <div class="card-info-row">
-                    <div class="card-info-cell full-width">
-                        <span type="text" class="card-name card-info-input">{{ profilePaymentCtrl.primaryCard.getName() }}</span>
-                    </div>
-                </div>
-                <div class="card-info-row">
-                    <div class="card-info-cell full-width">
-                        <a href="#" class="button" ng-click="profileCtrl.events.selectModule(profileCtrl.MODULES.PAYMENTS)">Editar métodos de pago</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card-info-brand"><span class="{{ profilePaymentCtrl.primaryCard.getBrandClass() }} icon-card"></span></div>
-            <div class="main-card" ng-if="profilePaymentCtrl.primaryCard.getPrimary()"><span class="icon-main-card"></span> Principal</div>
-        </div>
-    </card>
-</div-->
 <div class="resume-module" ng-controller="DashboardController as dashboardCtrl" ng-cloak>
     <p class="module-name">Código de promoción</p>
     <div class="social-activity">

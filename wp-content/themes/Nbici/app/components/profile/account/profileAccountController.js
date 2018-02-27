@@ -58,6 +58,14 @@ nbici.controller('AccountController', ['$scope', '$filter', 'SessionService', 'A
 
     /**
      *
+     * @returns {boolean}
+     */
+    accountCtrl.userIsSynced = function() {
+        return (SessionService.get())? SessionService.get().getLinked(): true;
+    };
+
+    /**
+     *
      * @returns {Appointment}
      */
     accountCtrl.getNextAppointment = function () {

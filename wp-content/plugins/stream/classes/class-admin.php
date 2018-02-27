@@ -162,8 +162,7 @@ class Admin {
 		add_action( 'wp_ajax_wp_stream_reset', array( $this, 'wp_ajax_reset' ) );
 
 		// Uninstall Streams and Deactivate plugin.
-		$uninstall = new Uninstall( $this->plugin );
-		add_action( 'wp_ajax_wp_stream_uninstall', array( $uninstall, 'uninstall' ) );
+		$uninstall = $this->plugin->db->driver->purge_storage( $this->plugin );
 
 		// Auto purge setup.
 		add_action( 'wp_loaded', array( $this, 'purge_schedule_setup' ) );
@@ -300,6 +299,14 @@ class Admin {
 		);
 
 		/**
+		 * Fires before submenu items are added to the Stream menu
+		 * allowing plugins to add menu items before Settings
+		 *
+		 * @return void
+		 */
+		do_action( 'wp_stream_admin_menu' );
+
+		/**
 		 * Filter the Settings admin page title
 		 *
 		 * @return string
@@ -338,8 +345,8 @@ class Admin {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		wp_register_script( 'wp-stream-select2', $this->plugin->locations['url'] . 'ui/lib/select2/js/select2.js', array( 'jquery' ), '3.5.2', true );
-		wp_register_style( 'wp-stream-select2', $this->plugin->locations['url'] . 'ui/lib/select2/css/select2.css', array(), '3.5.2' );
+		wp_register_script( 'wp-stream-select2', $this->plugin->locations['url'] . 'ui/lib/select2/js/select2.full.min.js', array( 'jquery' ), '3.5.2', true );
+		wp_register_style( 'wp-stream-select2', $this->plugin->locations['url'] . 'ui/lib/select2/css/select2.min.css', array(), '3.5.2' );
 		wp_register_script( 'wp-stream-timeago', $this->plugin->locations['url'] . 'ui/lib/timeago/jquery.timeago.js', array(), '1.4.1', true );
 
 		$locale    = strtolower( substr( get_locale(), 0, 2 ) );
@@ -363,6 +370,7 @@ class Admin {
 			wp_enqueue_script( 'wp-stream-timeago-locale' );
 
 			wp_enqueue_script( 'wp-stream-admin', $this->plugin->locations['url'] . 'ui/js/admin.js', array( 'jquery', 'wp-stream-select2' ), $this->plugin->get_version() );
+			wp_enqueue_script( 'wp-stream-admin-exclude', $this->plugin->locations['url'] . 'ui/js/exclude.js', array( 'jquery', 'wp-stream-select2' ), $this->plugin->get_version() );
 			wp_enqueue_script( 'wp-stream-live-updates', $this->plugin->locations['url'] . 'ui/js/live-updates.js', array( 'jquery', 'heartbeat' ), $this->plugin->get_version() );
 
 			wp_localize_script(
@@ -429,6 +437,11 @@ class Admin {
 	 */
 	public function is_stream_screen() {
 		if ( is_admin() && false !== strpos( wp_stream_filter_input( INPUT_GET, 'page' ), $this->records_page_slug ) ) {
+			return true;
+		}
+
+		$screen = get_current_screen();
+		if ( is_admin() && Alerts::POST_TYPE === $screen->post_type ) {
 			return true;
 		}
 
@@ -614,7 +627,7 @@ class Admin {
 			$options = (array) get_option( 'wp_stream', array() );
 		}
 
-		if ( isset( $options['general_keep_records_indefinitely'] ) || ! isset( $options['general_records_ttl'] ) ) {
+		if ( ! empty( $options['general_keep_records_indefinitely'] ) || ! isset( $options['general_records_ttl'] ) ) {
 			return;
 		}
 

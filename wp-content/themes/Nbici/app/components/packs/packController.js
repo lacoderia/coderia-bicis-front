@@ -86,14 +86,6 @@ nbici.controller('PackController', ['$scope', '$document', '$timeout', 'SessionS
     };
 
     /**
-     * Determines if the packs container is shown
-     * @returns {boolean}
-     */
-    var isOnlyBuying = function() {
-        return !document.getElementsByClassName('booking-component').length;
-    };
-
-    /**
      *
      * @param show
      */
@@ -145,7 +137,8 @@ nbici.controller('PackController', ['$scope', '$document', '$timeout', 'SessionS
      */
     packCtrl.init = function(packs) {
 
-        if(isOnlyBuying()) { // Si el elemento de Booking no existe
+        // We show the packs container on pages that don't involve booking (home & packs pages)
+        if(!document.getElementsByClassName('booking-component').length) {
             setShowPacks(true);
         }
 

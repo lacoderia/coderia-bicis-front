@@ -1,9 +1,9 @@
 === Stream ===
-Contributors:      fjarrett, lukecarbis, shadyvb, powelski, chacha102, stream, xwp
+Contributors:      fjarrett, lukecarbis, stream, xwp
 Tags:              actions, activity, activity log, activity logs, admin actions, analytics, audit, audit log, audit logs, blackbox, black box, change, changes, dashboard, log, logs, stream, tracking, troubleshooting, wp stream
 Requires at least: 3.9
-Tested up to:      4.5
-Stable tag:        3.0.6
+Tested up to:      4.8
+Stable tag:        3.2
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,18 +79,55 @@ Thank you for wanting to make Stream better for everyone!
 
 == Changelog ==
 
-= 3.0.6 - April 31, 2015 =
+= 3.2.0 - March 15, 2017 =
+
+* New: Stream now support alternate Database Drivers. ([#889](https://github.com/xwp/stream/pull/889))
+* Fix: Exclude dropdown menus ([e5c8677](https://github.com/xwp/stream/commit/e5c8677), [3626ba8](https://github.com/xwp/stream/commit/3626ba8), [e923a92](https://github.com/xwp/stream/commit/e923a92))
+* Fix: Prevent loading of connectors on frontend ([ed3a635](https://github.com/xwp/stream/commit/ed3a635))
+* Fix: Customizer performance issue ([#898](https://github.com/xwp/stream/pull/898))
+* Fix: Various Network Admin bugs ([#899](https://github.com/xwp/stream/pull/899))
+* Tweak: Codeclimate & Editorconfig support ([#896](https://github.com/xwp/stream/pull/896))
+* Tweak: Better DB migration support ([#905](https://github.com/xwp/stream/pull/905))
+
+= 3.1.1 - October 31, 2016 =
+
+* Fix: Hotfix for Error Updating Stream DB.
+
+= 3.1 - October 31, 2016 =
+
+* New: Stream Alerts is here! Get notified when something happens in your WP-Admin, so that you don't miss a thing. ([#844](https://github.com/xwp/stream/pull/844))
+* Tweak: Better support for the latest version of Yoast SEO ([#838](https://github.com/xwp/stream/pull/838))
+* Tweak: Better support for the latest version of WooCommerce ([#851](https://github.com/xwp/stream/pull/851)[#864](https://github.com/xwp/stream/pull/864))
+* Tweak: Better taxonomy labelling ([#859](https://github.com/xwp/stream/pull/859))
+* Fix: Fatal error caused by conflict with Yoast SEO ([#879](https://github.com/xwp/stream/pull/879))
+* Fix: Activating Stream through WP CLI now works ([#880](https://github.com/xwp/stream/pull/880))
+* Fix: Custom roles track properly ([#836](https://github.com/xwp/stream/pull/836))
+
+Props [@chacha](https://github.com/chacha), [@lukecarbis](https://github.com/lukecarbis), [@johnbillion](https://github.com/johnbillion), [@rheinardkorf](https://github.com/rheinardkorf), [@frozzare](https://github.com/frozzare), [@johnregan3](https://github.com/johnregan3), [@jacobschweitzer](https://github.com/jacobschweitzer), [@wrongware](https://github.com/wrongware)
+
+= 3.0.7 - June 14, 2016 =
+
+* Tweak: Use get_sites instead of wp_get_sites when available ([#856](https://github.com/xwp/stream/pull/856))
+* Tweak: More stable record actions (like exporting) ([71e6ac1](https://github.com/xwp/stream/commit/71e6ac1ff66e4415909c7ae29b243733a1fd209d))
+* Tweak: Better multisite support ([cfab041](https://github.com/xwp/stream/commit/cfab0413e67b83d969bd6612c895ecdb05dbfce4))
+* Fix: Exclude rule settings have been restored and enhanced ([#855](https://github.com/xwp/stream/pull/855))
+* Fix: Loading users via ajax ([#854](https://github.com/xwp/stream/pull/854))
+* Fix: Use the correct label for events relating to taxonomies which are registered late ([#859](https://github.com/xwp/stream/pull/859))
+
+Props [@chacha](https://github.com/chacha), [@lukecarbis](https://github.com/lukecarbis), Eugene Kireev, [@johnbillion](https://github.com/johnbillion)
+
+= 3.0.6 - May 31, 2016 =
 
 * New: Better support for default themes ([#831](https://github.com/xwp/stream/pull/831))
-* New: Upgrade filter menus to Select2 4 ([c3f6c65](https://github.com/xwp/stream/pull/c3f6c65c1bd95cebb26da7f00a720050a9144586))
+* New: Upgrade filter menus to Select2 4 ([c3f6c65](https://github.com/xwp/stream/commit/c3f6c65c1bd95cebb26da7f00a720050a9144586))
 * Fix: Security Fixes
 * Fix: Cron for purging old records has been fixed ([#843](https://github.com/xwp/stream/pull/843))
 * Fix: Better at storing records for Super Admins ([#835](https://github.com/xwp/stream/pull/835))
 * Fix: Allow Super Admins to be ignored and filtered ([#835](https://github.com/xwp/stream/pull/835))
 
-Props [@chacha](https://github.com/chacha), [@lukecarbis](https://github.com/lukecarbis), [@Stayallive](https://github.com/Stayallive), [@barryceelen](https://github.com/barryceelen), Jonathan Desrosiers, [@marcin-lawrowski](https://github.com/marcin-lawrowski)
+Props [@chacha](https://github.com/chacha), [@lukecarbis](https://github.com/lukecarbis), [@marcin-lawrowski](https://github.com/marcin-lawrowski)
 
-= 3.0.5 - March 15, 2015 =
+= 3.0.5 - March 15, 2016 =
 
 * New: Export your Stream records as CSV or JSON. ([#823](https://github.com/xwp/stream/pull/823))
 * Tweak: More mobile responsive list table ([#810](https://github.com/xwp/stream/pull/810))

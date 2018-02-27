@@ -142,7 +142,7 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
     };
 
     /**
-     * Determines if the packs container is shown
+     * Determines if the payment container is shown
      * @returns {boolean}
      */
     var isOnlyBuying = function() {

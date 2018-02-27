@@ -1,10 +1,10 @@
 === Surbma - Divi & Gravity Forms ===
 Contributors: Surbma
 Donate link: http://surbma.com/wordpress-plugins/
-Tags: divi, divi theme, gravityforms, gravity forms
+Tags: divi, divi theme, extra, extra theme, elegant themes, elegantthemes, gravityforms, gravity forms
 Requires at least: 4.0
-Tested up to: 4.5
-Stable tag: 1.4.1
+Tested up to: 4.8
+Stable tag: 1.5.7
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +26,7 @@ You have to buy the Divi Theme and the Gravity Forms Plugin to use this plugin:
 **My plugins for Divi theme:**
 
 - [Surbma - Divi Extras](https://wordpress.org/plugins/surbma-divi-extras/)
-- [Surbma - Divi & Gravity Forms](https://wordpress.org/plugins/surbma-divi-gravity-forms/)
+- [Surbma - Divi Lightbox](https://wordpress.org/plugins/surbma-divi-lightbox/)
 - [Surbma - Divi Project Shortcodes](https://wordpress.org/plugins/surbma-divi-project-shortcodes/)
 
 **Do you want to contribute or help improving this plugin?**
@@ -60,6 +60,45 @@ Yes, it is working with Extra. To be honest, it is working with every other Word
 It is the reverse version of my last name. ;)
 
 == Changelog ==
+
+= 1.5.7 =
+
+- Fix for required fields with error on desktop (GitHub issue #3).
+- Minor fix for required fields with error on mobile.
+
+= 1.5.6 =
+
+- My new Divi plugin added to the description: Surbma - Divi Lightbox
+
+= 1.5.5 =
+
+- Fix for fields with error on mobile (GitHub issue #1).
+- Fix for 16px padding for all fields on desktop (GitHub issue #2).
+- Tested with WordPress 4.8 version.
+
+= 1.5.4 =
+
+- Removed some unnecessary css.
+- Tested with WordPress 4.7 version.
+
+= 1.5.3 =
+
+- Fix to use the right font family and font weight for buttons.
+
+= 1.5.2 =
+
+- Gravity Forms 2.0.7.14 version changed some CSS styles, that are affected this plugin's styling. This is now fixed.
+- Tested with WordPress 4.6 version.
+
+= 1.5.1 =
+
+- Gravity Forms 2.0 has a new responsive styling included, so I have deleted almost every responsive CSS. The plugin's CSS file is more lighter now. :)
+
+= 1.5.0 =
+
+- Gravity Forms 2.0 compatible. Code is much more lighter, thanks to GF's new styles.
+- Divi 2.7 compatible.
+- Added another check if Divi theme, Extra theme or Divi Page Builder plugin is activated on the website.
 
 = 1.4.1 =
 

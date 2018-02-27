@@ -5,7 +5,6 @@
     wp_enqueue_script( 'ProfileDashboardController' );
     wp_enqueue_script( 'ProfileAccountService' );
     wp_enqueue_script( 'ProfileAccountController' );
-    wp_enqueue_script( 'ProfileUserMarqueeController' );
     wp_enqueue_script( 'ProfileHistoryService' );
     wp_enqueue_script( 'ProfileHistoryController' );
     wp_enqueue_script( 'ProfilePaymentService' );

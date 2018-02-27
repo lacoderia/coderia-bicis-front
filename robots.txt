@@ -1,0 +1,10 @@
+User-agent: *
+Crawl-delay: 30
+
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /wp-content/plugins/
+Disallow: /readme.html
+
+User-agent: Googlebot-Image
+Allow: /wp-content/uploads/

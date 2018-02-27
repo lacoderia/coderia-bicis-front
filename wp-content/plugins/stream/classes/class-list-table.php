@@ -13,7 +13,7 @@ class List_Table extends \WP_List_Table {
 	 * Class constructor.
 	 *
 	 * @param Plugin $plugin The main Plugin class.
-	 * @param array $args
+	 * @param array  $args
 	 */
 	function __construct( $plugin, $args = array() ) {
 		$this->plugin = $plugin;
@@ -56,9 +56,6 @@ class List_Table extends \WP_List_Table {
 	function extra_tablenav( $which ) {
 		if ( 'top' === $which ) {
 			echo $this->filters_form(); // xss ok
-		}
-		if ( 'bottom' === $which ) {
-			echo $this->record_actions_form(); // xss ok
 		}
 	}
 
@@ -209,8 +206,7 @@ class List_Table extends \WP_List_Table {
 		}
 		$args['records_per_page'] = apply_filters( 'stream_records_per_page', $args['records_per_page'] );
 
-		$items = $this->plugin->db->query( $args );
-
+		$items = $this->plugin->db->get_records( $args );
 		return $items;
 	}
 
@@ -220,7 +216,7 @@ class List_Table extends \WP_List_Table {
 	 * @return integer
 	 */
 	public function get_total_found_rows() {
-		return $this->plugin->db->query->found_records;
+		return $this->plugin->db->get_found_records_count();
 	}
 
 	function column_default( $item, $column_name ) {
@@ -311,8 +307,8 @@ class List_Table extends \WP_List_Table {
 
 			default :
 				/**
-				 * Registers new Columns to be inserted into the table.  The cell contents of this column is set
-				 * below with 'wp_stream_inster_column_default-'
+				 * Registers new Columns to be inserted into the table. The cell contents of this column is set
+				 * below with 'wp_stream_insert_column_default_'
 				 *
 				 * @return array
 				 */
@@ -328,7 +324,7 @@ class List_Table extends \WP_List_Table {
 						 * Also, note that the action name must include the $column_title registered
 						 * with wp_stream_register_column_defaults
 						 */
-						if ( $column_title === $column_name && has_filter( "wp_stream_insert_column_default-{$column_title}" ) ) {
+						if ( $column_title === $column_name && has_filter( "wp_stream_insert_column_default_{$column_title}" ) ) {
 							/**
 							 * Allows for the addition of content under a specified column.
 							 *
@@ -336,7 +332,7 @@ class List_Table extends \WP_List_Table {
 							 *
 							 * @return string
 							 */
-							$out = apply_filters( "wp_stream_insert_column_default-{$column_title}", $column_name, $record );
+							$out = apply_filters( "wp_stream_insert_column_default_{$column_title}", $column_name, $record );
 						} else {
 							$out = $column_name;
 						}
@@ -572,13 +568,19 @@ class List_Table extends \WP_List_Table {
 	}
 
 	function filters_form() {
-		$user_id = get_current_user_id();
 		$filters = $this->get_filters();
 
 		$filters_string  = sprintf( '<input type="hidden" name="page" value="%s" />', 'wp_stream' );
 		$filters_string .= sprintf( '<span class="filter_info hidden">%s</span>', esc_html__( 'Show filter controls via the screen options tab above.', 'stream' ) );
 
 		foreach ( $filters as $name => $data ) {
+
+			$data = wp_parse_args( $data, array(
+				'title' => '',
+				'items' => array(),
+				'ajax'  => false,
+			) );
+
 			if ( 'date' === $name ) {
 				$filters_string .= $this->filter_date( $data['items'] );
 			} else {
@@ -617,17 +619,18 @@ class List_Table extends \WP_List_Table {
 					// Sort top-level items by label
 					array_multisort( $labels, SORT_ASC, $data['items'] );
 
-					// Ouput a hidden input to handle the connector value
-					$filters_string .= '<input type="hidden" name="connector" class="record-filter-connector" />';
+					// Output a hidden input to handle the connector value
+					$filters_string .= sprintf(
+						'<input type="hidden" name="connector" class="record-filter-connector" value="%s" />',
+						esc_attr( wp_stream_filter_input( INPUT_GET, 'connector' ) )
+					);
 				}
 
-				$filters_string .= $this->filter_select( $name, $data['title'], $data['items'] );
+				$filters_string .= $this->filter_select( $name, $data['title'], $data['items'], $data['ajax'] );
 			}
 		}
 
 		$filters_string .= sprintf( '<input type="submit" id="record-query-submit" class="button" value="%s" />', __( 'Filter', 'stream' ) );
-
-		$filters_string .= wp_nonce_field( 'stream_filters_user_search_nonce', 'stream_filters_user_search_nonce' );
 
 		// Parse all query vars into an array
 		$query_vars = array();
@@ -836,7 +839,18 @@ class List_Table extends \WP_List_Table {
 		}
 		echo '</select></div>';
 		wp_nonce_field( 'stream_record_actions_nonce', 'stream_record_actions_nonce' );
+
+		printf( '<input type="hidden" name="page" value="%s">', esc_attr( wp_stream_filter_input( INPUT_GET, 'page' ) ) );
+		printf( '<input type="hidden" name="date_predefined" value="%s">', esc_attr( wp_stream_filter_input( INPUT_GET, 'date_predefined' ) ) );
+		printf( '<input type="hidden" name="date_from" value="%s">', esc_attr( wp_stream_filter_input( INPUT_GET, 'date_from' ) ) );
+		printf( '<input type="hidden" name="date_to" value="%s">', esc_attr( wp_stream_filter_input( INPUT_GET, 'date_to' ) ) );
+		printf( '<input type="hidden" name="user_id" value="%s">', esc_attr( wp_stream_filter_input( INPUT_GET, 'user_id' ) ) );
+		printf( '<input type="hidden" name="connector" value="%s">', esc_attr( wp_stream_filter_input( INPUT_GET, 'connector' ) ) );
+		printf( '<input type="hidden" name="context" value="%s">', esc_attr( wp_stream_filter_input( INPUT_GET, 'context' ) ) );
+		printf( '<input type="hidden" name="action" value="%s">', esc_attr( wp_stream_filter_input( INPUT_GET, 'action' ) ) );
+
 		printf( '<input type="submit" name="" id="record-actions-submit" class="button" value="%s">', esc_attr__( 'Apply', 'stream' ) );
+		echo '<div class="clear"></div>';
 
 		return ob_get_clean();
 	}
@@ -846,9 +860,24 @@ class List_Table extends \WP_List_Table {
 
 		echo '<form method="get" action="' . esc_url( $url ) . '" id="record-filter-form">';
 		echo $this->filter_search(); // xss ok
-
 		parent::display();
 		echo '</form>';
+
+		echo '<form method="get" action="' . esc_url( $url ) . '" id="record-actions-form">';
+		echo $this->record_actions_form(); // xss ok
+		echo '</form>';
+	}
+
+	function single_row( $item ) {
+		$classes      = apply_filters( 'wp_stream_record_classes', array(), $item );
+		$class_string = '';
+		if ( ! empty( $classes ) ) {
+			$class_string = ' class="' . esc_attr( join( ' ', $classes ) ) . '"';
+		}
+
+		echo sprintf( '<tr%s>', $class_string ); // xss ok
+		$this->single_row_columns( $item );
+		echo '</tr>';
 	}
 
 	function display_tablenav( $which ) {

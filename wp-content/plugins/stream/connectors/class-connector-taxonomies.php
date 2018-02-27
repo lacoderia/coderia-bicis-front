@@ -36,6 +36,13 @@ class Connector_Taxonomies extends Connector {
 	public $context_labels;
 
 	/**
+	 * Register connector in the WP Frontend
+	 *
+	 * @var bool
+	 */
+	public $register_frontend = false;
+
+	/**
 	 * Return translated connector label
 	 *
 	 * @return string Translated connector label
@@ -123,7 +130,7 @@ class Connector_Taxonomies extends Connector {
 		unset( $object_type );
 
 		$taxonomy_obj = (object) $args;
-		$label        = get_taxonomy_labels( $taxonomy_obj )->name;
+		$label        = get_taxonomy_labels( $taxonomy_obj )->singular_name;
 
 		$this->context_labels[ $taxonomy ] = $label;
 

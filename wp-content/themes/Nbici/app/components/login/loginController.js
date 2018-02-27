@@ -257,10 +257,14 @@ nbici.controller('LoginController', ['$rootScope', '$scope', '$timeout', 'Sessio
     };
 
     loginCtrl.init = function(){
+        var view = UtilsService.getParam('view');
         resetToken = UtilsService.getParam('reset_password_token');
         $timeout(function(){
             if (resetToken) {
                 loginCtrl.showView(loginCtrl.VIEWS.RESET);
+            }
+            if (view == 'signup') {
+                loginCtrl.showView(loginCtrl.VIEWS.SIGNUP);
             }
         }, 0);
 
