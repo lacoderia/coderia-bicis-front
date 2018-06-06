@@ -55,6 +55,8 @@ nbici.factory('LoginService', ['$http', '$q', 'SessionService', 'API_URL_BASE', 
 
                         var user = data.user;
                         SessionService.createSession(user);
+
+                        fbq('track', 'CompleteRegistration', {});
                     }
 
                     return data;
