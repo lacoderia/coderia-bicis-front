@@ -125,7 +125,9 @@ nbici.controller('PackController', ['$scope', '$document', '$timeout', 'SessionS
     };
 
     packCtrl.isSpecialPack = function(pack) {
-        if(SessionService.get()){
+        if(pack.getForceSpecialPrice()) {
+            return (pack.getSpecialPrice())? true : false;
+        } else if(SessionService.get()){
             return (!SessionService.get().getLastClassPurchased() && pack.getSpecialPrice())? true : false;
         }else{
             return (pack.getSpecialPrice())? true : false;
