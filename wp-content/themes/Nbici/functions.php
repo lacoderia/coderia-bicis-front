@@ -2,7 +2,7 @@
 
 define('child_template_directory', dirname( get_bloginfo('stylesheet_url')) );
 
-define ('VERSION', '2.1');
+define ('VERSION', '2.2.1');
 
 function version_id() {
   if ( WP_DEBUG )
@@ -29,14 +29,15 @@ function nbici_google_fonts() {
 $nbox_url = 'http://192.168.1.119/nbox/';
 $api_url_base = 'http://servicios.coderia.mx:8080';
 //$api_url_base = 'http://servicios.n-bici.com';
+$api_args = array('sslverify' => false);
 
 function get_instructors() {
-    global $api_url_base;
+    global $api_url_base, $api_args;
     $data['instructors'] = array();
 
     $url = $api_url_base.'/instructors';
     $request = new WP_Http;
-    $result = $request->get( $url );
+    $result = $request->get( $url, $api_args );
     if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['instructors']) ){
@@ -48,12 +49,12 @@ function get_instructors() {
 }
 
 function get_packs() {
-    global $api_url_base;
+    global $api_url_base, $api_args;
     $data['packs'] = array();
 
     $url = $api_url_base.'/packs';
     $request = new WP_Http;
-    $result = $request->get( $url );
+    $result = $request->get( $url, $api_args );
     if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['packs']) ){
@@ -80,14 +81,14 @@ function get_weekly_schedule() {
 }
 
 function get_instructor_profile() {
-    global $api_url_base;
+    global $api_url_base, $api_args;
     $data['instructor'] = array();
 
     $instructor_id = $_GET['id'];
 
     $url = $api_url_base.'/instructors/' . $instructor_id;
     $request = new WP_Http;
-    $result = $request->get( $url );
+    $result = $request->get( $url, $api_args );
     if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['instructor']) ){
@@ -379,7 +380,6 @@ function fbsdkhead() {
     }
 }
 add_action( 'wp_after_body', 'fbsdkhead' );
-
 
 function add_purchase_pixel_action() {
     ?>
