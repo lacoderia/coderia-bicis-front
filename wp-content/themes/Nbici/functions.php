@@ -26,7 +26,6 @@ function nbici_google_fonts() {
     wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Nunito:400,300,700&subset=latin', array() );
 }
 
-$nbox_url = 'http://192.168.1.119/nbox/';
 $api_url_base = 'http://servicios.coderia.mx:8080';
 //$api_url_base = 'http://servicios.n-bici.com';
 $api_args = array('sslverify' => false);
@@ -133,13 +132,13 @@ function get_primary_card() {
 }
 
 function get_future_appointments() {
-    global $api_url_base;
+    global $api_url_base, $api_args;
     $data['appointments'] = array();
 
     $url = $api_url_base.'/appointments/weekly_scope_for_user';
     $request = new WP_Http;
 
-    $result = $request->get( $url, array('headers' => get_nbc_headers()) );
+    $result = $request->get( $url, array('headers' => get_nbc_headers(), 'sslverify' => false) );
     if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['appointments']) ){
@@ -151,13 +150,13 @@ function get_future_appointments() {
 }
 
 function get_appointments_history() {
-    global $api_url_base;
+    global $api_url_base, $api_args;
     $data['appointments'] = array();
 
     $url = $api_url_base.'/appointments/historic_for_user';
     $request = new WP_Http;
 
-    $result = $request->get( $url, array('headers' => get_nbc_headers()) );
+    $result = $request->get( $url, array('headers' => get_nbc_headers(), 'sslverify' => false) );
     if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['appointments']) ){
@@ -244,7 +243,6 @@ function coderia_register_angular_scripts() {
     wp_register_script( 'ProfileHistoryService', get_stylesheet_directory_uri() . '/app/components/profile/history/profileHistoryService.js', '', version_id() );
     wp_register_script( 'ProfileDashboardService', get_stylesheet_directory_uri() . '/app/components/profile/dashboard/profileDashboardService.js', '', version_id() );
     wp_register_script( 'SocialService', get_stylesheet_directory_uri() . '/app/components/social/socialService.js', '', version_id() );
-    wp_register_script( 'SyncService', get_stylesheet_directory_uri() . '/app/components/sync/syncService.js', '', version_id() );
 
     // Controllers
     wp_register_script( 'RootController', get_stylesheet_directory_uri() . '/app/common/rootController.js', '', version_id() );
@@ -264,7 +262,6 @@ function coderia_register_angular_scripts() {
     wp_register_script( 'ProfileHistoryController', get_stylesheet_directory_uri() . '/app/components/profile/history/profileHistoryController.js', '', version_id() );
     wp_register_script( 'ProfileDashboardController', get_stylesheet_directory_uri() . '/app/components/profile/dashboard/profileDashboardController.js', '', version_id() );
     wp_register_script( 'NotificationController', get_stylesheet_directory_uri() . '/app/components/notification/notificationController.js', '', version_id() );
-    wp_register_script( 'SyncController', get_stylesheet_directory_uri() . '/app/components/sync/syncController.js', '', version_id() );
 
 }
 

@@ -28,6 +28,4 @@
             </a>
         </li>
     </ul>
-    <!-- Sync Link -->
-    <?php locate_template( array( 'app/components/sync/syncLinkTemplate.php' ), true, true ); ?>
 </div>
