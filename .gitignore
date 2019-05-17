@@ -6,15 +6,21 @@ sitemap.xml.gz
 wp-admin/
 wp-config.php
 wp-config-sample.php
-wp-content/
+wp-content/cache/
+wp-content/cache.old/
+wp-content/languages/
+wp-content/mu-plugins/
+wp-content/plugins/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/themes/Divi/
+wp-content/themes/twentynineteen/
+wp-content/w3tc-config/
+wp-content/wflogs/
 wp-includes/
 
 /readme.html
 /license.txt
-
-
-# Allow
-wp-content/themes/Divi Child
 
 # IDE files
 .idea
