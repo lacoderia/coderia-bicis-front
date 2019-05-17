@@ -1,9 +1,0 @@
-.coverrun
-.c9/
-.coverdata/
-node_modules
-npm-debug.log
-bower_components/
-node_modules/
-debug/
-reports/
