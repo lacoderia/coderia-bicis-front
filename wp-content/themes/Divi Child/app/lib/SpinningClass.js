@@ -1,6 +1,6 @@
 'use strict';
 
-function SpinningClass(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor) {
+function SpinningClass(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price) {
 
     // Private variables
     var _id = undefined;
@@ -12,6 +12,7 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
     var _description = undefined;
     var _isFree = undefined;
     var _alternateInstructor = undefined;
+    var _price = undefined;
 
     /**
      *
@@ -24,8 +25,9 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
      * @param description
      * @param isFree
      * @param alternateInstructor
+     * @param price
      */
-    this.constructor = function(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor) {
+    this.constructor = function(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price) {
         this.setId(id);
         this.setInstructorId(instructorId);
         this.setInstructorName(instructorName);
@@ -35,6 +37,7 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         this.setDescription(description);
         this.setIsFree(isFree);
         this.setAlternateInstructor(alternateInstructor);
+        this.setPrice(price);
     };
 
     /**
@@ -181,6 +184,22 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         _alternateInstructor = alternateInstructor;
     };
 
+     /**
+     *
+     * @returns {undefined}
+     */
+    this.getPrice = function () {
+        return _price;
+    };
+
+    /**
+     *
+     * @param price
+     */
+    this.setPrice = function (price) {
+        _price = price;
+    };
+
     /**
      *
      * @returns {string}
@@ -204,6 +223,6 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         return message;
     };
 
-    this.constructor(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor);
+    this.constructor(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price);
 
 };

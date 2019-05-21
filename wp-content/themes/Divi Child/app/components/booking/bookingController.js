@@ -94,6 +94,13 @@ nbici.controller('BookingController', ['$scope', '$timeout', '$document', 'Sessi
     });
 
     /**
+     * Listens for 'userNeedsToPayClass' event
+     */
+    $scope.$on('userNeedsToPayClass', function($event, args) {
+        setShowBooking(false);
+    });
+
+    /**
      * Determines if the booking container is shown
      * @returns {boolean}
      */
@@ -130,7 +137,11 @@ nbici.controller('BookingController', ['$scope', '$timeout', '$document', 'Sessi
      */
     bookingCtrl.book = function() {
         if(SessionService.isAuthenticated()) {
-            if( BookingService.getBooking().isFree || SessionService.get().getClassesLeft()){
+            if( BookingService.getBooking().price ) {
+
+                BookingService.broadcast('userNeedsToPayClass');
+
+            } else if( BookingService.getBooking().isFree || SessionService.get().getClassesLeft()){
 
                 usSpinnerService.spin('full-spinner');
 

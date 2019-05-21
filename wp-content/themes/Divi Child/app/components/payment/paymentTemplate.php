@@ -1,15 +1,15 @@
 <?php
     wp_enqueue_script( 'conekta' );
+    wp_enqueue_script( 'BookingService' );
     wp_enqueue_script( 'PaymentService' );
     wp_enqueue_script( 'PaymentController' );
     wp_enqueue_script( 'Card' );
 ?>
-<!-- TODO: agregar el ng-show -->
+
 <div id="payment" class="payment-component animate-visibility" ng-controller="PaymentController as paymentCtrl" ng-init="paymentCtrl.init(<?php echo htmlspecialchars(json_encode(get_option('conekta_public'))); ?>)" ng-show="paymentCtrl.isVisible()">
 
-    <!--h2>Selecciona un método de pago</h2>
-    <p>Paga con tu cuenta principal registrada o agrega una nueva tarjeta de crédito.</p-->
-    <h2>Verifica y compra tu paquete</h2>
+    <h2 ng-if="paymentCtrl.getPurchaseType() == 'pack'">Verifica y compra tu paquete</h2>
+    <h2 ng-if="paymentCtrl.getPurchaseType() == 'class'" class="payment-title">Verifica y paga tu clase</h2>
     <p>Paga con tu cuenta principal registrada o agrega una nueva tarjeta de crédito.</p>
     <div class="payment-wrapper">
         <div class="payment-section">
@@ -126,32 +126,38 @@
         <div class="cart-section">
             <h3>Resumen de la compra</h3>
             <div class="border-container">
-                <span us-spinner spinner-key="discount-spinner"></span>
+                <div ng-if="paymentCtrl.getPurchaseType() == 'pack'">
+                    <span us-spinner spinner-key="discount-spinner"></span>
 
-                <div class="cart-item-name">{{ paymentCtrl.getSelectedPack().getDescription() }}</div>
-                <div class="cart-subsection">Subtotal: {{ paymentCtrl.getSelectedPack().getPrice() | currency:"$" }}</div>
-                <div class="cart-actions cart-subsection" ng-show="!paymentCtrl.getDiscountType() && !paymentCtrl.isCouponFormVisible()">
-                    <a ng-click="paymentCtrl.showCouponForm()">Aplicar cupón</a> <span ng-show="paymentCtrl.getUserBalance() > 0">o</span> <a ng-click="paymentCtrl.applyDiscount('balance')" ng-show="paymentCtrl.getUserBalance() > 0">Aplicar saldo a favor</a>
-                </div>
-                <span ng-show="paymentCtrl.formErrorMessage" class="required-message error-message ">{{ paymentCtrl.formErrorMessage }}</span>
-                <div class="cart-subsection" ng-show="paymentCtrl.isCouponFormVisible()">
-                    <form novalidate name="paymentCtrl.couponForm" class="form" ng-submit="paymentCtrl.applyDiscount('coupon')">
-                        <fieldset class="coupon-form">
-                            <div class="input-cell">
-                                <input type="text" placeholder="cupón" name="coupon" ng-model="paymentCtrl.coupon.coupon" required>
-                            </div>
-                            <div class="button-cell">
-                                <button class="button-white button-apply">validar</button>
-                            </div>
-                        </fieldset>
-                        <a class="action-button" ng-click="paymentCtrl.cancelDiscount()">Cancelar</a>
-                    </form>
-                </div>
+                    <div class="cart-item-name">{{ paymentCtrl.getSelectedPack().getDescription() }}</div>
+                    <div class="cart-subsection">Subtotal: {{ paymentCtrl.getSelectedPack().getPrice() | currency:"$" }}</div>
+                    <div class="cart-actions cart-subsection" ng-show="!paymentCtrl.getDiscountType() && !paymentCtrl.isCouponFormVisible()">
+                        <a ng-click="paymentCtrl.showCouponForm()">Aplicar cupón</a> <span ng-show="paymentCtrl.getUserBalance() > 0">o</span> <a ng-click="paymentCtrl.applyDiscount('balance')" ng-show="paymentCtrl.getUserBalance() > 0">Aplicar saldo a favor</a>
+                    </div>
+                    <span ng-show="paymentCtrl.formErrorMessage" class="required-message error-message ">{{ paymentCtrl.formErrorMessage }}</span>
+                    <div class="cart-subsection" ng-show="paymentCtrl.isCouponFormVisible()">
+                        <form novalidate name="paymentCtrl.couponForm" class="form" ng-submit="paymentCtrl.applyDiscount('coupon')">
+                            <fieldset class="coupon-form">
+                                <div class="input-cell">
+                                    <input type="text" placeholder="cupón" name="coupon" ng-model="paymentCtrl.coupon.coupon" required>
+                                </div>
+                                <div class="button-cell">
+                                    <button class="button-white button-apply">validar</button>
+                                </div>
+                            </fieldset>
+                            <a class="action-button" ng-click="paymentCtrl.cancelDiscount()">Cancelar</a>
+                        </form>
+                    </div>
 
-                <div class="cart-subsection" ng-show="paymentCtrl.getDiscountType()">
-                    <span ng-show="paymentCtrl.getDiscountType() == 'coupon'">Cupón: -{{ paymentCtrl.getDiscountAmount() | currency:"$" }}</span>
-                    <span ng-show="paymentCtrl.getDiscountType() == 'balance'">Saldo a favor:-{{ paymentCtrl.getDiscountAmount() | currency:"$" }}</span>
-                    <a ng-click="paymentCtrl.cancelDiscount()">Cancelar</a>
+                    <div class="cart-subsection" ng-show="paymentCtrl.getDiscountType()">
+                        <span ng-show="paymentCtrl.getDiscountType() == 'coupon'">Cupón: -{{ paymentCtrl.getDiscountAmount() | currency:"$" }}</span>
+                        <span ng-show="paymentCtrl.getDiscountType() == 'balance'">Saldo a favor:-{{ paymentCtrl.getDiscountAmount() | currency:"$" }}</span>
+                        <a ng-click="paymentCtrl.cancelDiscount()">Cancelar</a>
+                    </div>
+                </div>
+                <div ng-if="paymentCtrl.getPurchaseType() == 'class'">
+                    <div class="cart-item-name">1 clase "{{ paymentCtrl.getBooking().description }}"</div>
+                    <div class="cart-item-caption">* Esta es una clase especial y tiene un costo adicional a los créditos que ya tienes. Si cancelas, se te devolverá la clase como un crédito normal. Por favor completa el pago para que tu reservación quede lista.</div>
                 </div>
 
                 <div class="cart-subsection cart-total">Total: {{ paymentCtrl.getPurchaseTotal() | currency:"$" }}</div>

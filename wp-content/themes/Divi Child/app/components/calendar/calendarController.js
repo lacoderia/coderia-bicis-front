@@ -73,6 +73,13 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
     });
 
     /**
+     * Listens for 'userNeedsToPayClass' event
+     */
+    $scope.$on('userNeedsToPayClass', function($event, args) {
+        setShowCalendar(false);
+    });
+
+    /**
      * Listens for window resize
      */
     $scope.$on('setWindowSize', function($event, windowSize) {

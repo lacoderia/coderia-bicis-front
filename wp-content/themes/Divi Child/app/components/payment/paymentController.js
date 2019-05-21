@@ -1,6 +1,6 @@
 'use strict';
 
-nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$document', '$location', 'PaymentService', 'PackService', 'SessionService', 'LoggerService', 'UtilsService', 'localStorageService', 'usSpinnerService', 'DEFAULT_VALUES', function($rootScope, $scope, $timeout, $document, $location, PaymentService, PackService, SessionService, LoggerService, UtilsService, localStorageService, usSpinnerService, DEFAULT_VALUES){
+nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$document', '$location', 'PaymentService', 'PackService', 'BookingService', 'SessionService', 'LoggerService', 'UtilsService', 'localStorageService', 'usSpinnerService', 'DEFAULT_VALUES', function($rootScope, $scope, $timeout, $document, $location, PaymentService, PackService, BookingService, SessionService, LoggerService, UtilsService, localStorageService, usSpinnerService, DEFAULT_VALUES){
 
     var paymentCtrl = this;
 
@@ -84,6 +84,11 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
         paymentCtrl.cancelDiscount();
     });
 
+    $scope.$on('userNeedsToPayClass', function($event, args) {
+        setShowPayment(true);
+        paymentCtrl.cancelDiscount();
+    });
+
     $scope.$on('userBoughtClasses', function($event, args) {
         setShowPayment(false);
     });
@@ -157,6 +162,22 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
         return PackService.getSelectedPack();
     };
 
+    /**
+     *
+     * @returns {*}
+     */
+    paymentCtrl.getBooking = function() {
+        return BookingService.getBooking();
+    };
+
+    paymentCtrl.getPurchaseType = function() {
+        if (paymentCtrl.getSelectedPack()) {
+            return 'pack';
+        } else {
+            return 'class';
+        }
+    }
+
     paymentCtrl.getUserBalance = function() {
         return (SessionService.get())? SessionService.get().getBalance(): 0;
     };
@@ -224,14 +245,25 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
     };
 
     paymentCtrl.getPurchaseTotal = function() {
-        return (purchase.total !== undefined) ? purchase.total: PackService.getSelectedPackPrice();
+        if (purchase.total !== undefined) {
+            return purchase.total;
+        } else if (PackService.getSelectedPack()) {
+            return PackService.getSelectedPackPrice();
+        } else {
+            return BookingService.getBooking().price;
+        }
     };
 
     paymentCtrl.processPayment = function(){
 
         if(paymentCtrl.hasPrimaryCard()) {
 
-            chargePayment();
+            if(paymentCtrl.getPurchaseType() == 'pack') {
+                chargePackPayment();
+            } else if (paymentCtrl.getPurchaseType() == 'class') {
+                chargeClassPayment(paymentCtrl.primaryCard.getUid());
+            }
+            
 
         } else if (paymentCtrl.newCardForm.$valid) {
 
@@ -256,7 +288,11 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
                             usSpinnerService.stop('full-spinner');
                             paymentCtrl.processingPayment = false;
                             if (data.card) {
-                                chargePayment();
+                                if(paymentCtrl.getPurchaseType() == 'pack') {
+                                    chargePackPayment();
+                                } else if (paymentCtrl.getPurchaseType() == 'class') {
+                                    chargeClassPayment(data.card.uid);
+                                }
                             }
                         }, function(error) {
                             if(error && error.errors){
@@ -281,14 +317,14 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
         }
     };
 
-    var chargePayment = function() {
+    var chargePackPayment = function() {
         var pack = PackService.getSelectedPack();
         var price = paymentCtrl.getPurchaseTotal();
 
         usSpinnerService.spin('full-spinner');
         paymentCtrl.processingPayment = true;
 
-        PaymentService.processPayment(pack.getId(), price, purchase.discount)
+        PaymentService.processPackPayment(pack.getId(), price, purchase.discount)
             .then(function(data) {
                 if (data.purchase) {
 
@@ -310,6 +346,41 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
                         usSpinnerService.stop('full-spinner');
                         paymentCtrl.processingPayment = false;
                     }
+                }
+            }, function(error) {
+                if(error && error.errors){
+                    var errorMessage = '<strong>¡Oops! Hubo un error al procesar el pago</strong>, ' + error.errors[0].title;
+                    alertify.log(errorMessage, 'error', 5000);
+                } else {
+                    var errorMessage = '<strong>¡Oops! Hubo un error al procesar el pago</strong>, por favor intenta de nuevo';
+                    alertify.log(errorMessage, 'error', 5000);
+                }
+                LoggerService.$logger().error(error);
+                usSpinnerService.stop('full-spinner');
+                paymentCtrl.processingPayment = false;
+            });
+    };
+
+    var chargeClassPayment = function(cardId) {
+        var booking = BookingService.getBooking();
+
+        usSpinnerService.spin('full-spinner');
+        paymentCtrl.processingPayment = true;
+
+        PaymentService.processClassPayment(cardId, booking)
+            .then(function(data) {
+                if(data.appointment) {
+
+                    paymentCtrl.primaryCard = PaymentService.getPrimaryCard();
+                    
+                    var bookingResume = {
+                        'bicycleNumber': data.appointment.bicycle_number,
+                        'date': data.appointment.schedule.datetime,
+                        'instructor': data.appointment.schedule.instructor.first_name
+                    };
+                    localStorageService.set('nbc-booking', bookingResume);
+
+                    window.location.href = UtilsService.getHomeUrl() + 'reserva-success';
                 }
             }, function(error) {
                 if(error && error.errors){

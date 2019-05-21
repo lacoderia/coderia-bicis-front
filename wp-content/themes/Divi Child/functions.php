@@ -26,8 +26,8 @@ function nbici_google_fonts() {
     wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Nunito:400,300,700&subset=latin', array() );
 }
 
-//$api_url_base = 'http://198.61.202.55';
-$api_url_base = 'https://servicios.n-bici.com';
+$api_url_base = 'http://servicios.coderia.mx:8080';
+//$api_url_base = 'http://servicios.n-bici.com';
 $api_args = array('sslverify' => false);
 
 function get_instructors() {
@@ -37,7 +37,7 @@ function get_instructors() {
     $url = $api_url_base.'/instructors';
     $request = new WP_Http;
     $result = $request->get( $url, $api_args );
-    if( wp_remote_retrieve_response_code($result) == '200' ){
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['instructors']) ){
             $data['instructors'] = $json['instructors'];
@@ -54,7 +54,7 @@ function get_packs() {
     $url = $api_url_base.'/packs';
     $request = new WP_Http;
     $result = $request->get( $url, $api_args );
-    if( wp_remote_retrieve_response_code($result) == '200' ){
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['packs']) ){
             $data['packs'] = $json['packs'];
@@ -70,7 +70,7 @@ function get_weekly_schedule() {
     $url = $api_url_base.'/schedules/weekly_scope';
     $request = new WP_Http;
     $result = $request->get( $url, $api_args );
-    if( wp_remote_retrieve_response_code($result) == '200' ){
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['schedules']) ){
             $data['weekly_schedule'] = $json;
@@ -88,7 +88,7 @@ function get_instructor_profile() {
     $url = $api_url_base.'/instructors/' . $instructor_id;
     $request = new WP_Http;
     $result = $request->get( $url, $api_args );
-    if( wp_remote_retrieve_response_code($result) == '200' ){
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['instructor']) ){
             $data['instructor'] = $json['instructor'];
@@ -105,7 +105,7 @@ function get_cards() {
     $request = new WP_Http;
 
     $result = $request->get( $url, array('headers' => get_nbc_headers(), 'sslverify' => false) );
-    if( wp_remote_retrieve_response_code($result) == '200' ){
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['cards']) ){
             $data['cards'] = $json['cards'];
@@ -114,7 +114,6 @@ function get_cards() {
     return htmlspecialchars(json_encode($data['cards']));
 }
 
-// Esta función no se utiliza
 function get_primary_card() {
     global $api_url_base;
     $data['card'] = null;
@@ -123,7 +122,7 @@ function get_primary_card() {
     $request = new WP_Http;
 
     $result = $request->get( $url, array('headers' => get_nbc_headers(), 'sslverify' => false) );
-    if( wp_remote_retrieve_response_code($result) == '200' ){
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['card']) ){
             $data['card'] = $json['card'];
@@ -140,7 +139,7 @@ function get_future_appointments() {
     $request = new WP_Http;
 
     $result = $request->get( $url, array('headers' => get_nbc_headers(), 'sslverify' => false) );
-    if( wp_remote_retrieve_response_code($result) == '200' ){
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['appointments']) ){
             $data['appointments'] = $json['appointments'];
@@ -158,7 +157,7 @@ function get_appointments_history() {
     $request = new WP_Http;
 
     $result = $request->get( $url, array('headers' => get_nbc_headers(), 'sslverify' => false) );
-    if( wp_remote_retrieve_response_code($result) == '200' ){
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
         $json = json_decode( $result['body'], true );
         if( isset($json['appointments']) ){
             $data['appointments'] = $json['appointments'];
@@ -226,7 +225,7 @@ function coderia_register_angular_scripts() {
     // Filters
     wp_register_script( 'ClassByInstructorFilter', get_stylesheet_directory_uri() . '/app/common/classByInstructorFilter.js', '', version_id() );
     wp_register_script( 'OrderByDateFilter', get_stylesheet_directory_uri() . '/app/common/orderByDateFilter.js', '', version_id() );
-    
+
     // Services
     wp_register_script( 'LoggerService', get_stylesheet_directory_uri() . '/app/common/loggerService.js', '', version_id() );
     wp_register_script( 'SessionService', get_stylesheet_directory_uri() . '/app/common/sessionService.js', '', version_id() );
@@ -338,7 +337,7 @@ function check_authorization() {
 
 }
 
-function wp_after_body() {  
+function wp_after_body() {
     do_action('wp_after_body');
 }
 
@@ -403,14 +402,14 @@ function add_purchase_pixel_action() {
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '963657277048584');
         fbq('track', 'PageView');
-    <?php if(is_page('compra-success')) { ?>
+        <?php if(is_page('compra-success')) { ?>
         fbq('track', 'Purchase', {
             contents: 'classes',
             content_type: 'product',
             value: 1,
             currency: 'MXN'
         });
-    <?php } ?>
+        <?php } ?>
     </script>
     <noscript><img height="1" width="1" style="display:none"
                    src="https://www.facebook.com/tr?id=963657277048584&ev=PageView&noscript=1"

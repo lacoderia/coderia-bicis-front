@@ -157,6 +157,11 @@ nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'Login
      */
     historyCtrl.cancelAppointment = function(appointment) {
 
+        alertify.set({ labels: {
+            ok     : "Si",
+            cancel : "No"
+        } });
+
         alertify.confirm('¿Estás seguro que deseas cancelar esta reservación?', function(e) {
             if(e){
                 usSpinnerService.spin('future-appointments-spinner');

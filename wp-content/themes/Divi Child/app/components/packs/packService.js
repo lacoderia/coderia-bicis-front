@@ -84,6 +84,10 @@ nbici.factory('PackService', ['$rootScope', 'LoggerService', 'SessionService', f
         return angular.copy(selectedPack);
     };
 
+    var resetSelectedPack = function() {
+        selectedPack = undefined;
+    }
+
     var getSelectedPackPrice = function() {
         if(selectedPack){
             var isFirstPurchase = SessionService.isAuthenticated() && !SessionService.get().getLastClassPurchased()
@@ -103,7 +107,8 @@ nbici.factory('PackService', ['$rootScope', 'LoggerService', 'SessionService', f
         "setPacks": setPacks,
         "setSelectedPack": setSelectedPack,
         "getSelectedPack": getSelectedPack,
-        "getSelectedPackPrice": getSelectedPackPrice
+        "getSelectedPackPrice": getSelectedPackPrice,
+        "resetSelectedPack": resetSelectedPack,
     };
 
     return service;

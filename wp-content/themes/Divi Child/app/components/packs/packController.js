@@ -67,6 +67,13 @@ nbici.controller('PackController', ['$scope', '$document', '$timeout', 'SessionS
         setShowPacksList(false);
     });
 
+    /**
+     * Listens for 'close classroom' event
+     */
+    $scope.$on('closeClassroom', function($event){
+        PackService.resetSelectedPack();
+    });
+
     // Function definition
 
     /**

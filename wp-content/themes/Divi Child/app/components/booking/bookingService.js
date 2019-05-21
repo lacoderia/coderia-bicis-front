@@ -8,7 +8,9 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
         date: undefined,
         bike: undefined,
         instructorId: undefined,
-        isFree: undefined
+        isFree: undefined,
+        price: undefined,
+        description: undefined,
     };
 
     var _appointment = undefined;
@@ -39,6 +41,8 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
         booking.date = spinningClass.getDate();
         booking.instructorId = spinningClass.getInstructorId();
         booking.isFree = spinningClass.getIsFree();
+        booking.price = spinningClass.getPrice();
+        booking.description = spinningClass.getDescription();
     };
 
     /**
@@ -59,7 +63,7 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
 
     /**
      *
-     * @returns {{classId: undefined, classroomId: undefined, date: undefined, bike: undefined, instructorId: undefined, isFree: undefined}}
+     * @returns {{classId: undefined, classroomId: undefined, date: undefined, bike: undefined, instructorId: undefined, isFree: undefined, price: undefined}}
      */
     var getBooking = function() {
         return angular.copy(booking);
@@ -75,7 +79,9 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
             date: undefined,
             bike: undefined,
             instructorId: undefined,
-            isFree: undefined
+            isFree: undefined,
+            price: undefined,
+            description: undefined,
         };
     };
 

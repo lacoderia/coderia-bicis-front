@@ -37,6 +37,13 @@ nbici.controller('ClassroomController', ['$rootScope', '$scope', '$timeout', '$d
     });
 
     /**
+     * Listens for 'userNeedsToPayClass' event
+     */
+    $scope.$on('userNeedsToPayClass', function($event, args) {
+        setShowClassroom(false);
+    });
+
+    /**
      * Listens for 'updateBookedSeats' event and update the booked seats array
      */
     $scope.$on('updateBookedSeats', function($event, bookedSeats) {

@@ -127,7 +127,7 @@ nbici.factory('PaymentService', ['$http', '$q', '$rootScope', 'SessionService', 
 
     };
 
-    var processPayment = function(packId, price, discount) {
+    var processPackPayment = function(packId, price, discount) {
         var cardsServiceURL = API_URL_BASE + '/purchases/charge';
 
         var params = {
@@ -157,6 +157,30 @@ nbici.factory('PaymentService', ['$http', '$q', '$rootScope', 'SessionService', 
             });
     };
 
+    var processClassPayment = function(cardId, booking) {
+        var cardsServiceURL = API_URL_BASE + '/appointments/book_and_charge';
+
+        var params = {
+            uid: cardId,
+            schedule_id: booking.classId,
+            bicycle_number: booking.bike.getNumber(),
+            description: booking.description,
+            price: booking.price,
+        };
+
+        return $http.post(cardsServiceURL, params)
+            .then(function(response) {
+                var data = response.data;
+                if (typeof data === 'object') {
+                    return data;
+                } else {
+                    return $q.reject(data);
+                }
+            }, function(error){
+                return $q.reject(error.data);
+            });
+    };
+
     service = {
         broadcast: broadcast,
         callPrimaryCard: callPrimaryCard,
@@ -164,7 +188,8 @@ nbici.factory('PaymentService', ['$http', '$q', '$rootScope', 'SessionService', 
         setPrimaryCard: setPrimaryCard,
         saveCard: saveCard,
         applyDiscount: applyDiscount,
-        processPayment: processPayment
+        processPackPayment: processPackPayment,
+        processClassPayment: processClassPayment,
     };
 
     return service;
