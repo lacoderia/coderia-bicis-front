@@ -8,6 +8,7 @@ wp-config.php
 wp-config-sample.php
 wp-content/cache/
 wp-content/cache.old/
+wp-content/et-cache/
 wp-content/languages/
 wp-content/mu-plugins/
 wp-content/plugins/

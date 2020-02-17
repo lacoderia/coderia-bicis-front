@@ -1,1 +1,0 @@
-# coderia-bicis-front

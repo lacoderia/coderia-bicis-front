@@ -40,7 +40,7 @@ $is_page_builder_used = et_pb_is_pagebuilder_used( get_the_ID() );
 
                             <?php endif; ?>
 
-                            <? wp_enqueue_script( 'NotificationController' ); ?>
+                            <?php wp_enqueue_script( 'NotificationController' ); ?>
 
                             <div class="entry-content" ng-controller="NotificationController as notificationCtrl" ng-init="notificationCtrl.init()">
                                 <?php

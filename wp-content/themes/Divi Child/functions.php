@@ -2,7 +2,7 @@
 
 define('child_template_directory', dirname( get_bloginfo('stylesheet_url')) );
 
-define ('VERSION', '3.0');
+define ('VERSION', '3.1.1');
 
 function version_id() {
   if ( WP_DEBUG )
@@ -26,8 +26,8 @@ function nbici_google_fonts() {
     wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Nunito:400,300,700&subset=latin', array() );
 }
 
-$api_url_base = 'http://servicios.coderia.mx:8080';
-//$api_url_base = 'http://servicios.n-bici.com';
+$api_url_base = 'https://servicios.coderia.mx:444';
+// $api_url_base = 'https://servicios.n-bici.com';
 $api_args = array('sslverify' => false);
 
 function get_instructors() {
@@ -166,6 +166,22 @@ function get_appointments_history() {
     return htmlspecialchars(json_encode($data['appointments']));
 }
 
+function get_smoothies() {
+    global $api_url_base, $api_args;
+    $data['products_catalog'] = array();
+
+    $url = $api_url_base.'/menu_categories';
+    $request = new WP_Http;
+    $result = $request->get( $url, array('headers' => get_nbc_headers(), 'sslverify' => false) );
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
+        $json = json_decode( $result['body'], true );
+        if( isset($json['menu_categories']) ){
+            $data['products_catalog'] = $json['menu_categories'];
+        }
+    }
+    return htmlspecialchars(json_encode($data['products_catalog']));
+}
+
 function get_nbc_headers() {
     $formatted_headers = array();
 
@@ -221,11 +237,12 @@ function coderia_register_angular_scripts() {
     wp_register_script( 'User', get_stylesheet_directory_uri() . '/app/lib/User.js', '', version_id() );
     wp_register_script( 'Pack', get_stylesheet_directory_uri() . '/app/lib/Pack.js', '', version_id() );
     wp_register_script( 'Card', get_stylesheet_directory_uri() . '/app/lib/Card.js', '', version_id() );
+    wp_register_script( 'Product', get_stylesheet_directory_uri() . '/app/lib/Product.js', '', version_id() );
 
     // Filters
     wp_register_script( 'ClassByInstructorFilter', get_stylesheet_directory_uri() . '/app/common/classByInstructorFilter.js', '', version_id() );
     wp_register_script( 'OrderByDateFilter', get_stylesheet_directory_uri() . '/app/common/orderByDateFilter.js', '', version_id() );
-
+    
     // Services
     wp_register_script( 'LoggerService', get_stylesheet_directory_uri() . '/app/common/loggerService.js', '', version_id() );
     wp_register_script( 'SessionService', get_stylesheet_directory_uri() . '/app/common/sessionService.js', '', version_id() );
@@ -243,6 +260,7 @@ function coderia_register_angular_scripts() {
     wp_register_script( 'ProfileHistoryService', get_stylesheet_directory_uri() . '/app/components/profile/history/profileHistoryService.js', '', version_id() );
     wp_register_script( 'ProfileDashboardService', get_stylesheet_directory_uri() . '/app/components/profile/dashboard/profileDashboardService.js', '', version_id() );
     wp_register_script( 'SocialService', get_stylesheet_directory_uri() . '/app/components/social/socialService.js', '', version_id() );
+    wp_register_script( 'SmoothiesService', get_stylesheet_directory_uri() . '/app/components/smoothies/smoothiesService.js', '', version_id() );
 
     // Controllers
     wp_register_script( 'RootController', get_stylesheet_directory_uri() . '/app/common/rootController.js', '', version_id() );
@@ -262,6 +280,7 @@ function coderia_register_angular_scripts() {
     wp_register_script( 'ProfileHistoryController', get_stylesheet_directory_uri() . '/app/components/profile/history/profileHistoryController.js', '', version_id() );
     wp_register_script( 'ProfileDashboardController', get_stylesheet_directory_uri() . '/app/components/profile/dashboard/profileDashboardController.js', '', version_id() );
     wp_register_script( 'NotificationController', get_stylesheet_directory_uri() . '/app/components/notification/notificationController.js', '', version_id() );
+    wp_register_script( 'SmoothiesController', get_stylesheet_directory_uri() . '/app/components/smoothies/smoothiesController.js', '', version_id() );
 
 }
 
@@ -337,13 +356,13 @@ function check_authorization() {
 
 }
 
-function wp_after_body() {
+function wp_after_body() {  
     do_action('wp_after_body');
 }
 
 function fbsdkhead() {
 
-    if ( is_page('mi-cuenta') || is_page('compra-success') || is_page('reserva-success')) {
+    if ( is_page('mi-cuenta') || is_page('compra-success') || is_page('reserva-success') ) {
         wp_enqueue_script( 'SocialService' );
 
         ?>
@@ -402,14 +421,22 @@ function add_purchase_pixel_action() {
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '963657277048584');
         fbq('track', 'PageView');
-        <?php if(is_page('compra-success')) { ?>
+        <?php if(is_page('compra-success')) {     
+            $classes = isset($_GET['classes']) ? $_GET['classes'] : 0;
+            $total = isset($_GET['total']) ? $_GET['total'] : 0;    
+        ?>
+
         fbq('track', 'Purchase', {
-            contents: 'classes',
-            content_type: 'product',
-            value: 1,
-            currency: 'MXN'
+            value: <?php echo $total ?>,
+            currency: 'MXN',
+            contents: [
+            {
+                id: 'clases',
+                quantity: <?php echo $classes ?>
+            }],
+            content_type: 'product'
         });
-        <?php } ?>
+    <?php } ?>
     </script>
     <noscript><img height="1" width="1" style="display:none"
                    src="https://www.facebook.com/tr?id=963657277048584&ev=PageView&noscript=1"
@@ -418,4 +445,11 @@ function add_purchase_pixel_action() {
     <?php
 }
 add_action('wp_head', 'add_purchase_pixel_action' );
+
+// Remove URL input from post comments 
+function prefix_disable_comment_url($fields) { 
+    unset($fields['url']);
+    return $fields;
+}
+add_filter('comment_form_default_fields','prefix_disable_comment_url');
 

@@ -387,9 +387,9 @@
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   list-style: none;
   margin: 3rem 0;
   padding: 0;
@@ -409,6 +409,7 @@
   background-color: #1adcff;
   border-radius: 60px 10px 60px 60px;
   font-family: Nunito, Helvetica, Arial, Lucida, sans-serif;
+  margin: 0px 20px 20px 20px;
   min-height: 190px;
   min-width: 190px;
   padding: 0;
@@ -2811,7 +2812,7 @@
 .social-container {
   color: #fff;
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 80px;
   text-align: center;
 }
 
@@ -2825,6 +2826,302 @@
 
 .a2a_s_email {
   background-color: #0166ff;
+}
+
+.smoothies-component {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 4rem auto 6rem;
+  max-width: 1024px;
+  padding: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 1170px) {
+  .smoothies-component {
+    margin: 4rem auto 2rem;
+  }
+}
+
+.smoothies-component .categories-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 40px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.smoothies-component .categories-list .category-item {
+  cursor: pointer;
+  margin: 10px 20px;
+  width: 150px;
+}
+
+@media screen and (max-width: 1170px) {
+  .smoothies-component .categories-list .category-item {
+    margin: 10px 15px;
+    width: 110px;
+  }
+}
+
+.smoothies-component .categories-list .category-item .category-image-container {
+  border-radius: 40px 10px 40px 40px;
+  overflow: hidden;
+  font-size: 0;
+  line-height: 0;
+}
+
+.smoothies-component .categories-list .category-item .category-image-container .category-image {
+  min-height: 150px;
+  min-width: 150px;
+}
+
+@media screen and (max-width: 1170px) {
+  .smoothies-component .categories-list .category-item .category-image-container .category-image {
+    min-height: 110px;
+    min-width: 110px;
+  }
+}
+
+.smoothies-component .categories-list .category-item .category-name {
+  color: #fff;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.smoothies-component .smoothies-list {
+  margin-top: 20px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.smoothies-component .smoothies-list .smoothies-section {
+  margin-top: 30px;
+}
+
+.smoothies-component .smoothies-list .categories-picker-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.smoothies-component .smoothies-list .categories-picker-container span {
+  color: #fff;
+  margin: 0 15px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .smoothies-component .smoothies-list .categories-picker-container span {
+    margin: 0 8px;
+  }
+}
+
+.smoothies-component .smoothies-list .categories-picker-container span.selected {
+  color: #eeee22;
+  font-weight: 600;
+}
+
+.smoothies-component .smoothies-list .products-container .product-meta {
+  border-bottom: 1px solid #333;
+  border-top: 1px solid #333;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+}
+
+.smoothies-component .smoothies-list .products-container .product-meta .product-price {
+  font-weight: 600;
+  margin-left: 10px;
+  text-align: left;
+  width: 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .smoothies-component .smoothies-list .products-container .product-meta .product-price {
+    text-align: right;
+    width: 60px;
+  }
+}
+
+.smoothies-component .smoothies-list .products-container .product-meta .product-quantity {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-weight: 600;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-left: 10px;
+  width: 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .smoothies-component .smoothies-list .products-container .product-meta .product-quantity {
+    display: none;
+  }
+}
+
+.smoothies-component .smoothies-list .products-container .product {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.smoothies-component .smoothies-list .products-container .product .product-info {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.smoothies-component .smoothies-list .products-container .product .product-name {
+  font-weight: 600;
+}
+
+.smoothies-component .smoothies-list .products-container .product .product-description {
+  font-size: 80%;
+}
+
+.smoothies-component .smoothies-list .products-container .product .product-price {
+  margin-left: 10px;
+  text-align: left;
+  width: 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .smoothies-component .smoothies-list .products-container .product .product-price {
+    text-align: right;
+    width: 60px;
+  }
+}
+
+.smoothies-component .smoothies-list .products-container .product .product-quantity {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-left: 10px;
+  width: 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .smoothies-component .smoothies-list .products-container .product .product-quantity {
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    margin-right: -10px;
+    margin-top: 12px;
+    width: 100%;
+  }
+}
+
+.smoothies-component .smoothies-list .products-container .product .product-quantity .quantity-label {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .smoothies-component .smoothies-list .products-container .product .product-quantity .quantity-label {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+.smoothies-component .smoothies-list .products-container .product .product-quantity .quantity-less, .smoothies-component .smoothies-list .products-container .product .product-quantity .quantity-more {
+  border: 1px solid #333;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 800;
+  height: 22px;
+  line-height: 19px;
+  margin: 0 10px;
+  text-align: center;
+  width: 22px;
+}
+
+.smoothies-component .smoothies-list .products-container .order-total {
+  border-top: 1px solid #333;
+  font-size: 16px;
+  font-weight: 600;
+  padding-top: 8px;
+  text-align: right;
+}
+
+.smoothies-component .smoothies-list .comments-container {
+  margin-top: 50px;
+}
+
+.smoothies-component .smoothies-list .comments-container textarea {
+  border: 1px solid #e1e3e6;
+  color: black;
+}
+
+.smoothies-component .smoothies-list .comments-container textarea:focus {
+  -webkit-box-shadow: 0px 0px 4px 0px rgba(26, 220, 255, 0.25);
+          box-shadow: 0px 0px 4px 0px rgba(26, 220, 255, 0.25);
+}
+
+.smoothies-component .smoothies-list .cards-container .filter {
+  color: #000;
+}
+
+.smoothies-component .smoothies-list .cards-container .no-payment-method-message {
+  color: red;
+  font-size: 80%;
+}
+
+.smoothies-component .smoothies-list .button-container {
+  text-align: right;
+}
+
+.smoothies-component .smoothies-list .button-container .et_pb_button {
+  cursor: pointer;
 }
 
 #left-area {
@@ -3186,7 +3483,6 @@ p {
 }
 
 select {
-  border-radius: 0px !important;
   color: #666666;
   font-family: Nunito, Helvetica, Arial, Lucida, sans-serif;
   font-size: .95em;
@@ -3204,10 +3500,27 @@ input {
   border-radius: 5px;
   font-family: Nunito, Helvetica, Arial, Lucida, sans-serif;
   font-size: 0.8rem;
-  padding: 0.4rem 1rem !important;
   height: 35px;
+  padding: 0.4rem 1rem !important;
   width: 100%;
+}
+
+textarea {
+  border-radius: 5px;
+  font-family: Nunito, Helvetica, Arial, Lucida, sans-serif;
+  font-size: 0.8rem;
+  height: 60px;
+  padding: 0.4rem 1rem !important;
+  resize: none;
   width: 100%;
+}
+
+.noselect, .et_pb_button {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .animate-visibility {

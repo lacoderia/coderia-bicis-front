@@ -79,10 +79,10 @@ nbici.factory('InstructorProfileService', ['$http', '$q', '$rootScope', 'LoggerS
     };
 
     return {
-        "broadcast": broadcast,
-        "getInstructorProfile": getInstructorProfile,
-        "setInstructorProfile": setInstructorProfile,
-        "getDayOfWeek": getDayOfWeek
+        broadcast: broadcast,
+        getInstructorProfile: getInstructorProfile,
+        setInstructorProfile: setInstructorProfile,
+        getDayOfWeek: getDayOfWeek
     };
 
 }]);

@@ -69,9 +69,9 @@ nbici.factory('InstructorService', ['$http', '$q', 'LoggerService', function($ht
      * @type {{getInstructors: getInstructors, setInstructors: setInstructors, getInstructorById: getInstructorById}}
      */
     service = {
-        "getInstructors": getInstructors,
-        "setInstructors": setInstructors,
-        "getInstructorById": getInstructorById
+        getInstructors: getInstructors,
+        setInstructors: setInstructors,
+        getInstructorById: getInstructorById
     };
 
     /**

@@ -97,6 +97,10 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
         var firstDay = instructorProfileCtrl.instructorProfile.week[0].getDate();
         var lastDay = instructorProfileCtrl.instructorProfile.week[6].getDate();
 
+        if(!firstDay.isValid()) {
+            return 'Por el momento ' + instructorProfileCtrl.instructorProfile.first_name + ' no cuenta con horarios disponibles.';
+        }
+
         return (firstDay.month() != lastDay.month())? 'Semana del ' + firstDay.date() + ' de ' + DEFAULT_VALUES.LABEL_MONTHS[firstDay.month()]  + ' al ' + lastDay.date() + ' de ' + DEFAULT_VALUES.LABEL_MONTHS[lastDay.month()] : 'Semana del ' + firstDay.date() + ' al ' + lastDay.date() + ' de ' + DEFAULT_VALUES.LABEL_MONTHS[firstDay.month()];
     };
 

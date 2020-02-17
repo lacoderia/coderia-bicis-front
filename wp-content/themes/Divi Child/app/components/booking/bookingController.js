@@ -154,9 +154,11 @@ nbici.controller('BookingController', ['$scope', '$timeout', '$document', 'Sessi
                             }
 
                             var bookingResume = {
+                                'id': data.appointment.id,
                                 'bicycleNumber': data.appointment.bicycle_number,
                                 'date': data.appointment.schedule.datetime,
-                                'instructor': data.appointment.schedule.instructor.first_name
+                                'instructor': data.appointment.schedule.instructor.first_name,
+                                'showMenu': data.appointment.show_menu,
                             };
                             localStorageService.set('nbc-booking', bookingResume);
 

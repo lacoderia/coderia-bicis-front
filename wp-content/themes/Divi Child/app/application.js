@@ -22,8 +22,8 @@ nbici.config(['localStorageServiceProvider', function(localStorageServiceProvide
 }]);
 
 nbici.constant('ENVIRONMENT', ENVIRONMENT);
-nbici.constant('API_URL_BASE', 'http://servicios.coderia.mx:8080');
 // nbici.constant('API_URL_BASE', 'https://servicios.n-bici.com');
+nbici.constant('API_URL_BASE', 'https://servicios.coderia.mx:444');
 
 nbici.constant('DEFAULT_VALUES', {
     'DAYS_OF_WEEK': ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],

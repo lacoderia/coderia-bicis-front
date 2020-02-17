@@ -101,14 +101,14 @@ nbici.factory('PackService', ['$rootScope', 'LoggerService', 'SessionService', f
     };
 
     service = {
-        "broadcast": broadcast,
-        "getPacks": getPacks,
-        "callPacks": callPacks,
-        "setPacks": setPacks,
-        "setSelectedPack": setSelectedPack,
-        "getSelectedPack": getSelectedPack,
-        "getSelectedPackPrice": getSelectedPackPrice,
-        "resetSelectedPack": resetSelectedPack,
+        broadcast: broadcast,
+        getPacks: getPacks,
+        callPacks: callPacks,
+        setPacks: setPacks,
+        setSelectedPack: setSelectedPack,
+        getSelectedPack: getSelectedPack,
+        getSelectedPackPrice: getSelectedPackPrice,
+        resetSelectedPack: resetSelectedPack,
     };
 
     return service;

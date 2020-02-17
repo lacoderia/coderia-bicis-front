@@ -14,12 +14,37 @@ nbici.controller('NotificationController', ['$scope', 'SessionService', 'UtilsSe
     notificationCtrl.bookingBicycleNumber;
 
     /**
+     * Determines if the booking tips container is shown
+     * @type {boolean}
+     */
+    var showBookingTips = false;
+
+    /**
      *
      */
     notificationCtrl.shareFB = function() {
         SocialService.shareFB();
     };
 
+    /**
+     * Determines if the booking tips container is shown
+     * @returns {boolean}
+     */
+    notificationCtrl.isBookingTipsVisible = function() {
+        return showBookingTips;
+    }
+
+    /**
+     *
+     * @param show
+     */
+    notificationCtrl.setShowBookingTips = function(show) {
+        showBookingTips = show;
+    };
+
+    /**
+     * Inits the controller
+     */
     notificationCtrl.init = function() {
         notificationCtrl.homeUrl = UtilsService.getHomeUrl();
 
@@ -47,7 +72,6 @@ nbici.controller('NotificationController', ['$scope', 'SessionService', 'UtilsSe
             notificationCtrl.bookingMessage = booking.instructor + ' te espera el día ' + date.date() + ' de ' + DEFAULT_VALUES.LABEL_MONTHS[date.month()] + ' a las ' + date.format('H:mm') + ' hrs.';
             notificationCtrl.bookingBicycleNumber = 'Tu bici es la número ' + booking.bicycleNumber;
         }
-        localStorageService.remove('nbc-booking');
 
         SocialService.configTwitter();
 

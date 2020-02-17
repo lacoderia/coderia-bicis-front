@@ -334,7 +334,7 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
                             'classes': pack.getClasses()
                         };
                         localStorageService.set('nbc-purchase', purchaseResume);
-                        window.location.href = UtilsService.getHomeUrl() + 'compra-success';
+                        window.location.href = UtilsService.getHomeUrl() + 'compra-success?classes=' + pack.getClasses() + '&total=' + price;
                     } else {
                         SessionService.createSession(data.purchase.user);
                         paymentCtrl.primaryCard = PaymentService.getPrimaryCard();
@@ -370,13 +370,14 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
         PaymentService.processClassPayment(cardId, booking)
             .then(function(data) {
                 if(data.appointment) {
-
                     paymentCtrl.primaryCard = PaymentService.getPrimaryCard();
                     
                     var bookingResume = {
+                        'id': data.appointment.id,
                         'bicycleNumber': data.appointment.bicycle_number,
                         'date': data.appointment.schedule.datetime,
-                        'instructor': data.appointment.schedule.instructor.first_name
+                        'instructor': data.appointment.schedule.instructor.first_name,
+                        'showMenu': data.appointment.show_menu,
                     };
                     localStorageService.set('nbc-booking', bookingResume);
 
