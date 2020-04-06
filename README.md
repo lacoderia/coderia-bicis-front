@@ -27,8 +27,8 @@ Steps to follow to deploy this on a live system:
 
 application.js
 ```
-// constant('API_URL_BASE', 'https://servicios.coderia.mx:444');
-constant('API_URL_BASE', 'https://servicios.n-bici.com');
+// nbici.constant('API_URL_BASE', 'https://servicios.coderia.mx:444');
+nbici.constant('API_URL_BASE', 'https://servicios.n-bici.com');
 ```
 functions.php
 ```
