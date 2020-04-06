@@ -15,7 +15,7 @@ This repository contains a Wordpress child template, so there are two things nee
 
 ### Installing
 
-1. Copy 'Divi Child' folder inside 'themes' folder
+1. Copy `Divi Child` folder inside `themes` folder
 2. Activate Divi Child template
 
 
@@ -23,7 +23,7 @@ This repository contains a Wordpress child template, so there are two things nee
 
 Steps to follow to deploy this on a live system:
 
-1. Uncomment the production environment url in application.js and functions.php files
+1. Uncomment the production environment url in `application.js` and `functions.php` files
 
 application.js
 ```
@@ -36,8 +36,8 @@ functions.php
 $api_url_base = 'https://servicios.n-bici.com';
 ```
 
-2. Find and replace any reference to 'localhost' in the project
-3. Update template version in functions.php file
+2. Find and replace any reference to `localhost` in the project
+3. Update template version in `functions.php` file
 
 ```
 // define ('VERSION', '3.1.1');
