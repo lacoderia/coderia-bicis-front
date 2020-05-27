@@ -5,21 +5,19 @@
     margin: 0
 
   user
-    display: inline-block
+    display: flex
     margin: 1rem 0
-    vertical-align: middle
     width: 49%
 
-    @media screen and (max-width: $screen-xs-max)
-      display: block
-      margin: 0 0 1rem
+    @media screen and (max-width: $screen-sm-max)
+      justify-content: center
+      margin: 0 0 2rem
       width: 100%
 
     .user-image
       background: black
       border: 4px solid $color-yellow-1
       border-radius: 50%
-      display: inline-block
       height: 70px
       margin: 0 0.5rem 0 0
       min-width: 70px
@@ -28,7 +26,6 @@
 
       @media screen and (max-width: $screen-xs-max)
         display: block
-        margin: 0 auto
 
       &.icon-user
         color: $color-yellow-1
@@ -42,19 +39,11 @@
           top: 50%
           transform: translate(-50%, -70%)
 
-
     .user-info
-      display: inline-block
       overflow: hidden
       padding: 0 1rem
       vertical-align: middle
       white-space: nowrap
-
-      @media screen and (max-width: $screen-xs-max)
-        display: block
-        padding: 0
-        text-align: center
-        width: 100%
 
       span
         display: block
@@ -63,13 +52,13 @@
         color: black
         font-size: 1.4rem
         font-weight: bold
-        max-width: 276px
+        max-width: 100%
         overflow: hidden
         text-overflow: ellipsis
         width: 100%
 
       .user-mail
-        max-width: 276px
+        max-width: 100%
         overflow: hidden
         text-overflow: ellipsis
         width: 100%
@@ -104,7 +93,6 @@
       margin: 4rem 0
       max-width: 110px
       vertical-align: top
-      width: 10%
 
       @media screen and (max-width: $screen-xs-max)
         bottom: 0
@@ -150,12 +138,13 @@
 
 
           &.selected
-            background: white
+            border: 1px solid $color-gray-2
             cursor: default
             position: relative
 
             @media screen and (max-width: $screen-xs-max)
               background: black
+              border: none
               color: $color-blue-1
 
             &:after
@@ -187,16 +176,14 @@
             @media screen and (max-width: $screen-xs-max)
               display: none
 
-
     .modules-container
       border-left: 1px solid $color-gray-2
       box-shadow: -2px 0px 3px -2px rgba(0,0,0,0.3)
       box-sizing: border-box
       margin: 2rem 0
-      padding: 0.4rem 2rem 0.4rem 3.5rem
-      position: relative
+      padding: 0.4rem 0rem 0.4rem 3.5rem
       vertical-align: top
-      width: 89%
+      width: 100%
 
       @media screen and (max-width: $screen-xs-max)
         border: none
@@ -252,55 +239,62 @@
               font-size: 3rem
               margin: 0 auto 0.5rem
 
-      .resume
+      .dashboard-header
+        display: flex
         align-items: center
-        display: inline-flex
-        font-size: 0rem
-        justify-content: flex-start
-        list-style-type: none !important
-        margin: 0.8rem 0 !important
-        padding: 0 !important
-        vertical-align: top
-        width: 50%
 
-        @media screen and (max-width: $screen-xs-max)
-          display: block
-          margin: 0 !important
-          text-align: center
-          width: 100%
+        @media screen and (max-width: $screen-sm-max)
+          flex-direction: column
 
-
-        li
-          display: inline-block
-          font-size: 1rem
-          margin-right: 4rem
-          text-align: left
+        .resume-container
+          @media screen and (max-width: $screen-sm-max)
+            width: 80%
 
           @media screen and (max-width: $screen-xs-max)
-            margin: 0
-            width: 48%
+            width: 100%
 
-          &:last-child
-            margin-right: 0
+          .resume
+            display: flex
+            list-style-type: none !important
+            margin: 0.8rem 0 !important
+            padding: 0 !important
 
-            @media screen and (max-width: $screen-xs-max)
-              margin-left: 1%
+            @media screen and (max-width: $screen-sm-max)
+              margin: 0 !important
+              text-align: center
 
-          span
-            display: block
-            line-height: 100%
-            text-align: center
+            li
+              flex: 1
+              font-size: 1rem
+              margin-right: 1.7rem
+              text-align: left
 
-            &.label
-              color: $color-blue-1
-              font-size: 0.8rem
-              font-weight: bold
-              margin-top: 0.6rem
+              @media screen and (max-width: $screen-md-max)
+                margin-right: 0.8rem
+              
+              @media screen and (max-width: $screen-xs-max)
+                margin-right: 0
 
-            &.digit
-              color: black
-              font-size: 1.3rem
+              &:last-child
+                margin-right: 0
 
+                @media screen and (max-width: $screen-md-max)
+                  margin-left: 1%
+
+              span
+                display: block
+                line-height: 100%
+                text-align: center
+
+                &.label
+                  color: $color-blue-1
+                  font-size: 0.8rem
+                  font-weight: bold
+                  margin-top: 0.6rem
+
+                &.digit
+                  color: black
+                  font-size: 1.3rem
 
       .resume-module
         margin: 4rem 0 4rem
@@ -312,8 +306,6 @@
     margin: 1.5rem auto
     transform: none
     width: 100%
-
-
 
 .icon-principal:before
   font-family: 'ETmodules'
@@ -424,8 +416,6 @@
           transform: translate(-8px, 40%)
           width: 20px
 
-
-
         &:hover
           background: white
           color: black
@@ -497,45 +487,3 @@
 
           @media screen and (max-width: $screen-xs-max)
             font-size: 0.6rem
-
-
-    .ticket-date
-      color: black
-      display: inline-block
-      padding: 1.3rem 0.6rem 1rem
-      text-align: center
-      vertical-align: middle
-      width: 35%
-
-      span
-        display: block
-
-        &.day
-          font-size: 1rem
-          margin: 0.3rem 0
-
-          @media screen and (max-width: $screen-xs-max)
-            margin: 0.1rem 0
-            font-size: 0.8rem
-
-        &.hour
-          font-size: 2rem
-
-          @media screen and (max-width: $screen-xs-max)
-            font-size: 1.4rem
-
-        &.status
-          font-size: 0.9rem
-          font-weight: bold
-
-          @media screen and (max-width: $screen-xs-max)
-            font-size: 0.7rem
-
-          &.appointment-booked
-            color: $color-pink-1
-
-          &.appointment-canceled
-            color: $color-gray-2
-
-          &.appointment-finalized
-            color: $color-blue-1

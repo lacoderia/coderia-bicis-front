@@ -1,6 +1,6 @@
 <p class="module-name">{{ profileCtrl.MODULES.PERSONAL_INFO.name }}</p>
 
-<div ng-controller="AccountController as accountCtrl" class="account-module"> 
+<div ng-controller="AccountController as accountCtrl" class="account-module">
     <span us-spinner spinner-key="account-spinner"></span>
     <form novalidate name="accountCtrl.infoForm" class="form special-form active" ng-submit="accountCtrl.updateInfo()">
         <div class="title">Datos personales</div>
@@ -27,7 +27,6 @@
                 </div>
             </div>
         </div>
-
     </form>
 
     <form novalidate name="accountCtrl.resetForm" class="form special-form active" ng-submit="accountCtrl.updatePassword()">

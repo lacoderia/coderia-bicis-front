@@ -58,6 +58,14 @@ nbici.controller('AccountController', ['$scope', '$filter', 'SessionService', 'A
 
     /**
      *
+     * @returns {*}
+     */
+    accountCtrl.getUserStreamingClassesLeft = function() {
+        return (SessionService.get())? SessionService.get().getStreamingClassesLeft(): '';
+    };
+
+    /**
+     *
      * @returns {boolean}
      */
     accountCtrl.userIsSynced = function() {

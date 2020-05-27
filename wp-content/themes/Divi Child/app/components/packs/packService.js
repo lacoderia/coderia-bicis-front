@@ -36,21 +36,6 @@ nbici.factory('PackService', ['$rootScope', 'LoggerService', 'SessionService', f
         return angular.copy(packs);
     };
 
-    /**
-     * Calls the service for retrieving the paks and set te list
-     * @param assetType
-     * @returns {*[]}
-     */
-    var callPacks = function() {
-        var serviceURL = 'http://servicios.coderia.mx/routes.json';
-
-        try {
-
-        } catch(error) {
-            //Logger.error('There has been an error \n ' + error.name + ': ' + error.message);
-        }
-    };
-
     var transformToObject = function(array){
         var list = [];
 
@@ -103,7 +88,6 @@ nbici.factory('PackService', ['$rootScope', 'LoggerService', 'SessionService', f
     service = {
         broadcast: broadcast,
         getPacks: getPacks,
-        callPacks: callPacks,
         setPacks: setPacks,
         setSelectedPack: setSelectedPack,
         getSelectedPack: getSelectedPack,

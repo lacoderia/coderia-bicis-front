@@ -300,6 +300,14 @@
 						<span class="mobile_menu_bar et_pb_header_toggle et_toggle_<?php echo esc_attr( et_get_option( 'header_style', 'left' ) ); ?>_menu"></span>
 					<?php endif; ?>
 
+					<div class="user-credits-container" ng-show="navigationCtrl.isLoggedIn()">
+						<div class="user-credits">
+								<span class="credits">clases: <span ng-bind="navigationCtrl.getUserClassesLeft()"></span></span>
+								<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								<span class="streaming-credits">clases N casa: <span ng-bind="navigationCtrl.getUserStreamingClassesLeft()"></span></span>
+						</div>
+				</div>
+
 					<?php if ( ( false !== et_get_option( 'show_search_icon', true ) && ! $et_slide_header ) || is_customize_preview() ) : ?>
 					<div id="et_top_search">
 						<span id="et_search_icon"></span>

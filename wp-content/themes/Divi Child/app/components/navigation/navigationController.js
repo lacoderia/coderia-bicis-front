@@ -8,12 +8,12 @@ nbici.controller('NavigationController', ['$rootScope', '$compile', 'SessionServ
         return SessionService.isAuthenticated();
     };
 
-    navigationCtrl.getGreetings = function() {
-        return (SessionService.get())? SessionService.get().getFirstName(): '';
-    };
-
     navigationCtrl.getUserClassesLeft = function() {
         return (SessionService.get())? SessionService.get().getClassesLeft(): '';
+    };
+
+    navigationCtrl.getUserStreamingClassesLeft = function() {
+        return (SessionService.get())? SessionService.get().getStreamingClassesLeft(): '';
     };
 
     navigationCtrl.showLogin = function() {

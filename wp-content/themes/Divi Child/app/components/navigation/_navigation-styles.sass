@@ -1,73 +1,73 @@
-#top-menu .menu-item
-  color: black
-  cursor: pointer
+#top-menu
+  @media screen and (max-width: $screen-md-max)
+    display: none
+  
+  .menu-item
+    background-color: white
+    color: black
+    cursor: pointer
+    z-index: 2
 
-#top-menu .menu-item a
-  text-transform: uppercase
+  .menu-item a
+    text-transform: uppercase
+
+#et_mobile_nav_menu
+  @media screen and (max-width: $screen-md-max)
+    display: block
+
+.et_header_style_left #et-top-navigation
+  @media screen and (max-width: $screen-md-max)
+    padding-top: 24px
+    display: block
+
+html body div#et-top-navigation ul.nav li a:hover
+  color: $color-yellow-2 !important
 
 .menu-user
   position: relative
 
-  &:before
+  &:after
     font-family: 'ETmodules'
     content: "\e08a"
     color: black
 
-  &:hover
-    opacity: 1 !important
-
-    .tooltip
-      opacity: 1
-
-      @media screen and (max-width: $screen-xs-max)
-        opacity: 0
-
-
   .menu-user-text
     display: none
 
-    @media screen and (max-width: $screen-xs-max)
+    @media screen and (max-width: $screen-md-max)
       display: inline
-      margin-left: 20px
+      margin-right: 20px
 
-  .menu-credits
+.user-credits-container
+  background-color: white
+  border-radius: 0 0 10px 10px
+  border-color: rgba(0, 0, 0, 0.1)
+  border-style: solid
+  border-width: 0 1px 1px 1px
+  bottom: -40px
+  height: 40px
+  position: absolute
+  right: 0
+  width: 240px
+  z-index: 1
+
+  .user-credits
     color: black
-    font-size: 0.6rem
-    position: absolute
-    left: 14px
-    top: -10px
+    display: flex
+    font-size: 0.8rem
+    height: 30px
+    justify-content: center
+    align-items: center
 
-    @media screen and (max-width: $screen-xs-max)
-      left: 25px
-      top: 0px
+    .credits
+      color: $color-pink-1
 
-  .tooltip
-    background: $color-blue-1
-    border-radius: 5px
-    color: black
-    cursor: auto
-    display: inline-block
-    font-size: 0.6rem
-    opacity: 0
-    padding: 0.5rem
-    position: absolute
-    left: 50%
-    top: 30px
-    transform: translateX(-50%)
-    white-space: pre
+    .streaming-credits
+      color: $color-pink-2
 
-    &:before
-      content: ""
-      border-left: 5px solid transparent
-      border-right: 5px solid transparent
-      border-bottom: 5px solid $color-blue-1
-      position: absolute
-      height: 0
-      left: 50%
-      top: -5px
-      transform: translateX(-50%)
-      width: 0
-
-
-
-
+#main-header.et-fixed-header
+  .user-credits-container
+    border: none
+    box-shadow: 0 1px 7px rgba(0, 0, 0, 0.1)
+    -moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.1)
+    -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.1)

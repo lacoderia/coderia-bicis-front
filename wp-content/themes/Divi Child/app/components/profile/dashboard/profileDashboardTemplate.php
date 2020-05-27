@@ -1,23 +1,29 @@
 
-<div ng-controller="AccountController as accountCtrl" ng-cloak>
-    <user> 
-        <div class="user-image icon-user"></div> 
+<div class="dashboard-header" ng-controller="AccountController as accountCtrl" ng-cloak>
+    <user>
+        <div class="user-image icon-user"></div>
         <div class="user-info">
             <span class="user-name">{{ accountCtrl.getUserName() }}</span>
             <span class="user-mail">{{ accountCtrl.getUserEmail() }}</span>
             <a href="" class="button" ng-click="profileCtrl.events.selectModule(profileCtrl.MODULES.PERSONAL_INFO)">Editar</a>
-        </div> 
+        </div>
     </user>
-    <ul class="resume">
-        <li>
-            <span class="digit">{{ accountCtrl.getUserClassesLeft() }}</span>
-            <span class="label">Clases disponibles</span>
-        </li>
-        <li>
-            <span class="digit">{{ accountCtrl.getUserBalance() | currency:"$" }}</span>
-            <span class="label">Saldo a favor</span>
-        </li>
-    </ul>
+    <div class="resume-container">
+        <ul class="resume">
+            <li>
+                <span class="digit">{{ accountCtrl.getUserClassesLeft() }}</span>
+                <span class="label">Clases disponibles</span>
+            </li>
+            <li>
+                <span class="digit">{{ accountCtrl.getUserStreamingClassesLeft() }}</span>
+                <span class="label">Clases N Casa disponibles</span>
+            </li>
+            <li>
+                <span class="digit">{{ accountCtrl.getUserBalance() | currency:"$" }}</span>
+                <span class="label">Saldo a favor</span>
+            </li>
+        </ul>
+    </div>
 </div>
 <div class="resume-module" ng-controller="HistoryController as historyCtrl" ng-init="historyCtrl.initDashboard(<?php echo get_future_appointments(); ?>)">
     <p class="module-name">Próximas clases reservadas</p>
@@ -53,7 +59,7 @@
                 <span class="more animate-visibility" title="Opciones" ng-click="historyCtrl.selectAppointment(appointment)" ng-show="!historyCtrl.isSelectedAppointment(appointment) && appointment.getStatus() != 'CANCELLED' && historyCtrl.isAppointmentEditable(appointment)">editar</span>
                 <icon class="close animate-visibility" title="Cerrar" ng-click="historyCtrl.selectAppointment(undefined)" ng-show="historyCtrl.isSelectedAppointment(appointment)"></icon>
             </ticket>
-            <div>
+            <div style="text-align:right; width: 100%">
                 <a class="button" ng-click="profileCtrl.events.selectModule(profileCtrl.MODULES.HISTORY)" ng-if="historyCtrl.hasFutureAppointments()">Ver todas</a>
             </div>
         </div>

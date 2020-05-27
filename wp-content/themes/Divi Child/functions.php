@@ -16,8 +16,8 @@ function nbici_enqueue_assets() {
 
     // Components styles
     wp_enqueue_style( 'NbiciStyles', get_stylesheet_directory_uri() . '/app/nbici-styles.css', '', version_id() );
-    wp_enqueue_style( 'slick-style', get_stylesheet_directory_uri() . '/js/bower_components/slick-carousel/slick/slick.css', '', version_id() );
-    wp_enqueue_style( 'slick-theme-style', get_stylesheet_directory_uri() . '/js/bower_components/slick-carousel/slick/slick-theme.css', '', version_id() );
+    wp_enqueue_style( 'slick-style', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/slick-carousel/slick/slick.css', '', version_id() );
+    wp_enqueue_style( 'slick-theme-style', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/slick-carousel/slick/slick-theme.css', '', version_id() );
 
 }
 
@@ -26,7 +26,7 @@ function nbici_google_fonts() {
     wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Nunito:400,300,700&subset=latin', array() );
 }
 
-$api_url_base = 'https://servicios.coderia.mx:444';
+$api_url_base = 'https://backend.coderia.mx:444';
 // $api_url_base = 'https://servicios.n-bici.com';
 $api_args = array('sslverify' => false);
 
@@ -182,6 +182,22 @@ function get_smoothies() {
     return htmlspecialchars(json_encode($data['products_catalog']));
 }
 
+function get_streams() {
+    global $api_url_base, $api_args;
+    $data['streams'] = array();
+
+    $url = $api_url_base.'/streaming_classes';
+    $request = new WP_Http;
+    $result = $request->get( $url, $api_args );
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
+        $json = json_decode( $result['body'], true );
+        if( isset($json['streaming_classes']) ){
+            $data['streams'] = $json['streaming_classes'];
+        }
+    }
+    return htmlspecialchars(json_encode($data['streams']));
+}
+
 function get_nbc_headers() {
     $formatted_headers = array();
 
@@ -203,27 +219,29 @@ function coderia_register_angular_scripts() {
 
     // Common libraries
     wp_register_script( 'conekta', 'https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js', '', version_id() );
-    wp_register_script( 'moment', get_stylesheet_directory_uri() . '/js/bower_components/moment/min/moment.min.js', '', version_id() );
-    wp_register_script( 'timezone', get_stylesheet_directory_uri() . '/js/bower_components/moment-timezone/builds/moment-timezone-with-data.min.js', '', version_id() );
-    wp_register_script( 'sprintf', get_stylesheet_directory_uri() . '/js/bower_components/sprintf/dist/sprintf.min.js', '', version_id() );
-    wp_register_script( 'locale', get_stylesheet_directory_uri() . '/js/bower_components/moment/locale/es.js', '', version_id() );
-    wp_register_script( 'alertify', get_stylesheet_directory_uri() . '/js/bower_components/alertify/alertify.min.js', '', version_id() );
+    wp_register_script( 'moment', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/moment/min/moment.min.js', '', version_id() );
+    wp_register_script( 'timezone', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/moment-timezone/builds/moment-timezone-with-data.min.js', '', version_id() );
+    wp_register_script( 'sprintf', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/sprintf/dist/sprintf.min.js', '', version_id() );
+    wp_register_script( 'locale', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/moment/locale/es.js', '', version_id() );
+    wp_register_script( 'alertify', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/alertify/alertify.min.js', '', version_id() );
 
     // Vendor libraries
-    wp_register_script( 'suave', get_stylesheet_directory_uri() . '/js/bower_components/Suave UI/dist/app.min.js', '', version_id() );
+    wp_register_script( 'suave', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/Suave UI/dist/app.min.js', '', version_id() );
 
     // Angular core and libraries
-    wp_register_script( 'angularjs', get_stylesheet_directory_uri() . '/js/bower_components/angular/angular.min.js', '', version_id() );
-    wp_register_script( 'angular-route', get_stylesheet_directory_uri() . '/js/bower_components/angular-route/angular-route.min.js', '', version_id() );
-    wp_register_script( 'angular-logger', get_stylesheet_directory_uri() . '/js/bower_components/angular-logger/dist/angular-logger.min.js', '', version_id() );
-    wp_register_script( 'angular-sanitize', get_stylesheet_directory_uri() . '/js/bower_components/angular-sanitize/angular-sanitize.min.js', '', version_id() );
-    wp_register_script( 'angular-scroll', get_stylesheet_directory_uri() . '/js/bower_components/angular-scroll/angular-scroll.min.js', '', version_id() );
-    wp_register_script( 'angular-local-storage' , get_stylesheet_directory_uri() . '/js/bower_components/angular-local-storage/dist/angular-local-storage.min.js', '', version_id() );
-    wp_register_script( 'angular-animate' , get_stylesheet_directory_uri() . '/js/bower_components/angular-animate/angular-animate.min.js', '', version_id() );
-    wp_register_script( 'spinner' , get_stylesheet_directory_uri() . '/js/bower_components/spin.js/spin.js', '', version_id() );
-    wp_register_script( 'angular-spinner' , get_stylesheet_directory_uri() . '/js/bower_components/angular-spinner/angular-spinner.js', '', version_id() );
-    wp_register_script( 'slick-carousel' , get_stylesheet_directory_uri() . '/js/bower_components/slick-carousel/slick/slick.js', '', version_id() );
-    wp_register_script( 'slick' , get_stylesheet_directory_uri() . '/js/bower_components/angular-slick-carousel/dist/angular-slick.min.js', '', version_id() );
+    wp_register_script( 'angularjs', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/angular/angular.min.js', '', version_id() );
+    wp_register_script( 'angular-route', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/angular-route/angular-route.min.js', '', version_id() );
+    wp_register_script( 'angular-logger', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/angular-logger/dist/angular-logger.min.js', '', version_id() );
+    wp_register_script( 'angular-sanitize', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/angular-sanitize/angular-sanitize.min.js', '', version_id() );
+    wp_register_script( 'angular-scroll', get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/angular-scroll/angular-scroll.min.js', '', version_id() );
+    wp_register_script( 'angular-local-storage' , get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/angular-local-storage/dist/angular-local-storage.min.js', '', version_id() );
+    wp_register_script( 'angular-animate' , get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/angular-animate/angular-animate.min.js', '', version_id() );
+    wp_register_script( 'slick-carousel' , get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/slick-carousel/slick/slick.js', '', version_id() );
+    wp_register_script( 'slick' , get_stylesheet_directory_uri() . '/lib/node_modules/@bower_components/angular-slick-carousel/dist/angular-slick.min.js', '', version_id() );
+
+    // Customized vendor libraries
+    wp_register_script( 'angular-spinner' , get_stylesheet_directory_uri() . '/lib/js/angular-spinner/angular-spinner.js', '', version_id() );
+    wp_register_script( 'spinner' , get_stylesheet_directory_uri() . '/lib/js/spin.js/spin.js', '', version_id() );
 
     // Application
     wp_register_script( 'app', get_stylesheet_directory_uri() . '/app/application.js', array('moment', 'timezone'), version_id() );
@@ -238,10 +256,14 @@ function coderia_register_angular_scripts() {
     wp_register_script( 'Pack', get_stylesheet_directory_uri() . '/app/lib/Pack.js', '', version_id() );
     wp_register_script( 'Card', get_stylesheet_directory_uri() . '/app/lib/Card.js', '', version_id() );
     wp_register_script( 'Product', get_stylesheet_directory_uri() . '/app/lib/Product.js', '', version_id() );
+    wp_register_script( 'Stream', get_stylesheet_directory_uri() . '/app/lib/Stream.js', '', version_id() );
 
     // Filters
     wp_register_script( 'ClassByInstructorFilter', get_stylesheet_directory_uri() . '/app/common/classByInstructorFilter.js', '', version_id() );
     wp_register_script( 'OrderByDateFilter', get_stylesheet_directory_uri() . '/app/common/orderByDateFilter.js', '', version_id() );
+    wp_register_script( 'StreamByInstructorFilter', get_stylesheet_directory_uri() . '/app/common/streamByInstructorFilter.js', '', version_id() );
+    wp_register_script( 'StreamByDurationFilter', get_stylesheet_directory_uri() . '/app/common/streamByDurationFilter.js', '', version_id() );
+    wp_register_script( 'StreamByIntensityFilter', get_stylesheet_directory_uri() . '/app/common/streamByIntensityFilter.js', '', version_id() );
     
     // Services
     wp_register_script( 'LoggerService', get_stylesheet_directory_uri() . '/app/common/loggerService.js', '', version_id() );
@@ -261,6 +283,7 @@ function coderia_register_angular_scripts() {
     wp_register_script( 'ProfileDashboardService', get_stylesheet_directory_uri() . '/app/components/profile/dashboard/profileDashboardService.js', '', version_id() );
     wp_register_script( 'SocialService', get_stylesheet_directory_uri() . '/app/components/social/socialService.js', '', version_id() );
     wp_register_script( 'SmoothiesService', get_stylesheet_directory_uri() . '/app/components/smoothies/smoothiesService.js', '', version_id() );
+    wp_register_script( 'StreamingService', get_stylesheet_directory_uri() . '/app/components/streaming/streamingService.js', '', version_id() );
 
     // Controllers
     wp_register_script( 'RootController', get_stylesheet_directory_uri() . '/app/common/rootController.js', '', version_id() );
@@ -281,6 +304,7 @@ function coderia_register_angular_scripts() {
     wp_register_script( 'ProfileDashboardController', get_stylesheet_directory_uri() . '/app/components/profile/dashboard/profileDashboardController.js', '', version_id() );
     wp_register_script( 'NotificationController', get_stylesheet_directory_uri() . '/app/components/notification/notificationController.js', '', version_id() );
     wp_register_script( 'SmoothiesController', get_stylesheet_directory_uri() . '/app/components/smoothies/smoothiesController.js', '', version_id() );
+    wp_register_script( 'StreamingController', get_stylesheet_directory_uri() . '/app/components/streaming/streamingController.js', '', version_id() );
 
 }
 
@@ -318,6 +342,9 @@ function coderia_enqueue_angular_scripts() {
     // Filters
     wp_enqueue_script( 'ClassByInstructorFilter' );
     wp_enqueue_script( 'OrderByDateFilter' );
+    wp_enqueue_script( 'StreamByInstructorFilter' );
+    wp_enqueue_script( 'StreamByDurationFilter' );
+    wp_enqueue_script( 'StreamByIntensityFilter' );
 
     // Services
     wp_enqueue_script( 'LoggerService' );
@@ -337,9 +364,19 @@ add_filter( 'wp_nav_menu_items', 'nbici_add_menu_items', 10, 2 );
 function nbici_add_menu_items( $items, $args ) {
     // Change 'primary' to 'secondary' to put the login link in your secondary nav bar
     if ( $args->theme_location == 'primary-menu' ) {
-        $items .= '<li class="menu-item" ng-show="!navigationCtrl.isLoggedIn()"><a href="#" class="menu-user" ng-click="navigationCtrl.showLogin()"><span class="menu-user-text">INICIAR SESIÓN</span></a></li>';
-        $items .= '<li class="menu-item" ng-show="navigationCtrl.isLoggedIn()"><a href="' . site_url('mi-cuenta') . '" class="menu-user"><span class="menu-user-text">MI CUENTA</span><span class="menu-credits" ng-bind="navigationCtrl.getUserClassesLeft()"></span><span class="tooltip">{{ "Hola " + navigationCtrl.getGreetings() }}</span></a></li>';
-        $items .= '<li class="menu-item" ng-show="navigationCtrl.isLoggedIn()"><a href="#" ng-click="navigationCtrl.logout()">SALIR</a></li>';
+        $items .= '<li class="menu-item" ng-show="!navigationCtrl.isLoggedIn()">
+                        <a href="#" class="menu-user" ng-click="navigationCtrl.showLogin()">
+                            <span class="menu-user-text">INICIAR SESIÓN</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" ng-show="navigationCtrl.isLoggedIn()">
+                        <a href="' . site_url('mi-cuenta') . '" class="menu-user">
+                            <span class="menu-user-text">MI CUENTA</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" ng-show="navigationCtrl.isLoggedIn()">
+                        <a href="#" ng-click="navigationCtrl.logout()">SALIR</a>
+                    </li>';
     }
     return $items;
 }

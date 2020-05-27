@@ -1,6 +1,6 @@
 'use strict';
 
-function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, active, coupon, couponValue, balance, isTestUser, linked) {
+function User(user) {
 
     // Private attributes
     var _id = undefined;
@@ -8,6 +8,7 @@ function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, a
     var _lastName = undefined;
     var _email = undefined;
     var _classesLeft = undefined;
+    var _streamingClassesLeft = undefined;
     var _lastClassPurchased = undefined;
     var _active = false;
     var _coupon = undefined;
@@ -23,6 +24,7 @@ function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, a
      * @param lastName
      * @param email
      * @param classesLeft
+     * @param streamingClassesLeft
      * @param lastClassPurchased
      * @param active
      * @param balance
@@ -32,19 +34,20 @@ function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, a
      * @param linked
      */
 
-    this.constructor = function(id, firstName, lastName, email, classesLeft, lastClassPurchased, active, coupon, couponValue, balance, isTestUser, linked) {
-        this.setId(id);
-        this.setFirstName(firstName);
-        this.setLastName(lastName);
-        this.setEmail(email);
-        this.setClassesLeft(classesLeft);
-        this.setLastClassPurchased(lastClassPurchased);
-        this.setActive(active);
-        this.setCoupon(coupon);
-        this.setCouponValue(couponValue);
-        this.setBalance(balance);
-        this.setIsTestUser(isTestUser);
-        this.setLinked(linked);
+    this.constructor = function(user) {
+        this.setId(user.id);
+        this.setFirstName(user.firstName);
+        this.setLastName(user.lastName);
+        this.setEmail(user.email);
+        this.setClassesLeft(user.classesLeft);
+        this.setStreamingClassesLeft(user.streamingClassesLeft);
+        this.setLastClassPurchased(user.lastClassPurchased);
+        this.setActive(user.active);
+        this.setCoupon(user.coupon);
+        this.setCouponValue(user.couponValue);
+        this.setBalance(user.balance);
+        this.setIsTestUser(user.isTestUser);
+        this.setLinked(user.linked);
     };
 
     /**
@@ -128,6 +131,27 @@ function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, a
             _classesLeft = classesLeft;
         } else {
             _classesLeft = 0;
+        }
+
+    };
+
+     /**
+     *
+     * @returns {undefined}
+     */
+    this.getStreamingClassesLeft = function(){
+        return _streamingClassesLeft;
+    };
+
+    /**
+     *
+     * @param streamingClassesLeft
+     */
+    this.setStreamingClassesLeft = function(streamingClassesLeft){
+        if (streamingClassesLeft) {
+            _streamingClassesLeft = streamingClassesLeft;
+        } else {
+            _streamingClassesLeft = 0;
         }
 
     };
@@ -244,6 +268,6 @@ function User(id, firstName, lastName, email, classesLeft, lastClassPurchased, a
         _linked = linked;
     };
 
-    this.constructor(id, firstName, lastName, email, classesLeft, lastClassPurchased, active, coupon, couponValue, balance, isTestUser, linked);
+    this.constructor(user);
 
 };
