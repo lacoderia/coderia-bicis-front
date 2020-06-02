@@ -21,26 +21,21 @@ This repository contains a Wordpress child template, so there are two things nee
 
 ## Deployment
 
-Steps to follow to deploy this on a live system:
+Steps for deploying the app on a production environment:
 
-1. Uncomment the production environment url in `application.js` and `functions.php` files
+1. Set up `conekta_public` and `api_url_base` options in the WP database
 
-application.js
-```
-// nbici.constant('API_URL_BASE', 'https://servicios.coderia.mx:444');
-nbici.constant('API_URL_BASE', 'https://servicios.n-bici.com');
-```
-functions.php
-```
-// $api_url_base = 'https://servicios.coderia.mx:444';
-$api_url_base = 'https://servicios.n-bici.com';
-```
+2. If necessary, find and replace any reference to `localhost` in the WP database
 
-2. Find and replace any reference to `localhost` in the project
-3. Update template version in `functions.php` file
+3. Configure environment file `env.js`
 
 ```
-// define ('VERSION', '3.1.1');
+window.__env.API_URL_BASE=''
+```
+
+4. Update template version in `functions.php` file to a greater one
+
+```
 define ('VERSION', '3.1.2');
 ```
 
