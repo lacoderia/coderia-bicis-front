@@ -24,6 +24,15 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
     streamingCtrl.instructors = [];
 
     /**
+     * Contains the intensity options
+     */
+    streamingCtrl.intensityCatalog = [
+        { level: 1, description: 'baja' },
+        { level: 2, description: 'media' },
+        { level: 3, description: 'alta' },
+    ];
+
+    /**
      * @type {undefined}
      * @private
      */
@@ -170,21 +179,13 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
             });
     }
 
-    var watchStream = function(streamId) {
-        getPlayerStream(streamId);
-        setShowCatalog(false);
-        setShowBooking(false);
-        setShowPlayer(true);
-    }
-
     var confirmBookStream = function() {
         usSpinnerService.spin('full-spinner');
         StreamingService.bookStream()
             .then(function(data) {
                 var streamId = data ? data.available_streaming_class.streaming_class.id : undefined;
                 if(streamId) {
-                    window.history.pushState(null, null, '?id=' + streamId);
-                    watchStream(streamId);
+                    window.location.href = UtilsService.getHomeUrl() + 'n-bici-n-casa-player/?id=' + streamId;
                 }
             }, function(error) {
                 if(error && error.errors){
@@ -204,8 +205,7 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
 
         if(SessionService.isAuthenticated()) {
             if(stream.getPlayable()){
-                window.history.pushState(null, null, '?id=' + stream.getId());
-                watchStream(stream.getId());
+                window.location.href = UtilsService.getHomeUrl() + 'n-bici-n-casa-player/?id=' + stream.getId();
             } else {
                 setShowBooking(true);
                 $timeout(function(){
@@ -218,6 +218,15 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
             StreamingService.broadcast('showLogin');
         }
     };
+
+    streamingCtrl.getIntensityDescription = function(level) {
+        for(var i=0; i<streamingCtrl.intensityCatalog.length; i++){
+            if(streamingCtrl.intensityCatalog[i].level == level) {
+                return streamingCtrl.intensityCatalog[i].description;
+            }
+        }
+        return '';
+    }
 
     streamingCtrl.getSelectedStreamId = function() {
         return StreamingService.getSelectedStream() && StreamingService.getSelectedStream().getId();
@@ -233,6 +242,14 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
 
     streamingCtrl.getSelectedStreamDuration = function() {
         return StreamingService.getSelectedStream() && StreamingService.getSelectedStream().getDuration();
+    }
+
+    streamingCtrl.getSelectedStreamIntensity = function() {
+        return StreamingService.getSelectedStream() && StreamingService.getSelectedStream().getIntensity();
+    }
+
+    streamingCtrl.getSelectedStreamIntensityDescription = function() {
+        return StreamingService.getSelectedStream() && streamingCtrl.getIntensityDescription(StreamingService.getSelectedStream().getIntensity());
     }
 
     streamingCtrl.getPlayerStreamTitle = function() {
@@ -251,6 +268,10 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
         return streamingCtrl.playerStream && streamingCtrl.playerStream.getIntensity();
     }
 
+    streamingCtrl.getPlayerStreamIntensityDescription = function() {
+        return streamingCtrl.playerStream && streamingCtrl.getIntensityDescription(streamingCtrl.playerStream.getIntensity());
+    }
+
     streamingCtrl.getPlayerStreamInstructorName = function() {
         return streamingCtrl.playerStream && streamingCtrl.playerStream.getInstructorName();
     }
@@ -267,6 +288,25 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
         return streamingCtrl.playerStream && streamingCtrl.playerStream.getEndDate();
     }
 
+    streamingCtrl.showBookButton = function() {
+        return SessionService.get() && (SessionService.get().getStreamingClassesLeft() || SessionService.get().getClassesLeft());
+    }
+    
+    streamingCtrl.getBookButtonText = function() {
+        return SessionService.get() && SessionService.get().getStreamingClassesLeft() ? 'Usar clase N casa' : 'Usar clase presencial';
+    }
+
+    streamingCtrl.getOrButtonText = function() {
+        return SessionService.get() && SessionService.get().getStreamingClassesLeft() ? '' : SessionService.get().getClassesLeft() ? 'o' : '* No cuentas con clases para poder iniciar este entrenamiento';
+    }
+
+    streamingCtrl.showBuyPackButton = function() {
+        return SessionService.get() && !SessionService.get().getStreamingClassesLeft();
+    }
+
+    streamingCtrl.goToPacksPage = function() {
+        window.location.href = UtilsService.getHomeUrl() + 'compra-de-paquetes';
+    }
     /**
      * Purchase streaming access
      */
@@ -276,7 +316,7 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
             cancel : "No"
         } });
 
-        if( SessionService.get().getStreamingClassesLeft()){
+        if(SessionService.get().getStreamingClassesLeft()){
             confirmBookStream();
         } else if (SessionService.get().getClassesLeft()) {
             alertify.confirm( 'No tienes clases N casa. ¿Deseas usar tus clases presenciales?', function(e) {
@@ -285,7 +325,7 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
                 }
             });
         } else {
-            window.location.href = UtilsService.getHomeUrl() + 'compra-de-paquetes';
+            streamingCtrl.goToPacksPage();
         }
     };
 
@@ -295,7 +335,8 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
     streamingCtrl.init = function(streamId, streams, instructors) {
 
         if (streamId) {
-            watchStream(streamId);
+            getPlayerStream(streamId);
+            setShowPlayer(true);
         } else {
             setShowCatalog(true);
         }

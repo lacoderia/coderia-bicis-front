@@ -1,4 +1,4 @@
-### WordPress template
+# WordPress template
 *.log
 .htaccess
 sitemap.xml
@@ -36,7 +36,15 @@ wp-signup.php
 wp-trackback.php
 xmlrpc.php
 
+# dependencies
+/node_modules
 
-# IDE files
-.idea
+# local env files
+env.js
+
+# IntelliJ
+.idea/
+
+# MacOS
 .DS_Store
+

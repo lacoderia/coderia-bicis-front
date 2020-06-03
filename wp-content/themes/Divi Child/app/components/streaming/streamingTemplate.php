@@ -28,37 +28,39 @@
                 </div>
                 <div class="filter-container">
                     <label>Intensidad:</label>
-                    <select class="filter" ng-model="streamingCtrl.selectedIntensity">
+                    <select class="filter" ng-model="streamingCtrl.selectedIntensity" ng-options="intensity.description for intensity in streamingCtrl.intensityCatalog">
                         <option value="">Todas</option>
-                        <option value="1">Baja</option>
-                        <option value="2">Media</option>
-                        <option value="3">Alta</option>
                     </select>
                 </div>
             </span>
             <div class="streams-list">
-                <stream ng-repeat="stream in filteredStreams = (streamingCtrl.streams | streamByInstructor:streamingCtrl.selectedInstructor | streamByDuration:streamingCtrl.selectedDuration | streamByIntensity:streamingCtrl.selectedIntensity)" ng-class="{ 'featured' : stream.getFeatured() }">
+                <stream ng-repeat="stream in filteredStreams = (streamingCtrl.streams | streamByInstructor:streamingCtrl.selectedInstructor | streamByDuration:streamingCtrl.selectedDuration | streamByIntensity:streamingCtrl.selectedIntensity.level)" ng-class="{ 'featured' : stream.getFeatured() }">
                     <div>
-                        <div class="main-container" style="background-image: url({{ stream.getCover() }})">
+                        <div class="cover-container" style="background-image: url({{ stream.getCover() }})">
                             <img ng-src="{{ stream.getCover() }}" class="stream-cover" />
-                            <div class="stream-overlay" ng-if="!stream.getPlayable()">
-                                <button class="book-button button-blue" ng-click="streamingCtrl.handleStreamClick(stream)">Comprar video</button>
-                            </div>
-                            <div class="stream-overlay" ng-if="stream.getPlayable()" ng-click="streamingCtrl.handleStreamClick(stream)">
-                                <a class="play-button">
+                            <div class="stream-overlay" ng-click="streamingCtrl.handleStreamClick(stream)">
+                                <a class="stream-button locked-button" ng-if="!stream.getPlayable()">
+                                    <span class='et-pb-icon'>&#xe06c;</span>
+                                </a>
+                                <a class="stream-button play-button" ng-if="stream.getPlayable()">
                                     <span class='et-pb-icon'>&#x49;</span>
                                 </a>
                             </div>
-                            <span class="stream-intensity">
-                                <div class="biceps-icon" ng-repeat="x in [].constructor(stream.getIntensity()) track by $index"></div>
-                            </span>
                             <span class="stream-duration">{{ stream.getDuration() }}</span>
                         </div>
                         <div class="stream-description">
                             <div class="stream-name">{{ stream.getTitle() }}
                                 <span class="stream-instructor">con {{ stream.getInstructorName() }}</span>
                             </div>
-                            <div class="stream-remaining-time" ng-if="stream.getPlayable()">Tiempo restante {{ stream.getEndDate().fromNow(true) }}</div>
+                            <div class="two-column-row">
+                                <span class="stream-intensity">
+                                    <div style="margin-right: 8px">Intensidad {{ streamingCtrl.getIntensityDescription(stream.getIntensity()) }}</div>
+                                    <div class="biceps-icon" ng-repeat="x in [].constructor(stream.getIntensity()) track by $index"></div>
+                                </span>
+                                <span class="stream-remaining-time" ng-if="stream.getPlayable()">
+                                    <div style="margin-right: 8px">Tiempo restante: {{ stream.getEndDate().fromNow(true) }}</div>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </stream>
@@ -70,35 +72,33 @@
     </div>
 
     <div id="streaming-player-component" class="streaming-player-component animate-visibility" ng-show="streamingCtrl.isPlayerVisible() && streamingCtrl.playerStream">
-        <h2>{{ streamingCtrl.getPlayerStreamTitle() }}</h2>
-        <h4>con {{ streamingCtrl.getPlayerStreamInstructorName() }}</h4>
-        <stream>
+        <stream class="featured">
             <div>
-                <div class="main-container" style="background-image: url({{ streamingCtrl.getPlayerStreamCover() }})" ng-if="!streamingCtrl.getPlayerStreamPlayable()">
+                <div class="cover-container" style="background-image: url({{ streamingCtrl.getPlayerStreamCover() }})" ng-if="!streamingCtrl.getPlayerStreamPlayable()">
                     <img ng-src="{{ streamingCtrl.getPlayerStreamCover() }}" class="stream-cover" />
-                    <div class="stream-overlay" ng-if="!streamingCtrl.getPlayerStreamPlayable()">
-                        <button class="book-button button-blue" ng-click="streamingCtrl.handleStreamClick(streamingCtrl.playerStream)">Comprar video</button>
+                    <div class="stream-overlay" ng-if="!streamingCtrl.getPlayerStreamPlayable()" ng-click="streamingCtrl.handleStreamClick(streamingCtrl.playerStream)">
+                        <a class="stream-button locked-button" ng-if="!stream.getPlayable()">
+                            <span class='et-pb-icon'>&#xe06c;</span>
+                        </a>
+                        <div class="stream-remaining-time" ng-if="stream.getPlayable()">Tiempo restante: {{ stream.getEndDate().fromNow(true) }}</div>
                     </div>
-                    <span class="stream-intensity">
-                        <div class="biceps-icon" ng-repeat="x in [].constructor(streamingCtrl.getPlayerStreamIntensity()) track by $index"></div>
-                    </span>
                     <span class="stream-duration">{{ streamingCtrl.getPlayerStreamDuration() }}</span>
                 </div>
                 <div class="player-container" ng-if="streamingCtrl.getPlayerStreamPlayable()">
                     <div class="vimeo-container" ng-bind-html="streamingCtrl.getPlayerStreamEmbedCode()"></div>
-                    <div class="player-row">
-                        <span class="player-label">Tiempo restante:&nbsp;</span>
-                        <span>{{ streamingCtrl.getPlayerStreamEndDate().fromNow(true) }}</span>
+                </div>
+                <div class="stream-description">
+                    <div class="stream-name">{{ streamingCtrl.getPlayerStreamTitle() }}
+                        <span class="stream-instructor">con {{ streamingCtrl.getPlayerStreamInstructorName() }}</span>
                     </div>
-                    <div class="player-row">
-                        <span class="player-label">Intensidad:&nbsp;</span>
+                    <div class="two-column-row">
                         <span class="stream-intensity">
-                            <div class="biceps-icon" ng-repeat="x in [].constructor(streamingCtrl.getPlayerStreamIntensity()) track by $index"></div>
+                            <div style="margin-right: 8px">Intensidad {{ streamingCtrl.getPlayerStreamIntensityDescription() }}</div>
+                            <div class="biceps-icon" ng-repeat="x in [].constructor(stream.getIntensity()) track by $index"></div>
                         </span>
-                    </div>
-                    <div class="player-row">
-                        <span class="player-label">Duración:&nbsp;</span>
-                        <span>{{ streamingCtrl.getPlayerStreamDuration() }}</span>
+                        <span class="stream-remaining-time" ng-if="streamingCtrl.getPlayerStreamPlayable()">
+                            <div style="margin-right: 8px">Tiempo restante: {{ streamingCtrl.getPlayerStreamEndDate().fromNow(true) }}</div>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -106,12 +106,41 @@
     </div>
     
     <div id="streaming-booking-component" class="streaming-booking-component animate-visibility" ng-show="streamingCtrl.isBookingVisible()">
-        <h2>Verifica tu selección</h2>
+        <h2>Iniciar entrenamiento: {{ streamingCtrl.getSelectedStreamTitle() }}</h2>
         <div class="booking-info">
-            <div><span class="booking-row">Stream:</span> <span class="booking-label">{{ streamingCtrl.getSelectedStreamTitle() }}</span></div>
-            <div><span class="booking-row">Tu instructor será:</span> <span class="booking-label"><span ng-if="!streamingCtrl.getSelectedStreamInstructorName()">---</span>{{ streamingCtrl.getSelectedStreamInstructorName() }}</span></div>
-            <div><span class="booking-row">Duración:</span> <span class="booking-label">{{ streamingCtrl.getSelectedStreamDuration() }}</span></div>
+            <div class="booking-row">
+                <span class="booking-label">Instructor:</span>
+                <span class="booking-text"><span ng-if="!streamingCtrl.getSelectedStreamInstructorName()">---</span>{{ streamingCtrl.getSelectedStreamInstructorName() }}</span>
+            </div>
+            <div class="booking-row">
+                <span class="booking-label">Duración:</span>
+                <span class="booking-text">{{ streamingCtrl.getSelectedStreamDuration() }}</span>
+            </div>
+            <div class="booking-row">
+                <span class="booking-label">Intensidad:</span>
+                <div class="booking-text-container">
+                    <span class="booking-text">{{ streamingCtrl.getSelectedStreamIntensityDescription() }}</span>
+                    <span class="stream-intensity">
+                        <div class="biceps-icon" ng-repeat="x in [].constructor(streamingCtrl.getSelectedStreamIntensity()) track by $index"></div>
+                    </span>
+                </div>
+            </div>
         </div>
-        <button class="button-blue" ng-disabled="!streamingCtrl.getSelectedStreamId()" ng-click="streamingCtrl.bookStream()">Comprar ahora</button>
+        <button 
+            class="button-blue" 
+            ng-disabled="!streamingCtrl.getSelectedStreamId()" 
+            ng-click="streamingCtrl.bookStream()"
+            ng-if="streamingCtrl.showBookButton()"
+        >
+            {{ streamingCtrl.getBookButtonText() }}
+        </button>
+        <div style="margin: 8px 0">{{ streamingCtrl.getOrButtonText() }}</div>
+        <button 
+            class="button-blue" 
+            ng-click="streamingCtrl.goToPacksPage()" 
+            ng-if="streamingCtrl.showBuyPackButton()"
+        >
+            Comprar paquete
+        </button>
     </div>
 </div>

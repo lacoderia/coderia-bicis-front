@@ -16,14 +16,12 @@ var nbici = angular.module('nbici', ['angular-logger', 'duScroll', 'LocalStorage
 
 nbici.config(['localStorageServiceProvider', function(localStorageServiceProvider){
     localStorageServiceProvider.setPrefix('');
-    //localStorageServiceProvider.setStorageCookie(45, 'http://n-bici.com/');
     localStorageServiceProvider.setStorageCookie(45, '/');
     localStorageServiceProvider.setStorageCookieDomain('');
 }]);
 
 nbici.constant('ENVIRONMENT', ENVIRONMENT);
-// nbici.constant('API_URL_BASE', 'https://servicios.n-bici.com');
-nbici.constant('API_URL_BASE', 'https://backend.coderia.mx:444');
+nbici.constant('API_URL_BASE', window.__env.API_URL_BASE);
 
 nbici.constant('DEFAULT_VALUES', {
     'DAYS_OF_WEEK': ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],

@@ -26,8 +26,7 @@ function nbici_google_fonts() {
     wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Nunito:400,300,700&subset=latin', array() );
 }
 
-$api_url_base = 'https://backend.coderia.mx:444';
-// $api_url_base = 'https://servicios.n-bici.com';
+$api_url_base = get_option('api_url_base');
 $api_args = array('sslverify' => false);
 
 function get_instructors() {
@@ -244,6 +243,7 @@ function coderia_register_angular_scripts() {
     wp_register_script( 'spinner' , get_stylesheet_directory_uri() . '/lib/js/spin.js/spin.js', '', version_id() );
 
     // Application
+    wp_register_script( 'env', get_stylesheet_directory_uri() . '/app/env.js', '', version_id() );
     wp_register_script( 'app', get_stylesheet_directory_uri() . '/app/application.js', array('moment', 'timezone'), version_id() );
 
     // Custom Libraries
@@ -331,6 +331,7 @@ function coderia_enqueue_angular_scripts() {
     wp_enqueue_script( 'slick' );
 
     // Application
+    wp_enqueue_script( 'env' );
     wp_enqueue_script( 'app' );
 
     // Classes
