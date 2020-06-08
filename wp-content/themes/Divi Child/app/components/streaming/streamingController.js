@@ -297,7 +297,7 @@ nbici.controller('StreamingController', ['$scope', '$document', '$timeout', '$sc
     }
 
     streamingCtrl.getOrButtonText = function() {
-        return SessionService.get() && SessionService.get().getStreamingClassesLeft() ? '' : SessionService.get().getClassesLeft() ? 'o' : '* No cuentas con clases para poder iniciar este entrenamiento';
+        return (SessionService.get() && SessionService.get().getStreamingClassesLeft()) ? '' : (SessionService.get() && SessionService.get().getClassesLeft()) ? 'o' : '* No cuentas con clases para poder iniciar este entrenamiento';
     }
 
     streamingCtrl.showBuyPackButton = function() {
