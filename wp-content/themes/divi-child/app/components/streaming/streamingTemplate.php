@@ -36,7 +36,7 @@
             <div class="streams-list">
                 <stream ng-repeat="stream in filteredStreams = (streamingCtrl.streams | streamByInstructor:streamingCtrl.selectedInstructor | streamByDuration:streamingCtrl.selectedDuration | streamByIntensity:streamingCtrl.selectedIntensity.level)" ng-class="{ 'featured' : stream.getFeatured() }">
                     <div>
-                        <div class="cover-container" style="background-image: url({{ stream.getCover() }})">
+                        <div class="cover-container" style="background-image: url({{ stream.getCover() }})" ng-class="{ 'themed' : stream.getDescription() }">
                             <img ng-src="{{ stream.getCover() }}" class="stream-cover" />
                             <div class="stream-overlay" ng-click="streamingCtrl.handleStreamClick(stream)">
                                 <a class="stream-button locked-button" ng-if="!stream.getPlayable()">
@@ -47,8 +47,9 @@
                                 </a>
                             </div>
                             <span class="stream-duration">{{ stream.getDuration() }}</span>
+                            <div class="ribbon" ng-if="stream.getDescription()"><span>TEMÁTICA</span></div>
                         </div>
-                        <div class="stream-description">
+                        <div class="stream-info">
                             <div class="stream-name">{{ stream.getTitle() }}
                                 <span class="stream-instructor">con {{ stream.getInstructorName() }}</span>
                             </div>
@@ -61,6 +62,7 @@
                                     <div style="margin-right: 8px">Tiempo restante: {{ stream.getEndDate().fromNow(true) }}</div>
                                 </span>
                             </div>
+                            <span class="stream-description">{{ stream.getDescription() }}</span>
                         </div>
                     </div>
                 </stream>

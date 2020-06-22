@@ -3231,12 +3231,12 @@ html body div#et-top-navigation ul.nav li a:hover {
   padding: 0px 6px;
 }
 
-.streaming-component stream.featured .stream-description {
+.streaming-component stream.featured .stream-info {
   font-size: 1.4rem;
   margin-top: 14px;
 }
 
-.streaming-component stream.featured .stream-description .stream-instructor {
+.streaming-component stream.featured .stream-info .stream-instructor {
   font-size: 1.4rem;
 }
 
@@ -3245,6 +3245,10 @@ html body div#et-top-navigation ul.nav li a:hover {
   background-position: center;
   background-size: 100%;
   position: relative;
+}
+
+.streaming-component stream .cover-container.themed {
+  border: 3px solid #1adcff;
 }
 
 .streaming-component stream .cover-container .stream-cover {
@@ -3345,19 +3349,52 @@ html body div#et-top-navigation ul.nav li a:hover {
   }
 }
 
-.streaming-component stream .stream-description {
+.streaming-component stream .cover-container .ribbon {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  text-align: right;
+}
+
+.streaming-component stream .cover-container .ribbon span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #000;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 15px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  background: #1adcff;
+  background: -webkit-gradient(linear, left top, left bottom, from(#1adcff), to(#1adcff));
+  background: linear-gradient(#1adcff 0%, #1adcff 100%);
+  -webkit-box-shadow: 0 3px 10px -5px black;
+          box-shadow: 0 3px 10px -5px black;
+  padding-top: 3px;
+  position: absolute;
+  top: 19px;
+  left: -21px;
+}
+
+.streaming-component stream .stream-info {
   color: black;
   font-size: 1.2rem;
   font-weight: 600;
   margin-top: 10px;
 }
 
-.streaming-component stream .stream-description .stream-instructor {
+.streaming-component stream .stream-info .stream-instructor {
   font-size: 1.2rem;
   font-weight: 300;
 }
 
-.streaming-component stream .stream-description .two-column-row {
+.streaming-component stream .stream-info .two-column-row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3366,7 +3403,7 @@ html body div#et-top-navigation ul.nav li a:hover {
           justify-content: space-between;
 }
 
-.streaming-component stream .stream-description .stream-remaining-time {
+.streaming-component stream .stream-info .stream-remaining-time {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
@@ -3396,6 +3433,18 @@ html body div#et-top-navigation ul.nav li a:hover {
   width: 21px;
   height: 20px;
   margin: 0 2px 6px 2px;
+}
+
+.streaming-component .stream-description {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  color: #1adcff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 /**

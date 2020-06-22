@@ -1,10 +1,11 @@
 'use strict';
 
-function Stream(id, title, instructorId, instructorName, duration, intensity, playable, cover, embedCode, endDate, featured) {
+function Stream(id, title, description, instructorId, instructorName, duration, intensity, playable, cover, embedCode, endDate, featured) {
 
     // Private variables
     var _id = undefined;
     var _title = undefined;
+    var _description = undefined;
     var _instructorId = undefined;
     var _instructorName = undefined;
     var _duration = undefined;
@@ -19,6 +20,7 @@ function Stream(id, title, instructorId, instructorName, duration, intensity, pl
      *
      * @param id
      * @param title
+     * @param description
      * @param instructorId
      * @param instructorName
      * @param duration
@@ -29,9 +31,10 @@ function Stream(id, title, instructorId, instructorName, duration, intensity, pl
      * @param endDate
      * @param featured
      */
-    this.constructor = function(id, title, instructorId, instructorName, duration, intensity, playable, cover, embedCode, endDate, featured) {
+    this.constructor = function(id, title, description, instructorId, instructorName, duration, intensity, playable, cover, embedCode, endDate, featured) {
         this.setId(id);
         this.setTitle(title);
+        this.setDescription(description);
         this.setInstructorId(instructorId);
         this.setInstructorName(instructorName);
         this.setDuration(duration);
@@ -73,6 +76,22 @@ function Stream(id, title, instructorId, instructorName, duration, intensity, pl
      */
     this.getTitle = function() {
         return _title;
+    };
+
+    /**
+     *
+     * @param description
+     */
+    this.setDescription = function(description) {
+        _description = description;
+    };
+
+    /**
+     *
+     * @returns {undefined}
+     */
+    this.getDescription = function() {
+        return _description;
     };
 
     /**
@@ -220,6 +239,6 @@ function Stream(id, title, instructorId, instructorName, duration, intensity, pl
     };
 
     // Calls constructor function
-    this.constructor(id, title, instructorId, instructorName, duration, intensity, playable, cover, embedCode, endDate, featured);
+    this.constructor(id, title, description, instructorId, instructorName, duration, intensity, playable, cover, embedCode, endDate, featured);
 
 };

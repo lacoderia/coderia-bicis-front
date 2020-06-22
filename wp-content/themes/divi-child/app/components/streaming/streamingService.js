@@ -35,7 +35,8 @@ nbici.factory('StreamingService', ['$http', '$q', '$rootScope', 'SessionService'
         }
         return new Stream(
             item.id, 
-            item.title, 
+            item.title,
+            item.description,
             instructor.getId(), 
             instructor.getName(), 
             item.length, 
