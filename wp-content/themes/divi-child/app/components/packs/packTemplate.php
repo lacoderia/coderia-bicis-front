@@ -21,7 +21,7 @@
                 <span class="pack-price">{{ pack.getSpecialPrice() | currency:"$" }}</span>
                 <span class="pack-expiration">Expira en {{ pack.getExpiration() }} días</span>
                 <span class="pack-button-more">+</span>
-                <span class="tooltip">Por ser tu primera clase, recibe un precio especial</span>
+                <span class="tooltip" ng-if="packCtrl.isUserFirstClass()">Por ser tu primera clase, recibe un precio especial</span>
             </a>
             <a ng-click="packCtrl.selectPack(pack)" ng-if="!packCtrl.isSpecialPack(pack)">
                 <span class="pack-name">{{ pack.getClasses() }}</span>

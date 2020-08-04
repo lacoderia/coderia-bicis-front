@@ -77,7 +77,7 @@ nbici.factory('PackService', ['$rootScope', 'LoggerService', 'SessionService', f
         if(selectedPack){
             var isFirstPurchase = SessionService.isAuthenticated() && !SessionService.get().getLastClassPurchased()
             var forceSpecialPrice = selectedPack.getForceSpecialPrice();
-            if ((isFirstPurchase || forceSpecialPrice) && selectedPack.getSpecialPrice()) {
+            if ((isFirstPurchase || forceSpecialPrice) && selectedPack.getSpecialPrice() !== null) {
                 return selectedPack.getSpecialPrice();
             } else {
                 return selectedPack.getPrice();

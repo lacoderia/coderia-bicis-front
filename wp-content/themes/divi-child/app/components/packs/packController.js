@@ -133,13 +133,20 @@ nbici.controller('PackController', ['$scope', '$document', '$timeout', 'SessionS
 
     packCtrl.isSpecialPack = function(pack) {
         if(pack.getForceSpecialPrice()) {
-            return (pack.getSpecialPrice())? true : false;
+            return (pack.getSpecialPrice() !== null)? true : false;
         } else if(SessionService.get()){
-            return (!SessionService.get().getLastClassPurchased() && pack.getSpecialPrice())? true : false;
+            return (!SessionService.get().getLastClassPurchased() && pack.getSpecialPrice() !== null)? true : false;
         }else{
-            return (pack.getSpecialPrice())? true : false;
+            return (pack.getSpecialPrice() !== null)? true : false;
         }
     };
+
+    packCtrl.isUserFirstClass = function() {
+        if (SessionService.get() && !SessionService.get().getLastClassPurchased()) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Inits the controller
