@@ -181,6 +181,29 @@ nbici.factory('PaymentService', ['$http', '$q', '$rootScope', 'SessionService', 
             });
     };
 
+    var processWaitingListClassPayment = function(cardId, booking) {
+        var cardsServiceURL = API_URL_BASE + '/waitlists/charge';
+
+        var params = {
+            uid: cardId,
+            schedule_id: booking.classId,
+            description: booking.description,
+            price: booking.price,
+        };
+
+        return $http.post(cardsServiceURL, params)
+            .then(function(response) {
+                var data = response.data;
+                if (typeof data === 'object') {
+                    return data;
+                } else {
+                    return $q.reject(data);
+                }
+            }, function(error){
+                return $q.reject(error.data);
+            });
+    };
+
     service = {
         broadcast: broadcast,
         callPrimaryCard: callPrimaryCard,
@@ -190,6 +213,7 @@ nbici.factory('PaymentService', ['$http', '$q', '$rootScope', 'SessionService', 
         applyDiscount: applyDiscount,
         processPackPayment: processPackPayment,
         processClassPayment: processClassPayment,
+        processWaitingListClassPayment: processWaitingListClassPayment,
     };
 
     return service;

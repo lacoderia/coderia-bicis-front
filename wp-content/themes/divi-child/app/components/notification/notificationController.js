@@ -10,6 +10,7 @@ nbici.controller('NotificationController', ['$scope', 'SessionService', 'UtilsSe
 
     notificationCtrl.homeUrl;
     notificationCtrl.purchaseMessage;
+    notificationCtrl.bookingTitle;
     notificationCtrl.bookingMessage;
     notificationCtrl.bookingBicycleNumber;
 
@@ -43,6 +44,14 @@ nbici.controller('NotificationController', ['$scope', 'SessionService', 'UtilsSe
     };
 
     /**
+     *
+     */
+    notificationCtrl.isWaitingList = function() {
+        var booking = localStorageService.get('nbc-booking');
+        return booking && !booking.bicycleNumber;
+    };
+
+    /**
      * Inits the controller
      */
     notificationCtrl.init = function() {
@@ -66,11 +75,15 @@ nbici.controller('NotificationController', ['$scope', 'SessionService', 'UtilsSe
 
         // Booking notification
         var booking = localStorageService.get('nbc-booking');
+        var date = booking ? moment(booking.date) : undefined;
 
         if (booking && booking.bicycleNumber) {
-            var date = moment(booking.date);
-            notificationCtrl.bookingMessage = booking.instructor + ' te espera el día ' + date.date() + ' de ' + DEFAULT_VALUES.LABEL_MONTHS[date.month()] + ' a las ' + date.format('H:mm') + ' hrs.';
+            notificationCtrl.bookingMessage = date ? booking.instructor + ' te espera el día ' + date.date() + ' de ' + DEFAULT_VALUES.LABEL_MONTHS[date.month()] + ' a las ' + date.format('H:mm') + ' hrs.' : '';
             notificationCtrl.bookingBicycleNumber = 'Tu bici es la número ' + booking.bicycleNumber;
+            notificationCtrl.bookingTitle = '¡Tu reservación está lista!';
+        } else {
+            notificationCtrl.bookingMessage = date ? 'Te anotaste en la lista de espera con ' + booking.instructor + ', el día ' + date.date() + ' de ' + DEFAULT_VALUES.LABEL_MONTHS[date.month()] + ' a las ' + date.format('H:mm') + ' hrs.' : '';
+            notificationCtrl.bookingTitle = 'Lista de espera';
         }
 
         SocialService.configTwitter();

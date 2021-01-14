@@ -254,6 +254,14 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
         }
     };
 
+    /**
+     *
+     * @returns {*}
+     */
+    paymentCtrl.isWaitingListBooking = function() {
+        return !BookingService.getBooking().availableSeats;
+    };
+
     paymentCtrl.processPayment = function(){
 
         if(paymentCtrl.hasPrimaryCard()) {
@@ -264,7 +272,6 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
                 chargeClassPayment(paymentCtrl.primaryCard.getUid());
             }
             
-
         } else if (paymentCtrl.newCardForm.$valid) {
 
             var card = {
@@ -367,7 +374,8 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
         usSpinnerService.spin('full-spinner');
         paymentCtrl.processingPayment = true;
 
-        PaymentService.processClassPayment(cardId, booking)
+        if (booking.availableSeats) {
+            PaymentService.processClassPayment(cardId, booking)
             .then(function(data) {
                 if(data.appointment) {
                     paymentCtrl.primaryCard = PaymentService.getPrimaryCard();
@@ -395,6 +403,37 @@ nbici.controller('PaymentController', ['$rootScope', '$scope', '$timeout', '$doc
                 usSpinnerService.stop('full-spinner');
                 paymentCtrl.processingPayment = false;
             });
+        } else {
+            PaymentService.processWaitingListClassPayment(cardId, booking)
+            .then(function(data) {
+                if(data.waitlist) {
+                    paymentCtrl.primaryCard = PaymentService.getPrimaryCard();
+                    
+                    var bookingResume = {
+                        'id': data.waitlist.id,
+                        'date': data.waitlist.schedule.datetime,
+                        'instructor': data.waitlist.schedule.instructor.first_name,
+                        'showMenu': data.waitlist.show_menu,
+                    };
+                    localStorageService.set('nbc-booking', bookingResume);
+
+                    window.location.href = UtilsService.getHomeUrl() + 'reserva-success';
+                }
+            }, function(error) {
+                if(error && error.errors){
+                    var errorMessage = '<strong>¡Oops! Hubo un error al procesar el pago</strong>, ' + error.errors[0].title;
+                    alertify.log(errorMessage, 'error', 5000);
+                } else {
+                    var errorMessage = '<strong>¡Oops! Hubo un error al procesar el pago</strong>, por favor intenta de nuevo';
+                    alertify.log(errorMessage, 'error', 5000);
+                }
+                LoggerService.$logger().error(error);
+                usSpinnerService.stop('full-spinner');
+                paymentCtrl.processingPayment = false;
+            });
+        }
+
+        
     };
 
     var getAvailableYears = function(){

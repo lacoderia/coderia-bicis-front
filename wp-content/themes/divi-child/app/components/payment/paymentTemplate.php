@@ -9,7 +9,10 @@
 <div id="payment" class="payment-component animate-visibility" ng-controller="PaymentController as paymentCtrl" ng-init="paymentCtrl.init(<?php echo htmlspecialchars(json_encode(get_option('conekta_public'))); ?>)" ng-show="paymentCtrl.isVisible()">
 
     <h2 ng-if="paymentCtrl.getPurchaseType() == 'pack'">Verifica y compra tu paquete</h2>
-    <h2 ng-if="paymentCtrl.getPurchaseType() == 'class'" class="payment-title">Verifica y paga tu clase</h2>
+    <h2 ng-if="paymentCtrl.getPurchaseType() == 'class'" class="payment-title">
+        <span ng-if="!paymentCtrl.isWaitingListBooking()">Verifica y paga tu clase</span>
+        <span ng-if="paymentCtrl.isWaitingListBooking()">Verifica y únete a la lista de espera</span>
+    </h2>
     <p>Paga con tu cuenta principal registrada o agrega una nueva tarjeta de crédito.</p>
     <div class="payment-wrapper">
         <div class="payment-section">
@@ -157,7 +160,8 @@
                 </div>
                 <div ng-if="paymentCtrl.getPurchaseType() == 'class'">
                     <div class="cart-item-name">1 clase "{{ paymentCtrl.getBooking().description }}"</div>
-                    <div class="cart-item-caption">* Esta es una clase especial y tiene un costo adicional a los créditos que ya tienes. Si cancelas, se te devolverá la clase como un crédito normal. Por favor completa el pago para que tu reservación quede lista.</div>
+                    <div class="cart-item-caption" ng-if="!paymentCtrl.isWaitingListBooking()">* Esta es una clase especial y tiene un costo adicional a los créditos que ya tienes. Si cancelas, se te devolverá la clase como un crédito normal. Por favor completa el pago para que tu reservación quede lista.</div>
+                    <div class="cart-item-caption" ng-if="paymentCtrl.isWaitingListBooking()">* Esta es una clase especial y tiene un costo adicional a los créditos que ya tienes. Si no se libera una bici, se te devolverá el crédito para que puedas comprar paquetes de clases. Por favor completa el pago para unirte a la lista de espera.</div>
                 </div>
 
                 <div class="cart-subsection cart-total">Total: {{ paymentCtrl.getPurchaseTotal() | currency:"$" }}</div>

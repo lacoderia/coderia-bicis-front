@@ -43,7 +43,7 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
     /**
      * Listens for 'close classroom' event
      */
-    $scope.$on('closeClassroom', function($event){
+    $scope.$on('classroomClosed', function($event){
         setShowCalendar(true);
         $timeout(function(){
             var calendarContainer = angular.element(document.getElementById('calendar'));

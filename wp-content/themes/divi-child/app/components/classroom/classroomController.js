@@ -16,6 +16,12 @@ nbici.controller('ClassroomController', ['$rootScope', '$scope', '$timeout', '$d
     var showClassroom = false;
 
     /**
+     * Determines if the classroom is full
+     * @type {boolean}
+     */
+    var classroomIsFull = false;
+
+    /**
      *
      * @type {Bike}
      */
@@ -27,6 +33,16 @@ nbici.controller('ClassroomController', ['$rootScope', '$scope', '$timeout', '$d
      */
     $scope.$on('spinningClassBooked', function($event, spinningClass){
         getClassroomDistribution();
+    });
+
+    /**
+     * Listens for 'spinningClassSelected' event from calendarController
+     */
+    $scope.$on('spinningClassSelected', function($event, spinningClass) {
+        if (spinningClass.getAvailableSeats() == 0) {
+            classroomIsFull = true;
+            ClassroomService.broadcast('bikeSelected');
+        }
     });
 
     /**
@@ -85,6 +101,13 @@ nbici.controller('ClassroomController', ['$rootScope', '$scope', '$timeout', '$d
         setShowClassroom(true);
     });
 
+    /**
+     * Listens for 'closeClassroom' event
+     */
+    $scope.$on('closeClassroom', function(){
+        classroomCtrl.closeClassroom();
+    });
+
     // Function definition
 
     /**
@@ -100,7 +123,7 @@ nbici.controller('ClassroomController', ['$rootScope', '$scope', '$timeout', '$d
      */
     classroomCtrl.closeClassroom = function (){
         setShowClassroom(false);
-        $rootScope.$broadcast('closeClassroom');
+        $rootScope.$broadcast('classroomClosed');
     };
 
     /**
@@ -109,6 +132,14 @@ nbici.controller('ClassroomController', ['$rootScope', '$scope', '$timeout', '$d
      */
     var setShowClassroom = function(show) {
         showClassroom = show;
+    };
+
+    /**
+     * Determines if the classroom is full
+     * @returns {boolean}
+     */
+    classroomCtrl.isFull = function() {
+        return classroomIsFull;
     };
 
     /**
@@ -149,7 +180,7 @@ nbici.controller('ClassroomController', ['$rootScope', '$scope', '$timeout', '$d
             });
     };
 
-    /**
+     /**
      *
      * @param bike
      */
@@ -201,6 +232,14 @@ nbici.controller('ClassroomController', ['$rootScope', '$scope', '$timeout', '$d
      */
     classroomCtrl.getInstructorName = function () {
         return (BookingService.getBooking().instructorId ? InstructorService.getInstructorById(BookingService.getBooking().instructorId).getName() : '');
+    };
+
+    /**
+     * Gets the number of available seats
+     * @returns {*}
+     */
+    classroomCtrl.getAvailableSeats = function () {
+        return BookingService.getBooking().availableSeats;
     };
 
     /**

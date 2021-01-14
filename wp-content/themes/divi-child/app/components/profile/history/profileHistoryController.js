@@ -60,7 +60,7 @@ nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'Login
         }, 0);
     });
 
-    $scope.$on('closeClassroom', function($event){
+    $scope.$on('classroomClosed', function($event){
         historyCtrl.selectAppointment(undefined);
         setShowCalendar(true);
 

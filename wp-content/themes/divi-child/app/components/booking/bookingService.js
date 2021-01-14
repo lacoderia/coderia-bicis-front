@@ -11,6 +11,7 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
         isFree: undefined,
         price: undefined,
         description: undefined,
+        availableSeats: undefined,
     };
 
     var _appointment = undefined;
@@ -43,6 +44,7 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
         booking.isFree = spinningClass.getIsFree();
         booking.price = spinningClass.getPrice();
         booking.description = spinningClass.getDescription();
+        booking.availableSeats = spinningClass.getAvailableSeats();
     };
 
     /**
@@ -82,6 +84,7 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
             isFree: undefined,
             price: undefined,
             description: undefined,
+            availableSeats: undefined,
         };
     };
 
@@ -97,6 +100,22 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
 
         var bookingServiceURL = API_URL_BASE + '/appointments/book';
         return $http.post(bookingServiceURL, { schedule_id: booking.classId, bicycle_number: booking.bike.getNumber() })
+            .then(function(response) {
+                var data = response.data;
+                if (typeof data === 'object') {
+                    return data;
+                } else {
+                    return $q.reject(data);
+                }
+            }, function(error){
+                return $q.reject(error.data);
+            });
+    };
+
+    var bookWaitingList = function() {
+
+        var bookingServiceURL = API_URL_BASE + '/waitlists';
+        return $http.post(bookingServiceURL, { schedule_id: booking.classId })
             .then(function(response) {
                 var data = response.data;
                 if (typeof data === 'object') {
@@ -134,6 +153,7 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
         unsetBike: unsetBike,
         resetBooking: resetBooking,
         bookClass: bookClass,
+        bookWaitingList: bookWaitingList,
         setAppointment: setAppointment,
         editClass: editClass
     };

@@ -57,7 +57,7 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
     /**
      * Listens for 'close classroom' event
      */
-    $scope.$on('closeClassroom', function($event){
+    $scope.$on('classroomClosed', function($event){
         setShowCalendar(true);
         $timeout(function(){
             var calendarContainer = angular.element(document.getElementById('calendar'));
@@ -139,7 +139,7 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
      */
     calendarCtrl.isClassEnabled = function(spinningClass) {
         var now = moment();
-        return (spinningClass.getDate().diff(now, 'minutes') >= 1) && (spinningClass.getAvailableSeats() > 0);
+        return (spinningClass.getDate().diff(now, 'minutes') >= 1);
     };
 
     /**

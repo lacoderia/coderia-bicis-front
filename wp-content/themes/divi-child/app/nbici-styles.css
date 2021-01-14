@@ -2001,6 +2001,22 @@ html body div#et-top-navigation ul.nav li a:hover {
   text-decoration: line-through;
 }
 
+.booking-component .actions {
+  text-align: center;
+}
+
+.booking-component .actions .close-link {
+  color: #1adcff;
+  font-weight: bold;
+  display: inline-block;
+  font-family: Nunito, Helvetica, Arial, Lucida, sans-serif;
+  margin: 1rem auto 2rem;
+}
+
+.booking-component .actions .close-link:hover {
+  color: #e3da19;
+}
+
 .profile-component {
   margin: 0;
 }

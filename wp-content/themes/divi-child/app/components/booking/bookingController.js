@@ -1,6 +1,6 @@
 'use strict';
 
-nbici.controller('BookingController', ['$scope', '$timeout', '$document', 'SessionService', 'BookingService', 'ClassroomService', 'InstructorService', 'UtilsService', 'LoggerService', 'localStorageService', 'usSpinnerService', function($scope, $timeout, $document, SessionService, BookingService, ClassroomService, InstructorService, UtilsService, LoggerService, localStorageService, usSpinnerService){
+nbici.controller('BookingController', ['$rootScope', '$scope', '$timeout', '$document', 'SessionService', 'BookingService', 'ClassroomService', 'InstructorService', 'UtilsService', 'LoggerService', 'localStorageService', 'usSpinnerService', function($rootScope, $scope, $timeout, $document, SessionService, BookingService, ClassroomService, InstructorService, UtilsService, LoggerService, localStorageService, usSpinnerService){
 
     // Private variables
     /**
@@ -18,7 +18,7 @@ nbici.controller('BookingController', ['$scope', '$timeout', '$document', 'Sessi
     /**
      * Listens for 'close classroom' event
      */
-    $scope.$on('closeClassroom', function($event){
+    $scope.$on('classroomClosed', function($event){
         BookingService.resetBooking();
         setShowBooking(false);
     });
@@ -71,6 +71,13 @@ nbici.controller('BookingController', ['$scope', '$timeout', '$document', 'Sessi
     /**
      *
      */
+    $scope.$on('bookWaitingList', function() {
+        bookingCtrl.bookWaitingList();
+    });
+
+    /**
+     *
+     */
     $scope.$on('closePacksView', function(){
         setShowBooking(true);
     });
@@ -109,6 +116,29 @@ nbici.controller('BookingController', ['$scope', '$timeout', '$document', 'Sessi
     };
 
     /**
+     * Determines if the classroom is full and waiting list must be shown
+     * @returns {boolean}
+     */
+    bookingCtrl.classroomIsFull = function() {
+        return BookingService.getBooking().availableSeats === undefined || BookingService.getBooking().availableSeats == 0;
+    };
+
+    /**
+     * Closes the classroom view
+     */
+    bookingCtrl.closeClassroom = function (){
+        $rootScope.$broadcast('closeClassroom');
+    };
+
+    /**
+     * 
+     */
+    bookingCtrl.isWaitingListOpen = function() {
+        var now = moment();
+        return BookingService.getBooking().date && BookingService.getBooking().date.diff(now, 'hours') >= 12;
+    };
+
+    /**
      *
      * @param show
      */
@@ -135,7 +165,7 @@ nbici.controller('BookingController', ['$scope', '$timeout', '$document', 'Sessi
     /**
      * Books the class
      */
-    bookingCtrl.book = function() {
+    bookingCtrl.book = function() {        
         if(SessionService.isAuthenticated()) {
             if( BookingService.getBooking().price ) {
 
@@ -182,6 +212,59 @@ nbici.controller('BookingController', ['$scope', '$timeout', '$document', 'Sessi
             }
         } else {
             BookingService.broadcast('showLogin', 'book');
+        }
+    };
+
+    /**
+     * Books the class
+     */
+    bookingCtrl.bookWaitingList = function() {
+        if(SessionService.isAuthenticated()) {
+            if( BookingService.getBooking().price ) {
+
+                BookingService.broadcast('userNeedsToPayClass');
+
+            } else if( BookingService.getBooking().isFree || SessionService.get().getClassesLeft()){
+
+                usSpinnerService.spin('full-spinner');
+
+                BookingService.bookWaitingList()
+                    .then(function(data) {
+                        if(data.waitlist) {
+
+                            if(!data.waitlist.schedule.free) {
+                                SessionService.get().setClassesLeft(SessionService.get().getClassesLeft() - 1);
+                            }
+
+                            var bookingResume = {
+                                'id': data.waitlist.id,
+                                'bicycleNumber': data.waitlist.bicycle_number,
+                                'date': data.waitlist.schedule.datetime,
+                                'instructor': data.waitlist.schedule.instructor.first_name,
+                                'showMenu': data.waitlist.show_menu,
+                            };
+                            localStorageService.set('nbc-booking', bookingResume);
+
+                            window.location.href = UtilsService.getHomeUrl() + 'reserva-success';
+                        }
+                    }, function(error) {
+                        if(error && error.errors){
+                            var errorMessage = "<strong>¡Oops!</strong> " + error.errors[0].title;
+                            alertify.log(errorMessage, 'error', 5000);
+                        } else {
+                            var errorMessage = '<strong>¡Oops! Error al reservar la clase</strong>, por favor intenta de nuevo';
+                            alertify.log(errorMessage, 'error', 5000);
+                        }
+                        LoggerService.$logger().error(error);
+                        usSpinnerService.stop('full-spinner');
+                    });
+
+            } else {
+                BookingService.broadcast('userNeedsClasses');
+                usSpinnerService.spin('full-spinner');
+            }
+        } else {
+            BookingService.broadcast('showLogin', 'bookWaitingList');
         }
     };
 
