@@ -44,7 +44,7 @@ nbici.factory('CalendarService', ['$rootScope', 'LoggerService', 'DEFAULT_VALUES
                     instructor.setName(item.instructor.first_name);
                 }
 
-                var spinningClass = new SpinningClass(item.id, instructor.getId(), instructor.getName(), item.room.id, item.datetime, item.available_seats, item.description, item.free, (item.alternate_instructor ? item.alternate_instructor.first_name : ''), item.price);
+                var spinningClass = new SpinningClass(item.id, instructor.getId(), instructor.getName(), item.room.id, item.datetime, item.available_seats, item.description, item.free, (item.alternate_instructor ? item.alternate_instructor.first_name : ''), item.price, item.room.venue.style);
                 list.push(spinningClass);
             }
         } catch(error){
@@ -118,11 +118,15 @@ nbici.factory('CalendarService', ['$rootScope', 'LoggerService', 'DEFAULT_VALUES
         return (day>=0 && day<=7)? DEFAULT_VALUES.DAYS_OF_WEEK[day]: -1;
     };
 
+    var getVenues = function(data) {
+        return data.venues;
+    }
 
     service = {
         broadcast: broadcast,
         getWeek: getWeek,
-        getDayOfWeek: getDayOfWeek
+        getDayOfWeek: getDayOfWeek,
+        getVenues: getVenues,
     };
 
     return service;

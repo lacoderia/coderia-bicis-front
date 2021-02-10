@@ -53,6 +53,11 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
      */
     calendarCtrl.week = [];
 
+    /**
+     *
+     */
+    calendarCtrl.venues = [];
+
     // Listeners
     /**
      * Listens for 'close classroom' event
@@ -213,6 +218,13 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
 
     /**
      *
+     */
+    calendarCtrl.getDistributionStyles = function(spinningClass) {
+        return spinningClass.getDistributionStyles();
+    }
+
+    /**
+     *
      * @param instructors
      * @param classes
      */
@@ -225,6 +237,9 @@ nbici.controller('CalendarController', ['$scope', '$document', '$timeout', 'Cale
 
         // Getting the current calendar week
         calendarCtrl.week = CalendarService.getWeek(weeklySchedule);
+
+        // Getting venue catalog
+        calendarCtrl.venues = CalendarService.getVenues(weeklySchedule);
 
         // Setting the default day (for mobile mode view)
         if(calendarCtrl.week.length > 0){

@@ -24,6 +24,12 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
     instructorProfileCtrl.instructorProfile = undefined;
 
     /**
+     *
+     * @type {Array}
+     */
+    instructorProfileCtrl.venues = [];
+
+    /**
      * Determines if the classroom container is shown
      * @returns {boolean}
      */
@@ -135,12 +141,21 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
     };
 
     /**
+     *
+     */
+    instructorProfileCtrl.getDistributionStyles = function(spinningClass) {
+        return spinningClass.getDistributionStyles();
+    }
+
+    /**
      * Initialize controller
      * @param instructors
      */
     instructorProfileCtrl.init = function(instructor) {
         InstructorProfileService.setInstructorProfile(instructor);
         instructorProfileCtrl.instructorProfile = InstructorProfileService.getInstructorProfile();
+
+        instructorProfileCtrl.venues = InstructorProfileService.getVenues(instructor);
     };
 
 }]);

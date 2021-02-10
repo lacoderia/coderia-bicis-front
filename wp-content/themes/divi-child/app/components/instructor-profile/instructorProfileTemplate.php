@@ -23,6 +23,12 @@
         <div class="calendar-filters">
             <span class="week-label">{{ ::instructorProfileCtrl.getWeekLabel() }}</span>
         </div>
+        <div class="color-dictionary">
+            <div class="color" ng-repeat="venue in instructorProfileCtrl.venues">
+                <div class="color-name">{{ ::venue.name }}</div>
+                <div class="color-circle" style="{{ ::venue.style }}"></div>
+            </div>
+        </div>
         <ul>
             <li ng-repeat="day in instructorProfileCtrl.instructorProfile.week" class="day" ng-if="instructorProfileCtrl.hasClassesAvailable(day)">
                 <div class="day-label">
@@ -30,7 +36,7 @@
                     <span class="day-title"> {{ ::instructorProfileCtrl.getDayOfWeek(day.getDate().day()) }}</span>
                 </div>
                 <ul>
-                    <li ng-repeat="spinningClass in day.getSpinningClasses() | orderByDate" class="class" ng-class="{ 'enabled': instructorProfileCtrl.isClassEnabled(spinningClass), 'disabled': !instructorProfileCtrl.isClassEnabled(spinningClass), 'selectable': instructorProfileCtrl.isClassSelectable(spinningClass), 'warning': spinningClass.getAvailableSeats() <= 10, 'special': spinningClass.getDescription() }">
+                    <li ng-repeat="spinningClass in day.getSpinningClasses() | orderByDate" style="{{instructorProfileCtrl.getDistributionStyles(spinningClass)}}" class="class" ng-class="{ 'enabled': instructorProfileCtrl.isClassEnabled(spinningClass), 'disabled': !instructorProfileCtrl.isClassEnabled(spinningClass), 'selectable': instructorProfileCtrl.isClassSelectable(spinningClass), 'warning': spinningClass.getAvailableSeats() <= 10, 'special': spinningClass.getDescription() }">
                         <div ng-click="instructorProfileCtrl.selectSpinningClass(spinningClass)">
                             <div class="ribbon" ng-if="::spinningClass.getIsFree()"><span>GRATIS</span></div>
                             <span class="class-description" ng-if="instructorProfileCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>

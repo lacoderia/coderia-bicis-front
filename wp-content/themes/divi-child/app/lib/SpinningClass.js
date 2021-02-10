@@ -1,6 +1,6 @@
 'use strict';
 
-function SpinningClass(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price) {
+function SpinningClass(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price, distributionStyles) {
 
     // Private variables
     var _id = undefined;
@@ -13,6 +13,7 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
     var _isFree = undefined;
     var _alternateInstructor = undefined;
     var _price = undefined;
+    var _distributionStyles = '';
 
     /**
      *
@@ -26,8 +27,9 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
      * @param isFree
      * @param alternateInstructor
      * @param price
+     * @param distributionStyles
      */
-    this.constructor = function(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price) {
+    this.constructor = function(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price, distributionStyles) {
         this.setId(id);
         this.setInstructorId(instructorId);
         this.setInstructorName(instructorName);
@@ -38,6 +40,7 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         this.setIsFree(isFree);
         this.setAlternateInstructor(alternateInstructor);
         this.setPrice(price);
+        this.setDistributionStyles(distributionStyles);
     };
 
     /**
@@ -184,7 +187,7 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         _alternateInstructor = alternateInstructor;
     };
 
-     /**
+    /**
      *
      * @returns {undefined}
      */
@@ -198,6 +201,22 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
      */
     this.setPrice = function (price) {
         _price = price;
+    };
+
+    /**
+     *
+     * @returns {undefined}
+     */
+    this.getDistributionStyles = function () {
+        return _distributionStyles;
+    };
+
+    /**
+     *
+     * @param price
+     */
+    this.setDistributionStyles = function (distributionStyles) {
+        _distributionStyles = distributionStyles;
     };
 
     /**
@@ -223,6 +242,6 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         return message;
     };
 
-    this.constructor(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price);
+    this.constructor(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price, distributionStyles);
 
 };

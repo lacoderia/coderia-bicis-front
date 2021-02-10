@@ -42,7 +42,7 @@ nbici.factory('InstructorProfileService', ['$http', '$q', '$rootScope', 'LoggerS
             var weeklySchedules = instructorProfile.weekly_schedules.schedules;
             for (var i = 0; i < weeklySchedules.length; i++) {
                 var item = weeklySchedules[i];
-                var spinningClass = new SpinningClass(item.id, instructorProfile.id, instructorProfile.first_name, item.room.id, item.datetime, item.available_seats, item.description, item.free, (item.alternate_instructor ? item.alternate_instructor.first_name : ''), item.price);
+                var spinningClass = new SpinningClass(item.id, instructorProfile.id, instructorProfile.first_name, item.room.id, item.datetime, item.available_seats, item.description, item.free, (item.alternate_instructor ? item.alternate_instructor.first_name : ''), item.price, item.room.venue.style);
                 spinningClasses.push(spinningClass);
             }
 
@@ -78,11 +78,16 @@ nbici.factory('InstructorProfileService', ['$http', '$q', '$rootScope', 'LoggerS
         return (day>=0 && day<=7)? DEFAULT_VALUES.DAYS_OF_WEEK[day]: -1;
     };
 
+    var getVenues = function(data) {
+        return data.weekly_schedules.venues;
+    }
+
     return {
         broadcast: broadcast,
         getInstructorProfile: getInstructorProfile,
         setInstructorProfile: setInstructorProfile,
-        getDayOfWeek: getDayOfWeek
+        getDayOfWeek: getDayOfWeek,
+        getVenues: getVenues,
     };
 
 }]);
