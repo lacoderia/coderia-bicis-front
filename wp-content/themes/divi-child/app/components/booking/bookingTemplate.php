@@ -16,9 +16,9 @@
             <button class="button-blue" ng-click="bookingCtrl.book()" ng-if="bookingCtrl.userHasClassesLeft()">Reserva ahora</button>
         </div>
         <div ng-if="bookingCtrl.isBookingPaymentOptionsVisible()">
-            <button class="button-blue" ng-click="bookingCtrl.book()" ng-if="bookingCtrl.userHasClassesLeft()">Reserva con créditos</button>
+            <button class="button-blue" ng-click="bookingCtrl.book()" ng-if="bookingCtrl.userHasClassesLeft()">Reservar con créditos</button>
             <div ng-if="bookingCtrl.userHasClassesLeft()">o</div>
-            <button class="button-blue" ng-click="bookingCtrl.showBookingPaymentForm()">Reserva con cargo a mi tarjeta</button>
+            <button class="button-blue" ng-click="bookingCtrl.showBookingPaymentForm()">Reservar a precio especial early bird</button>
         </div>
     </div>
     <div ng-if="bookingCtrl.classroomIsFull()">
