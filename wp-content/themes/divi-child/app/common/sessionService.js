@@ -22,7 +22,8 @@ nbici.factory('SessionService', ['$http', '$rootScope', 'localStorageService', f
             couponValue: user.coupon_value,
             balance: user.credits,
             isTestUser: user.test,
-            linked: user.linked
+            linked: user.linked,
+            referenceClassCost: parseInt(user.reference_class_cost),
         }
         
         _session = new User(session);

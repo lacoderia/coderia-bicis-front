@@ -16,6 +16,7 @@ function User(user) {
     var _balance = 0;
     var _isTestUser = false;
     var _linked = false;
+    var _referenceClassCost = undefined;
 
     /**
      *
@@ -32,6 +33,7 @@ function User(user) {
      * @param couponValue
      * @param isTestUser
      * @param linked
+     * @param referenceClassCost
      */
 
     this.constructor = function(user) {
@@ -48,6 +50,7 @@ function User(user) {
         this.setBalance(user.balance);
         this.setIsTestUser(user.isTestUser);
         this.setLinked(user.linked);
+        this.setReferenceClassCost(user.referenceClassCost);
     };
 
     /**
@@ -266,6 +269,22 @@ function User(user) {
      */
     this.setLinked = function(linked){
         _linked = linked;
+    };
+
+    /**
+     *
+     * @returns {undefined}
+     */
+     this.getReferenceClassCost = function(){
+        return _referenceClassCost;
+    };
+
+    /**
+     *
+     * @param referenceClassCost
+     */
+    this.setReferenceClassCost = function(referenceClassCost){
+        _referenceClassCost = referenceClassCost;
     };
 
     this.constructor(user);
