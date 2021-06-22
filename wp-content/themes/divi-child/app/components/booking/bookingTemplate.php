@@ -13,7 +13,7 @@
             <div><span class="booking-instructor">Tu instructor será:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getInstructorName()">---</span>{{ bookingCtrl.getInstructorName() }}</span></div>
         </div>
         <div ng-if="!bookingCtrl.isBookingPaymentOptionsVisible()">
-            <button class="button-blue" ng-click="bookingCtrl.book()" ng-if="bookingCtrl.userHasClassesLeft()">Reserva ahora</button>
+            <button class="button-blue" ng-click="bookingCtrl.book()">Reserva ahora</button>
         </div>
         <div ng-if="bookingCtrl.isBookingPaymentOptionsVisible()">
             <button class="button-blue" ng-click="bookingCtrl.book()" ng-if="bookingCtrl.userHasClassesLeft()">Reservar con créditos</button>
