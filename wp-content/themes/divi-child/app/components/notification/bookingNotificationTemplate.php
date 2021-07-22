@@ -6,6 +6,18 @@
     <h1 style="text-align: center; color: #fff;">{{ notificationCtrl.bookingTitle }}</h1>
     <h3 style="text-align: center; color: #fff;">{{ notificationCtrl.bookingMessage }}</h3>
     <h3 style="text-align: center; color: #fff;">{{ notificationCtrl.bookingBicycleNumber }}</h3>
+    <?php
+        $start_date = "{{notificationCtrl.bookingDate}}";
+        $end_date = "{{notificationCtrl.bookingDate}}";
+        $description = "{{notificationCtrl.bookingCalendarDescription}}";
+    ?>
+
+    <div style="text-align: center; margin: 16px 0;">
+        <a href="<?php echo get_feed_link('calendar'); ?>?startdate=<?php echo $start_date; ?>&enddate=<?php echo $end_date; ?>&description=<?php echo $description; ?>">
+            <img alt="Calendar icon" src="<?php echo get_stylesheet_directory_uri() . '/images/calendar-icon.png'; ?>" width="50">
+        </a>
+    </div>
+
     <div ng-show="notificationCtrl.isBookingTipsVisible()">
         <p style="text-align: center; color: #fff;">Te recordamos:</p>
         <ul style="margin: auto; max-width: 400px;" ng-if="!notificationCtrl.isWaitingList()">

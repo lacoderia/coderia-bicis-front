@@ -13,6 +13,8 @@ nbici.controller('NotificationController', ['$scope', 'SessionService', 'UtilsSe
     notificationCtrl.bookingTitle;
     notificationCtrl.bookingMessage;
     notificationCtrl.bookingBicycleNumber;
+    notificationCtrl.bookingCalendarDescription;
+    notificationCtrl.bookingDate;
 
     /**
      * Determines if the booking tips container is shown
@@ -77,13 +79,17 @@ nbici.controller('NotificationController', ['$scope', 'SessionService', 'UtilsSe
         var booking = localStorageService.get('nbc-booking');
         var date = booking ? moment(booking.date) : undefined;
 
+        notificationCtrl.bookingDate = booking.date;
+
         if (booking && booking.bicycleNumber) {
             notificationCtrl.bookingMessage = date ? booking.instructor + ' te espera el día ' + date.date() + ' de ' + DEFAULT_VALUES.LABEL_MONTHS[date.month()] + ' a las ' + date.format('H:mm') + ' hrs.' : '';
             notificationCtrl.bookingBicycleNumber = 'Tu bici es la número ' + booking.bicycleNumber;
             notificationCtrl.bookingTitle = '¡Tu reservación está lista!';
+            notificationCtrl.bookingCalendarDescription = 'Clase de Nbici con ' + booking.instructor;
         } else {
             notificationCtrl.bookingMessage = date ? 'Te anotaste en la lista de espera con ' + booking.instructor + ', el día ' + date.date() + ' de ' + DEFAULT_VALUES.LABEL_MONTHS[date.month()] + ' a las ' + date.format('H:mm') + ' hrs.' : '';
             notificationCtrl.bookingTitle = 'Lista de espera';
+            notificationCtrl.bookingCalendarDescription = 'Clase de Nbici (En lista de espera)';
         }
 
         SocialService.configTwitter();
