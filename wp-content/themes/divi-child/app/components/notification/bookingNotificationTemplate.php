@@ -12,9 +12,10 @@
         $description = "{{notificationCtrl.bookingCalendarDescription}}";
     ?>
 
-    <div style="text-align: center; margin: 16px 0;">
+    <div style="text-align: center; margin: 16px 0 32px 0;">
         <a href="<?php echo get_feed_link('calendar'); ?>?startdate=<?php echo $start_date; ?>&enddate=<?php echo $end_date; ?>&description=<?php echo $description; ?>">
             <img alt="Calendar icon" src="<?php echo get_stylesheet_directory_uri() . '/images/calendar-icon.png'; ?>" width="50">
+            <div style="color: white;">Agregar a mi calendario</div>
         </a>
     </div>
 
