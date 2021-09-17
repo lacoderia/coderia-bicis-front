@@ -152,7 +152,7 @@ nbici.controller('BookingController', ['$rootScope', '$scope', '$timeout', '$doc
     var setShowBooking = function(show) {
         if(show) {
             if( BookingService.getBooking().price ) {
-                if (BookingService.getBooking().price <= SessionService.get().getReferenceClassCost()) {
+                if (SessionService.get() && BookingService.getBooking().price <= SessionService.get().getReferenceClassCost()) {
                     // Show payment or direct booking options
                     setShowBookingPaymentOptions(true);
                 }
