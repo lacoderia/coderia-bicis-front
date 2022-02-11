@@ -44,7 +44,20 @@ nbici.factory('CalendarService', ['$rootScope', 'LoggerService', 'DEFAULT_VALUES
                     instructor.setName(item.instructor.first_name);
                 }
 
-                var spinningClass = new SpinningClass(item.id, instructor.getId(), instructor.getName(), item.room.id, item.datetime, item.available_seats, item.description, item.free, (item.alternate_instructor ? item.alternate_instructor.first_name : ''), item.price, item.room.venue.style);
+                var spinningClass = new SpinningClass(
+                                        item.id, 
+                                        instructor.getId(), 
+                                        instructor.getName(), 
+                                        item.room.id, 
+                                        item.datetime, 
+                                        item.available_seats, 
+                                        item.schedule_type ? item.schedule_type.id : undefined, 
+                                        item.schedule_type ? item.schedule_type.name : '', 
+                                        item.description, 
+                                        item.free, 
+                                        (item.alternate_instructor ? item.alternate_instructor.first_name : ''), 
+                                        item.price, 
+                                        item.room.venue.style);
                 list.push(spinningClass);
             }
         } catch(error){

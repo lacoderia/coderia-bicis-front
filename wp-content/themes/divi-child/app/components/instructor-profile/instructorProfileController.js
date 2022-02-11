@@ -25,6 +25,13 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
 
     /**
      *
+     * @type {undefined}
+     * @private
+     */
+     instructorProfileCtrl.selectedClassType = undefined;
+
+    /**
+     *
      * @type {Array}
      */
     instructorProfileCtrl.venues = [];
@@ -151,11 +158,14 @@ nbici.controller('InstructorProfileController', ['$scope', '$timeout', '$documen
      * Initialize controller
      * @param instructors
      */
-    instructorProfileCtrl.init = function(instructor) {
+    instructorProfileCtrl.init = function(instructor, classTypes) {
         InstructorProfileService.setInstructorProfile(instructor);
         instructorProfileCtrl.instructorProfile = InstructorProfileService.getInstructorProfile();
 
         instructorProfileCtrl.venues = InstructorProfileService.getVenues(instructor);
+
+        // Setting class types
+        instructorProfileCtrl.classTypes = classTypes;
     };
 
 }]);

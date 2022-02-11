@@ -11,6 +11,7 @@
             <div><span class="booking-date">Fecha de reservación:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getBooking().date">---</span>{{ bookingCtrl.getBooking().date.local('es').format('MMMM D, h:mm a') }}</span></div>
             <div><span class="booking-bike">No. de bici:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getBooking().bike.getNumber()">---</span>{{ bookingCtrl.getBooking().bike.getNumber() }}</span></div>
             <div><span class="booking-instructor">Tu instructor será:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getInstructorName()">---</span>{{ bookingCtrl.getInstructorName() }}</span></div>
+            <div ng-if="bookingCtrl.getBooking().classTypeName"><span class="booking-instructor">Tipo de clase:</span> <span class="booking-label">{{ bookingCtrl.getBooking().classTypeName }}</span></div>
         </div>
         <div ng-if="!bookingCtrl.isBookingPaymentOptionsVisible()">
             <button class="button-blue" ng-click="bookingCtrl.book()">Reserva ahora</button>
@@ -32,6 +33,7 @@
                 <div><span class="booking-date">Fecha de reservación:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getBooking().date">---</span>{{ bookingCtrl.getBooking().date.local('es').format('MMMM D, h:mm a') }}</span></div>
                 <div><span class="booking-bike">No. de bici:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getBooking().bike.getNumber()">---</span>{{ bookingCtrl.getBooking().bike.getNumber() }}</span></div>
                 <div><span class="booking-instructor">Tu instructor será:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getInstructorName()">---</span>{{ bookingCtrl.getInstructorName() }}</span></div>
+                <div ng-if="bookingCtrl.getBooking().classTypeName"><span class="booking-instructor">Tipo de clase:</span> <span class="booking-label">{{ bookingCtrl.getBooking().classTypeName }}</span></div>
             </div>
             <button class="button-blue" ng-click="bookingCtrl.book()" style="margin: 20px 0;">Unirme a la lista de espera</button>
             <div class="actions">

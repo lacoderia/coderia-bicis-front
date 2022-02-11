@@ -5,7 +5,7 @@
 
 ?>
 
-<div ng-controller="InstructorProfileController as instructorProfileCtrl" ng-init="instructorProfileCtrl.init(<?php echo get_instructor_profile(); ?>)" class="instructors-profile-component animate-visibility">
+<div ng-controller="InstructorProfileController as instructorProfileCtrl" ng-init="instructorProfileCtrl.init(<?php echo get_instructor_profile() . ', ' . get_class_types(); ?>)" class="instructors-profile-component animate-visibility">
 
     <instructor>
         <bio>
@@ -21,7 +21,15 @@
         <h2 class="et_pb_text_align_center">Reserva tu lugar con {{ instructorProfileCtrl.instructorProfile.first_name }}</h2>
         <p class="et_pb_text_align_center">Selecciona un horario</p>
         <div class="calendar-filters">
-            <span class="week-label">{{ ::instructorProfileCtrl.getWeekLabel() }}</span>
+            <div class="week-label">{{ ::instructorProfileCtrl.getWeekLabel() }}</div>
+            <div class="week-filters">
+                <div class="filter-container">
+                    <label>Tipo de Clase:</label>
+                    <select class="filter" ng-model="instructorProfileCtrl.selectedClassType" ng-options="classType.name for classType in instructorProfileCtrl.classTypes track by classType.id">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="color-dictionary">
             <div class="color" ng-repeat="venue in instructorProfileCtrl.venues">
@@ -36,10 +44,11 @@
                     <span class="day-title"> {{ ::instructorProfileCtrl.getDayOfWeek(day.getDate().day()) }}</span>
                 </div>
                 <ul>
-                    <li ng-repeat="spinningClass in day.getSpinningClasses() | orderByDate" style="{{instructorProfileCtrl.getDistributionStyles(spinningClass)}}" class="class" ng-class="{ 'enabled': instructorProfileCtrl.isClassEnabled(spinningClass), 'disabled': !instructorProfileCtrl.isClassEnabled(spinningClass), 'selectable': instructorProfileCtrl.isClassSelectable(spinningClass), 'warning': spinningClass.getAvailableSeats() <= 10, 'special': spinningClass.getDescription() }">
+                    <li ng-repeat="spinningClass in day.getSpinningClasses() | classByType:instructorProfileCtrl.selectedClassType | orderByDate" style="{{instructorProfileCtrl.getDistributionStyles(spinningClass)}}" class="class" ng-class="{ 'enabled': instructorProfileCtrl.isClassEnabled(spinningClass), 'disabled': !instructorProfileCtrl.isClassEnabled(spinningClass), 'selectable': instructorProfileCtrl.isClassSelectable(spinningClass), 'warning': spinningClass.getAvailableSeats() <= 10, 'special': spinningClass.getDescription() }">
                         <div ng-click="instructorProfileCtrl.selectSpinningClass(spinningClass)">
                             <div class="ribbon" ng-if="::spinningClass.getIsFree()"><span>GRATIS</span></div>
                             <span class="class-description" ng-if="instructorProfileCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>
+                            <span class="class-type" ng-if="instructorProfileCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getClassTypeName() }}</span>
                             <span class="class-time">{{ ::spinningClass.getDate().format('H:mm')}}</span>
                             <span class="class-title">{{ ::spinningClass.getAvailableSeatsMessage(true) }}</span>
                         </div>

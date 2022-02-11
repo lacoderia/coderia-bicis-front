@@ -24,7 +24,8 @@
 
       .week-label
         display: table-cell
-        font-size: 1.2rem
+        font-size: 1.4rem
+        font-weight: 700
         width: 50%
 
         @media screen and (max-width: $screen-xs-max)
@@ -36,6 +37,7 @@
 
       .week-filters
         display: table-cell
+        margin-bottom: 24px
         text-align: right
         width: 50%
 
@@ -43,6 +45,9 @@
           display: block
           text-align: center
           width: 100%
+
+        .filter-container
+          margin-bottom: 6px
 
         select
           margin-left: 0.4rem
@@ -136,7 +141,13 @@
               background: $color-pink-1
 
               .class-description
+                background: $color-pink-1
                 color: black
+                opacity: 1
+
+              .class-type
+                color: black
+                opacity: 0
 
               icon
                 color: $color-yellow-1
@@ -146,6 +157,30 @@
 
         .class-description
           color: $color-pink-1
+          bottom: 0px
+          overflow: hidden
+          padding: 0 2px
+          position: absolute
+          font-size: 0.7rem
+          font-weight: bold
+          line-height: 10px
+          left: 50%
+          opacity: 0
+          padding: 6px 0
+          transform: translateX(-50%)
+          transition: ease 0.5s
+          width: 100%
+
+          @media screen and (max-width: $screen-xs-max)
+            bottom: auto
+            left: auto
+            max-width: 100px
+            right: 4%
+            transform: translateY(-50%)
+            text-align: left
+            top: 50%
+
+        .class-type
           bottom: 6px
           overflow: hidden
           padding: 0 2px
@@ -154,7 +189,9 @@
           font-weight: bold
           line-height: 10px
           left: 50%
+          opacity: 1
           transform: translateX(-50%)
+          transition: ease 0.5s
           width: 100%
 
           @media screen and (max-width: $screen-xs-max)

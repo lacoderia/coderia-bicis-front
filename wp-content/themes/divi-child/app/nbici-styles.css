@@ -568,7 +568,8 @@ html body div#et-top-navigation ul.nav li a:hover {
 
 .calendar-component .calendar .calendar-filters .week-label {
   display: table-cell;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 700;
   width: 50%;
 }
 
@@ -584,6 +585,7 @@ html body div#et-top-navigation ul.nav li a:hover {
 
 .calendar-component .calendar .calendar-filters .week-filters {
   display: table-cell;
+  margin-bottom: 24px;
   text-align: right;
   width: 50%;
 }
@@ -594,6 +596,10 @@ html body div#et-top-navigation ul.nav li a:hover {
     text-align: center;
     width: 100%;
   }
+}
+
+.calendar-component .calendar .calendar-filters .week-filters .filter-container {
+  margin-bottom: 6px;
 }
 
 .calendar-component .calendar .calendar-filters .week-filters select {
@@ -732,7 +738,14 @@ html body div#et-top-navigation ul.nav li a:hover {
 }
 
 .calendar-component .calendar > ul .class.enabled.special:hover .class-description {
+  background: #D662DB;
   color: black;
+  opacity: 1;
+}
+
+.calendar-component .calendar > ul .class.enabled.special:hover .class-type {
+  color: black;
+  opacity: 0;
 }
 
 .calendar-component .calendar > ul .class.enabled.special:hover icon {
@@ -745,6 +758,37 @@ html body div#et-top-navigation ul.nav li a:hover {
 
 .calendar-component .calendar > ul .class .class-description {
   color: #D662DB;
+  bottom: 0px;
+  overflow: hidden;
+  padding: 0 2px;
+  position: absolute;
+  font-size: 0.7rem;
+  font-weight: bold;
+  line-height: 10px;
+  left: 50%;
+  opacity: 0;
+  padding: 6px 0;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  -webkit-transition: ease 0.5s;
+  transition: ease 0.5s;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .calendar-component .calendar > ul .class .class-description {
+    bottom: auto;
+    left: auto;
+    max-width: 100px;
+    right: 4%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    text-align: left;
+    top: 50%;
+  }
+}
+
+.calendar-component .calendar > ul .class .class-type {
   bottom: 6px;
   overflow: hidden;
   padding: 0 2px;
@@ -753,13 +797,16 @@ html body div#et-top-navigation ul.nav li a:hover {
   font-weight: bold;
   line-height: 10px;
   left: 50%;
+  opacity: 1;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
+  -webkit-transition: ease 0.5s;
+  transition: ease 0.5s;
   width: 100%;
 }
 
 @media screen and (max-width: 768px) {
-  .calendar-component .calendar > ul .class .class-description {
+  .calendar-component .calendar > ul .class .class-type {
     bottom: auto;
     left: auto;
     max-width: 100px;
@@ -1084,7 +1131,7 @@ html body div#et-top-navigation ul.nav li a:hover {
   margin-bottom: 35px;
   position: relative;
   text-align: center;
-  top: 50px;
+  top: 10px;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   width: 100px;
@@ -1270,6 +1317,7 @@ html body div#et-top-navigation ul.nav li a:hover {
 
 .classroom-component .actions {
   text-align: center;
+  margin-top: 10px;
 }
 
 .classroom-component .actions .close-link {
@@ -1586,6 +1634,7 @@ html body div#et-top-navigation ul.nav li a:hover {
 }
 
 .instructors-profile-component {
+  font-family: Nunito, Helvetica, Arial, Lucida, sans-serif;
   margin: 1rem auto 0;
   width: 100%;
 }
@@ -1658,11 +1707,51 @@ html body div#et-top-navigation ul.nav li a:hover {
 }
 
 .instructors-profile-component .calendar .calendar-filters {
+  display: table;
   margin: 1.4rem 0 0 0;
+  padding: 0 0.4rem;
+  width: 100%;
 }
 
 .instructors-profile-component .calendar .week-label {
-  font-size: 1.2rem;
+  display: table-cell;
+  font-size: 1.4rem;
+  font-weight: 700;
+  width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  .instructors-profile-component .calendar .week-label {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.instructors-profile-component .calendar .week-filters {
+  display: table-cell;
+  margin-bottom: 24px;
+  text-align: right;
+  width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  .instructors-profile-component .calendar .week-filters {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.instructors-profile-component .calendar .week-filters .filter-container {
+  margin-bottom: 6px;
+}
+
+.instructors-profile-component .calendar .week-filters select {
+  margin-left: 0.4rem;
+  width: 150px;
 }
 
 .instructors-profile-component .calendar .color-dictionary {
@@ -1738,7 +1827,7 @@ html body div#et-top-navigation ul.nav li a:hover {
   margin: 0 0.4rem 0.4rem 0;
   max-width: 142px;
   overflow: hidden;
-  padding: 1.4rem 0.4rem;
+  padding: 1.7rem 0.4rem;
   position: relative;
   text-align: center;
   -webkit-transition: ease 0.5s;
@@ -1792,7 +1881,14 @@ html body div#et-top-navigation ul.nav li a:hover {
 }
 
 .instructors-profile-component .calendar > ul > li ul li.class.enabled.special:hover .class-description {
+  background: #D662DB;
   color: black;
+  opacity: 1;
+}
+
+.instructors-profile-component .calendar > ul > li ul li.class.enabled.special:hover .class-type {
+  color: black;
+  opacity: 0;
 }
 
 .instructors-profile-component .calendar > ul > li ul li.class.enabled.special:hover icon {
@@ -1815,11 +1911,39 @@ html body div#et-top-navigation ul.nav li a:hover {
   position: absolute;
   font-size: 0.7rem;
   font-weight: bold;
-  line-height: 10px;
+  line-height: 1.1;
   left: 50%;
+  opacity: 0;
+  padding: 6px 0;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
+  -webkit-transition: ease 0.5s;
+  transition: ease 0.5s;
   width: 100%;
+}
+
+.instructors-profile-component .calendar > ul > li ul li.class .class-type {
+  bottom: 6px;
+  overflow: hidden;
+  padding: 0 2px;
+  position: absolute;
+  font-size: 0.7rem;
+  font-weight: bold;
+  line-height: 10px;
+  left: 50%;
+  opacity: 1;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  -webkit-transition: ease 0.5s;
+  transition: ease 0.5s;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .instructors-profile-component .calendar > ul > li ul li.class .class-type {
+    bottom: 6px;
+    text-align: center;
+  }
 }
 
 .instructors-profile-component .calendar > ul > li ul li.class .class-title {

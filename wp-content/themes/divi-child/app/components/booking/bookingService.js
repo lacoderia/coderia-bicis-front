@@ -8,6 +8,7 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
         date: undefined,
         bike: undefined,
         instructorId: undefined,
+        classTypeName: undefined,
         isFree: undefined,
         price: undefined,
         description: undefined,
@@ -41,6 +42,7 @@ nbici.factory('BookingService', ['$http', '$q', '$rootScope', 'API_URL_BASE', fu
         booking.classroomId = spinningClass.getClassroomId();
         booking.date = spinningClass.getDate();
         booking.instructorId = spinningClass.getInstructorId();
+        booking.classTypeName = spinningClass.getClassTypeName();
         booking.isFree = spinningClass.getIsFree();
         booking.price = spinningClass.getPrice();
         booking.description = spinningClass.getDescription();

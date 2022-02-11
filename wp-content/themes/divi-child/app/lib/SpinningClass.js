@@ -1,6 +1,6 @@
 'use strict';
 
-function SpinningClass(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price, distributionStyles) {
+function SpinningClass(id, instructorId, instructorName, classroomId, date, availableSeats, classTypeId, classTypeName, description, isFree, alternateInstructor, price, distributionStyles) {
 
     // Private variables
     var _id = undefined;
@@ -9,6 +9,8 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
     var _classroomId = undefined;
     var _date = undefined;
     var _availableSeats = undefined;
+    var _classTypeId = undefined;
+    var _classTypeName = '';
     var _description = undefined;
     var _isFree = undefined;
     var _alternateInstructor = undefined;
@@ -23,19 +25,23 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
      * @param classroomId
      * @param date
      * @param availableSeats
+     * @param classTypeId
+     * @param classTypeName
      * @param description
      * @param isFree
      * @param alternateInstructor
      * @param price
      * @param distributionStyles
      */
-    this.constructor = function(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price, distributionStyles) {
+    this.constructor = function(id, instructorId, instructorName, classroomId, date, availableSeats, classTypeId, classTypeName, description, isFree, alternateInstructor, price, distributionStyles) {
         this.setId(id);
         this.setInstructorId(instructorId);
         this.setInstructorName(instructorName);
         this.setClassroomId(classroomId);
         this.setDate(date);
         this.setAvailableSeats(availableSeats);
+        this.setClassTypeId(classTypeId);
+        this.setClassTypeName(classTypeName);
         this.setDescription(description);
         this.setIsFree(isFree);
         this.setAlternateInstructor(alternateInstructor);
@@ -159,6 +165,38 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
      *
      * @returns {undefined}
      */
+     this.getClassTypeId = function () {
+        return _classTypeId;
+    };
+
+    /**
+     *
+     * @param classTypeId
+     */
+    this.setClassTypeId = function (classTypeId) {
+        _classTypeId = classTypeId;
+    };
+
+    /**
+     *
+     * @returns {undefined}
+     */
+     this.getClassTypeName = function () {
+        return _classTypeName;
+    };
+
+    /**
+     *
+     * @param classTypeName
+     */
+    this.setClassTypeName = function (classTypeName) {
+        _classTypeName = classTypeName;
+    };
+
+    /**
+     *
+     * @returns {undefined}
+     */
     this.getIsFree = function () {
         return _isFree;
     };
@@ -242,6 +280,6 @@ function SpinningClass(id, instructorId, instructorName, classroomId, date, avai
         return message;
     };
 
-    this.constructor(id, instructorId, instructorName, classroomId, date, availableSeats, description, isFree, alternateInstructor, price, distributionStyles);
+    this.constructor(id, instructorId, instructorName, classroomId, date, availableSeats, classTypeId, classTypeName, description, isFree, alternateInstructor, price, distributionStyles);
 
 };

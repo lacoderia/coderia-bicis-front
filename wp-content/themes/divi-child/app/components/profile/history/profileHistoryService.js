@@ -37,7 +37,28 @@ nbici.factory('HistoryService', ['$http', '$q', '$rootScope', 'LoggerService', '
         try {
             for (var i=0; i<appointments.length; i++) {
                 var item = appointments[i];
-                var appointment = new Appointment(item.id, item.schedule.instructor.first_name, item.status, item.bicycle_number, item.start, new SpinningClass(item.schedule.id, item.schedule.instructor.id, item.schedule.instructor.first_name, item.schedule.room_id, item.schedule.datetime, undefined, undefined, undefined, (item.schedule.alternate_instructor ? item.schedule.alternate_instructor.first_name : ''), undefined, ''));
+                var appointment = new Appointment(
+                                    item.id, 
+                                    item.schedule.instructor.first_name, 
+                                    item.status, 
+                                    item.bicycle_number, 
+                                    item.start, 
+                                    new SpinningClass(
+                                        item.schedule.id, 
+                                        item.schedule.instructor.id, 
+                                        item.schedule.instructor.first_name, 
+                                        item.schedule.room_id, 
+                                        item.schedule.datetime, 
+                                        undefined, // available seats
+                                        item.schedule.schedule_type ? item.schedule.schedule_type.id : undefined, 
+                                        item.schedule.schedule_type ? item.schedule.schedule_type.name : '', 
+                                        undefined, // description
+                                        undefined, // free
+                                        (item.schedule.alternate_instructor ? item.schedule.alternate_instructor.first_name : ''), 
+                                        undefined, // price
+                                        ''         // venue
+                                    )
+                                );
                 list.push(appointment);
             }
 

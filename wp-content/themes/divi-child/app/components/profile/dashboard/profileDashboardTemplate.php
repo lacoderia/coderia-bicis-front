@@ -50,6 +50,10 @@
                             <span class="label">Instructor:</span>
                             <span class="data">{{ ::appointment.getInstructorName() }}</span>
                         </div>
+                        <div class="bike-info-container" ng-if="appointment.getSpinningClass().getClassTypeName()">
+                            <span class="label">Tipo:</span>
+                            <span class="data">{{ ::appointment.getSpinningClass().getClassTypeName() }}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="actions-overlay animate-visibility" ng-show="historyCtrl.isSelectedAppointment(appointment)">

@@ -5,20 +5,26 @@
 
 ?>
 
-<div id="calendar" ng-controller="CalendarController as calendarCtrl" ng-init="calendarCtrl.init(<?php echo get_instructors() . ', ' . get_weekly_schedule(); ?>)" ng-show="calendarCtrl.isVisible()" class="calendar-component animate-visibility">
+<div id="calendar" ng-controller="CalendarController as calendarCtrl" ng-init="calendarCtrl.init(<?php echo get_weekly_schedule() . ', ' . get_instructors() . ', ' . get_class_types(); ?>)" ng-show="calendarCtrl.isVisible()" class="calendar-component animate-visibility">
     <h2>Reserva tu lugar</h2>
     <p class="et_pb_text_align_center">Selecciona un horario</p>
     <div class="calendar">
         <div class="calendar-filters">
-            <span class="week-label">{{ ::calendarCtrl.getWeekLabel() }}</span>
-            <span class="week-filters">
-                <div>
+            <div class="week-label">{{ ::calendarCtrl.getWeekLabel() }}</div>
+            <div class="week-filters">
+                <div class="filter-container">
                     <label>Instructor:</label>
                     <select class="filter" ng-model="calendarCtrl.selectedInstructor" ng-options="instructor.getName() for instructor in calendarCtrl.instructors track by instructor.getId()">
                         <option value="">Todos</option>
                     </select>
                 </div>
-            </span>
+                <div class="filter-container">
+                    <label>Tipo de Clase:</label>
+                    <select class="filter" ng-model="calendarCtrl.selectedClassType" ng-options="classType.name for classType in calendarCtrl.classTypes track by classType.id">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="color-dictionary">
             <div class="color" ng-repeat="venue in calendarCtrl.venues">
@@ -35,10 +41,11 @@
                     <span class="day-label"> {{ ::calendarCtrl.getDayOfWeek(day.getDate().day()) }}</span>
                 </div>
                 <ul>
-                    <li ng-repeat="spinningClass in day.getSpinningClasses() | classByInstructor:calendarCtrl.selectedInstructor | orderByDate" style="{{calendarCtrl.getDistributionStyles(spinningClass)}}" class="class" ng-class="{ 'enabled': calendarCtrl.isClassEnabled(spinningClass), 'disabled': !calendarCtrl.isClassEnabled(spinningClass), 'selectable': calendarCtrl.isClassSelectable(spinningClass), 'special': spinningClass.getDescription() }">
+                    <li ng-repeat="spinningClass in day.getSpinningClasses() | classByInstructor:calendarCtrl.selectedInstructor | classByType:calendarCtrl.selectedClassType | orderByDate" style="{{calendarCtrl.getDistributionStyles(spinningClass)}}" class="class" ng-class="{ 'enabled': calendarCtrl.isClassEnabled(spinningClass), 'disabled': !calendarCtrl.isClassEnabled(spinningClass), 'selectable': calendarCtrl.isClassSelectable(spinningClass), 'special': spinningClass.getDescription() }">
                         <div ng-click="calendarCtrl.selectSpinningClass(spinningClass)">
                             <div class="ribbon" ng-if="::spinningClass.getIsFree()"><span>GRATIS</span></div>
                             <span class="class-description" ng-if="calendarCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>
+                            <span class="class-type" ng-if="calendarCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getClassTypeName() }}</span>
                             <span class="class-instructor">{{ ::spinningClass.getInstructorName() }}</span>
                             <span class="class-time">{{ ::spinningClass.getDate().format('H:mm')}}</span>
                             <span class="class-title">{{ ::spinningClass.getAvailableSeatsMessage() }}</span>

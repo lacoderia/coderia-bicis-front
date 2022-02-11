@@ -115,7 +115,7 @@ nbici.controller('HistoryController', ['$scope', '$timeout', '$document', 'Login
      */
     historyCtrl.isAppointmentEnabled = function(appointment) {
         var now = moment();
-        return appointment.getDate().diff(now, 'hours') >= 12 || (SessionService.get() && SessionService.get().getIsTestUser());
+        return appointment.getDate().diff(now, 'hours') >= 11 || (SessionService.get() && SessionService.get().getIsTestUser());
     };
 
 

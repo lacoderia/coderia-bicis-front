@@ -46,6 +46,23 @@ function get_instructors() {
 
 }
 
+function get_class_types() {
+    global $api_url_base, $api_args;
+    $data['class_types'] = array();
+
+    $url = $api_url_base.'/schedule_types';
+    $request = new WP_Http;
+    $result = $request->get( $url, $api_args );
+    if( wp_remote_retrieve_response_code($result) == '200' || wp_remote_retrieve_response_code($result) == '304' ){
+        $json = json_decode( $result['body'], true );
+        if( isset($json['schedule_types']) ){
+            $data['class_types'] = $json['schedule_types'];
+        }
+    }
+    return htmlspecialchars(json_encode($data['class_types']));
+
+}
+
 function get_packs() {
     global $api_url_base, $api_args;
     $data['packs'] = array();
@@ -260,6 +277,7 @@ function coderia_register_angular_scripts() {
 
     // Filters
     wp_register_script( 'ClassByInstructorFilter', get_stylesheet_directory_uri() . '/app/common/classByInstructorFilter.js', '', version_id() );
+    wp_register_script( 'ClassByTypeFilter', get_stylesheet_directory_uri() . '/app/common/classByTypeFilter.js', '', version_id() );
     wp_register_script( 'OrderByDateFilter', get_stylesheet_directory_uri() . '/app/common/orderByDateFilter.js', '', version_id() );
     wp_register_script( 'StreamByInstructorFilter', get_stylesheet_directory_uri() . '/app/common/streamByInstructorFilter.js', '', version_id() );
     wp_register_script( 'StreamByDurationFilter', get_stylesheet_directory_uri() . '/app/common/streamByDurationFilter.js', '', version_id() );
@@ -342,6 +360,7 @@ function coderia_enqueue_angular_scripts() {
 
     // Filters
     wp_enqueue_script( 'ClassByInstructorFilter' );
+    wp_enqueue_script( 'ClassByTypeFilter' );
     wp_enqueue_script( 'OrderByDateFilter' );
     wp_enqueue_script( 'StreamByInstructorFilter' );
     wp_enqueue_script( 'StreamByDurationFilter' );
