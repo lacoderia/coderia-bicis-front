@@ -75,7 +75,7 @@
         </div>
     </div>
     <div ng-hide="smoothiesCtrl.isPurchaseAvailable()">
-        <h1 style="text-align: center; color: #fff;">La barra Dafit no abrirá este día</h1>
+        <h1 style="text-align: center; color: #fff;">La barra Viasanna no abrirá este día</h1>
         <p style="text-align: center; color: #fff;">Lamentamos cualquier inconveniente.</p>
     </div>
 </div>

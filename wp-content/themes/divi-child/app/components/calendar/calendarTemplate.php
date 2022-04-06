@@ -70,7 +70,7 @@
             </li>
         </ul>
         <ul ng-if="calendarCtrl.isMobile()" class="classes-container">
-            <li ng-repeat="spinningClass in calendarCtrl.selectedDay.getSpinningClasses() | classByInstructor:calendarCtrl.selectedInstructor | orderByDate" style="{{calendarCtrl.getDistributionStyles(spinningClass)}}" class="class" ng-class="{ 'enabled': calendarCtrl.isClassEnabled(spinningClass), 'disabled': !calendarCtrl.isClassEnabled(spinningClass), 'selectable': calendarCtrl.isClassSelectable(spinningClass), 'special': spinningClass.getDescription() }">
+            <li ng-repeat="spinningClass in calendarCtrl.selectedDay.getSpinningClasses() | classByInstructor:calendarCtrl.selectedInstructor | classByType:calendarCtrl.selectedClassType | orderByDate" style="{{calendarCtrl.getDistributionStyles(spinningClass)}}" class="class" ng-class="{ 'enabled': calendarCtrl.isClassEnabled(spinningClass), 'disabled': !calendarCtrl.isClassEnabled(spinningClass), 'selectable': calendarCtrl.isClassSelectable(spinningClass), 'special': spinningClass.getDescription() }">
                 <div ng-click="calendarCtrl.selectSpinningClass(spinningClass)">
                     <div class="ribbon" ng-if="::spinningClass.getIsFree()"><span>GRATIS</span></div>
                     <span class="class-description" ng-if="calendarCtrl.isClassEnabled(spinningClass)">{{ ::spinningClass.getDescription() }}</span>
