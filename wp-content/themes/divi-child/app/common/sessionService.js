@@ -24,6 +24,7 @@ nbici.factory('SessionService', ['$http', '$rootScope', 'localStorageService', f
             isTestUser: user.test,
             linked: user.linked,
             referenceClassCost: parseInt(user.reference_class_cost),
+            acceptedWaiver: user.accept_document,
         }
         
         _session = new User(session);

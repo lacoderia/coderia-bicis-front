@@ -27,6 +27,7 @@ function nbici_google_fonts() {
 }
 
 $api_url_base = get_option('api_url_base');
+//$api_url_base = 'https://servicios.n-bici.com/';
 $api_args = array('sslverify' => false);
 
 function get_instructors() {

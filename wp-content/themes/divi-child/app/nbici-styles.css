@@ -2141,6 +2141,29 @@ html body div#et-top-navigation ul.nav li a:hover {
   margin-right: 0;
 }
 
+.booking-component .booking-info .booking-waiver {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 24px;
+  font-weight: normal;
+}
+
+.booking-component .booking-info .booking-waiver a {
+  font-weight: bold;
+}
+
+.booking-component .booking-info .booking-waiver input {
+  margin-right: 15px;
+  width: 15px;
+}
+
 .booking-component .booking-date, .booking-component .booking-bike, .booking-component .booking-instructor {
   display: table-cell;
   font-size: 1em;
@@ -4932,5 +4955,31 @@ iframe[height='1'] {
 
 .slick-next {
   right: 0px !important;
+}
+
+.footer-bottom-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.footer-bottom-container .et-social-facebook {
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .footer-bottom-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
 }
 /*# sourceMappingURL=nbici-styles.css.map */

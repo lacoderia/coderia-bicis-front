@@ -20,6 +20,12 @@ nbici.controller('BookingController', ['$rootScope', '$scope', '$timeout', '$doc
      */
      var showBookingPaymentOptions = false;
 
+    /**
+     * Determines if the user has checked the waiver checkbox
+     * @type {boolean}
+     */
+    bookingCtrl.waiverChecked = false;
+
     // Listeners
     /**
      * Listens for 'close classroom' event
@@ -177,6 +183,14 @@ nbici.controller('BookingController', ['$rootScope', '$scope', '$timeout', '$doc
 
     bookingCtrl.userHasClassesLeft = function() {
         return Boolean(SessionService.get().getClassesLeft());
+    }
+
+    bookingCtrl.userHasAcceptedWaiver = function() {
+        return SessionService.get() && Boolean(SessionService.get().getAcceptedWaiver());
+    }
+
+    bookingCtrl.userHasCheckedWaiver = function() {
+        return bookingCtrl.userHasAcceptedWaiver() || bookingCtrl.waiverChecked;
     }
 
     /**

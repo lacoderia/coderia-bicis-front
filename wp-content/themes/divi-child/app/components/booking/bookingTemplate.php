@@ -12,9 +12,14 @@
             <div><span class="booking-bike">No. de bici:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getBooking().bike.getNumber()">---</span>{{ bookingCtrl.getBooking().bike.getNumber() }}</span></div>
             <div><span class="booking-instructor">Tu instructor será:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getInstructorName()">---</span>{{ bookingCtrl.getInstructorName() }}</span></div>
             <div ng-if="bookingCtrl.getBooking().classTypeName"><span class="booking-instructor">Tipo de clase:</span> <span class="booking-label">{{ bookingCtrl.getBooking().classTypeName }}</span></div>
+            <div ng-if="!bookingCtrl.userHasAcceptedWaiver()" class="booking-waiver">
+                <input type="checkbox" ng-model="bookingCtrl.waiverChecked">
+                    Acepto los&nbsp;<a href="https://n-bici.com/wp-content/themes/divi-child/docs/terminos-y-condiciones-nbici-20220427.pdf" target="_blank">Términos y condiciones</a>
+                </input>
+            </div>
         </div>
         <div ng-if="!bookingCtrl.isBookingPaymentOptionsVisible()">
-            <button class="button-blue" ng-click="bookingCtrl.book()">Reserva ahora</button>
+            <button class="button-blue" ng-click="bookingCtrl.book()" ng-disabled="!bookingCtrl.userHasCheckedWaiver()">Reserva ahora</button>
         </div>
         <div ng-if="bookingCtrl.isBookingPaymentOptionsVisible()">
             <button class="button-blue" ng-click="bookingCtrl.book()" ng-if="bookingCtrl.userHasClassesLeft()">Reservar con créditos</button>
@@ -34,8 +39,13 @@
                 <div><span class="booking-bike">No. de bici:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getBooking().bike.getNumber()">---</span>{{ bookingCtrl.getBooking().bike.getNumber() }}</span></div>
                 <div><span class="booking-instructor">Tu instructor será:</span> <span class="booking-label"><span ng-if="!bookingCtrl.getInstructorName()">---</span>{{ bookingCtrl.getInstructorName() }}</span></div>
                 <div ng-if="bookingCtrl.getBooking().classTypeName"><span class="booking-instructor">Tipo de clase:</span> <span class="booking-label">{{ bookingCtrl.getBooking().classTypeName }}</span></div>
+                <div ng-if="!bookingCtrl.userHasAcceptedWaiver()" class="booking-waiver">
+                <input type="checkbox" ng-model="bookingCtrl.waiverChecked">
+                    Acepto los&nbsp;<a href="https://n-bici.com/wp-content/themes/divi-child/docs/terminos-y-condiciones-nbici-20220427.pdf" target="_blank">Términos y condiciones</a>
+                </input>
             </div>
-            <button class="button-blue" ng-click="bookingCtrl.book()" style="margin: 20px 0;">Unirme a la lista de espera</button>
+            </div>
+            <button class="button-blue" ng-click="bookingCtrl.book()" style="margin: 20px 0;" ng-disabled="!bookingCtrl.userHasCheckedWaiver()">Unirme a la lista de espera</button>
             <div class="actions">
                 <a href="" class="close-link" ng-click="bookingCtrl.closeClassroom()">Regresar a los horarios</a>
             </div>

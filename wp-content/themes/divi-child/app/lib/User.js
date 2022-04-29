@@ -17,6 +17,7 @@ function User(user) {
     var _isTestUser = false;
     var _linked = false;
     var _referenceClassCost = undefined;
+    var _acceptedWaiver = false;
 
     /**
      *
@@ -34,6 +35,7 @@ function User(user) {
      * @param isTestUser
      * @param linked
      * @param referenceClassCost
+     * @param acceptedWaiver
      */
 
     this.constructor = function(user) {
@@ -51,6 +53,7 @@ function User(user) {
         this.setIsTestUser(user.isTestUser);
         this.setLinked(user.linked);
         this.setReferenceClassCost(user.referenceClassCost);
+        this.setAcceptedWaiver(user.acceptedWaiver);
     };
 
     /**
@@ -285,6 +288,22 @@ function User(user) {
      */
     this.setReferenceClassCost = function(referenceClassCost){
         _referenceClassCost = referenceClassCost;
+    };
+
+    /**
+     *
+     * @returns {undefined}
+     */
+     this.getAcceptedWaiver = function(){
+        return _acceptedWaiver;
+    };
+
+    /**
+     *
+     * @param acceptedWaiver
+     */
+    this.setAcceptedWaiver = function(acceptedWaiver){
+        _acceptedWaiver = acceptedWaiver;
     };
 
     this.constructor(user);

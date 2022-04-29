@@ -51,18 +51,30 @@ if ( ! is_page_template( 'page-template-blank.php' ) ) : ?>
 
 			<?php endif; ?>
 
-				<div id="footer-bottom">
+				<div id="footer-bottom" style="padding: 15px 0 !important;">
 					<div class="container clearfix">
 						<?php
-							if ( false !== et_get_option( 'show_footer_social_icons', true ) ) {
-								get_template_part( 'includes/social_icons', 'footer' );
-							}
+							// if ( false !== et_get_option( 'show_footer_social_icons', true ) ) {
+							// 	get_template_part( 'includes/social_icons', 'footer' );
+							// }
 						?>
-						<div style="display:flex">
-							<span style="margin-top:3px">powered by</span>
-							<a href="http://coderia.mx" target="_blank">
-								<img src="https://n-bici.com/wp-content/uploads/coderia/coderia_logo.png" style="margin-left:8px; height:27px; width:100px" />
-							</a>
+						<div class="footer-bottom-container">
+							<div style="display:flex;">
+								<span style="margin-top:3px">powered by</span>
+								<a href="http://coderia.mx" target="_blank">
+									<img src="https://n-bici.com/wp-content/uploads/coderia/coderia_logo.png" style="margin-left:8px; height:27px; width:100px" />
+								</a>
+							</div>
+							<div>
+								<ul>
+									<li class="et-social-icon et-social-facebook">
+										<a href="https://www.facebook.com/nbicisanluis/" class="icon" style="color: white;">
+											<span>Facebook</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<a href="https://n-bici.com/wp-content/themes/divi-child/docs/terminos-y-condiciones-nbici-20220427.pdf" target="_blank" style="color: white;">Términos y condiciones</a>
 						</div>
 					</div>	<!-- .container -->
 				</div>
